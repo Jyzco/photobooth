@@ -244,7 +244,108 @@ a {
     border-color: rgba(235, 192, 107, 0.18);
 }
 
-/* Full-page subtle ambient fireflies & starlight canvas */
+/* Full-viewport living biome ambience backdrop + ambient fireflies canvas */
+.world-ambience-stage {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+    color: #1A4F3E;
+    transition: color 600ms ease, background 600ms ease;
+}
+
+.ambience-sky-glow {
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse 80% 55% at 15% 12%, rgba(26, 79, 62, 0.14), transparent 68%),
+        radial-gradient(ellipse 75% 50% at 85% 18%, rgba(216, 168, 78, 0.18), transparent 68%),
+        linear-gradient(125deg, rgba(255, 253, 248, 0.45) 0%, rgba(246, 240, 227, 0) 45%, rgba(216, 168, 78, 0.14) 100%);
+    transition: background 600ms ease, opacity 500ms ease;
+}
+
+.world-ambience-stage[data-biome="1"] { color: #1A4F3E; }
+.world-ambience-stage[data-biome="2"] { color: #8A3B1E; }
+.world-ambience-stage[data-biome="3"] { color: #5B2C52; }
+.world-ambience-stage[data-biome="4"] { color: #1F3B66; }
+
+.world-ambience-stage[data-biome="2"] .ambience-sky-glow {
+    background:
+        radial-gradient(ellipse 75% 55% at 20% 15%, rgba(216, 155, 60, 0.22), transparent 68%),
+        radial-gradient(ellipse 75% 55% at 82% 20%, rgba(138, 59, 30, 0.16), transparent 68%),
+        linear-gradient(130deg, rgba(250, 240, 226, 0.35) 0%, rgba(216, 155, 60, 0.14) 100%);
+}
+
+.world-ambience-stage[data-biome="3"] .ambience-sky-glow {
+    background:
+        radial-gradient(ellipse 75% 55% at 18% 18%, rgba(91, 44, 82, 0.17), transparent 68%),
+        radial-gradient(ellipse 75% 55% at 85% 22%, rgba(240, 155, 176, 0.22), transparent 68%),
+        linear-gradient(130deg, rgba(247, 236, 243, 0.35) 0%, rgba(185, 142, 177, 0.15) 100%);
+}
+
+.world-ambience-stage[data-biome="4"] .ambience-sky-glow {
+    background:
+        radial-gradient(ellipse 80% 55% at 50% 8%, rgba(216, 168, 78, 0.22), transparent 68%),
+        radial-gradient(ellipse 75% 55% at 84% 26%, rgba(31, 59, 102, 0.18), transparent 68%),
+        linear-gradient(135deg, rgba(230, 238, 249, 0.4) 0%, rgba(216, 168, 78, 0.12) 100%);
+}
+
+[data-theme="dark"] .world-ambience-stage[data-biome="1"] { color: #7ED4BD; }
+[data-theme="dark"] .world-ambience-stage[data-biome="2"] { color: #EBC06B; }
+[data-theme="dark"] .world-ambience-stage[data-biome="3"] { color: #F09BB0; }
+[data-theme="dark"] .world-ambience-stage[data-biome="4"] { color: #96C2F7; }
+
+[data-theme="dark"] .ambience-sky-glow {
+    background:
+        radial-gradient(ellipse 80% 55% at 15% 12%, rgba(126, 212, 189, 0.14), transparent 68%),
+        radial-gradient(ellipse 75% 50% at 85% 18%, rgba(235, 192, 107, 0.12), transparent 68%);
+}
+
+[data-theme="dark"] .world-ambience-stage[data-biome="2"] .ambience-sky-glow {
+    background:
+        radial-gradient(ellipse 75% 55% at 20% 15%, rgba(235, 192, 107, 0.15), transparent 68%),
+        radial-gradient(ellipse 75% 55% at 82% 20%, rgba(196, 114, 71, 0.14), transparent 68%);
+}
+
+[data-theme="dark"] .world-ambience-stage[data-biome="3"] .ambience-sky-glow {
+    background:
+        radial-gradient(ellipse 75% 55% at 18% 18%, rgba(185, 142, 177, 0.14), transparent 68%),
+        radial-gradient(ellipse 75% 55% at 85% 22%, rgba(240, 155, 176, 0.14), transparent 68%);
+}
+
+[data-theme="dark"] .world-ambience-stage[data-biome="4"] .ambience-sky-glow {
+    background:
+        radial-gradient(ellipse 80% 55% at 50% 8%, rgba(235, 192, 107, 0.14), transparent 68%),
+        radial-gradient(ellipse 75% 55% at 84% 26%, rgba(150, 194, 247, 0.16), transparent 68%);
+}
+
+.ambience-wings-svg {
+    position: absolute;
+    top: 64px;
+    bottom: 0;
+    width: clamp(90px, 14vw, 220px);
+    height: calc(100% - 64px);
+    opacity: 0.62;
+    transition: opacity 400ms ease;
+}
+
+.ambience-wings-left { left: 0; }
+.ambience-wings-right { right: 0; }
+
+.ambience-horizon-svg {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: clamp(110px, 18vh, 185px);
+    opacity: 0.45;
+}
+
+[data-theme="dark"] .ambience-wings-svg { opacity: 0.72; }
+[data-theme="dark"] .ambience-horizon-svg { opacity: 0.56; }
+
 .ambient-world-canvas {
     position: fixed;
     inset: 0;
@@ -2140,6 +2241,221 @@ a {
     font-size: 14px;
 }
 
+/* Quick 1-Tap Selingan Mini-Game inside Each Pos Card */
+.pos-selingan-box {
+    margin-top: 14px;
+    padding: 13px 15px;
+    border-radius: var(--radius-md);
+    background: var(--bg);
+    border: 1.5px dashed var(--biome-border);
+}
+
+.selingan-kicker {
+    margin: 0 0 4px;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: var(--biome-accent);
+}
+
+.selingan-prompt {
+    margin: 0 0 10px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--ink);
+}
+
+.selingan-choices {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.btn-selingan {
+    min-height: 36px;
+    min-width: 44px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    border: 1.5px solid var(--biome-border);
+    background: var(--surface);
+    color: var(--ink);
+    font-size: 12.5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 150ms ease, border-color 150ms ease, transform 120ms ease;
+}
+
+.btn-selingan:hover {
+    background: var(--surface-soft);
+    border-color: var(--biome-accent);
+}
+
+.btn-selingan.is-picked {
+    background: var(--biome-bubble-jay);
+    color: #FAF6EE;
+    border-color: var(--gold-bright);
+}
+
+.selingan-result {
+    margin: 10px 0 0;
+    padding: 9px 12px;
+    border-radius: var(--radius-sm);
+    background: var(--biome-tint);
+    border-left: 3px solid var(--gold);
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--ink);
+}
+
+/* Interactive Mini-Games inside Berhenti Sejenak Cards */
+.talk-minigame {
+    margin-top: 16px;
+    padding: 16px 18px;
+    border-radius: var(--radius-md);
+    background: var(--bg);
+    border: 1.5px dashed var(--gold);
+    text-align: left;
+}
+
+.minigame-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.minigame-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: var(--wax);
+    color: #FAF6EE;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+}
+
+.minigame-score {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--biome-accent);
+}
+
+.minigame-title {
+    margin: 0 0 4px;
+    font-family: var(--font-display);
+    font-size: 1.06rem;
+    font-weight: 600;
+    color: var(--ink);
+}
+
+.minigame-desc {
+    margin: 0 0 12px;
+    font-size: 13.5px;
+    color: var(--muted);
+}
+
+.minigame-stage {
+    display: grid;
+    gap: 10px;
+}
+
+.minigame-quote-card {
+    padding: 12px 14px;
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    border: 1px solid var(--biome-border);
+    font-family: var(--font-serif-italic);
+    font-style: italic;
+    font-size: 18px;
+    line-height: 1.38;
+    color: var(--ink);
+}
+
+.minigame-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.minigame-btn {
+    min-height: 40px;
+    min-width: 44px;
+    padding: 8px 14px;
+    border-radius: var(--radius-sm);
+    border: 1.5px solid var(--biome-border);
+    background: var(--surface);
+    color: var(--ink);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 150ms ease, border-color 150ms ease, transform 120ms ease;
+}
+
+.minigame-btn:hover:not(:disabled) {
+    background: var(--surface-soft);
+    border-color: var(--gold);
+}
+
+.minigame-btn.is-active,
+.minigame-btn.is-lit {
+    background: var(--biome-bubble-jay);
+    color: #FAF6EE;
+    border-color: var(--gold-bright);
+}
+
+.minigame-btn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+.lantern-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(105px, 1fr));
+    gap: 8px;
+}
+
+.lantern-node-btn {
+    min-height: 54px;
+    min-width: 44px;
+    padding: 8px 10px;
+    border-radius: var(--radius-sm);
+    border: 1.5px solid var(--biome-border);
+    background: var(--surface);
+    color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.lantern-node-btn.is-lit {
+    background: var(--biome-bubble-jay);
+    color: #FAF6EE;
+    border-color: var(--gold-bright);
+    box-shadow: 0 0 14px rgba(216, 168, 78, 0.35);
+}
+
+.minigame-feedback {
+    margin: 0;
+    padding: 10px 12px;
+    border-radius: var(--radius-sm);
+    background: var(--reaction-bg);
+    border-left: 3px solid var(--gold);
+    color: var(--reaction-ink);
+    font-size: 13.5px;
+    font-weight: 500;
+}
+
 /* Bab IV: Illuminated Manuscript Letter Card */
 .book-letter-card {
     position: relative;
@@ -2979,6 +3295,17 @@ a {
 }
 
 /* Responsive Breakpoints */
+@media (max-width: 1020px) {
+    .ambience-wings-svg {
+        width: 108px;
+        opacity: 0.3;
+    }
+
+    .ambience-horizon-svg {
+        opacity: 0.28;
+    }
+}
+
 @media (max-width: 960px) {
     .hero-content-wrap {
         grid-template-columns: 1fr;
@@ -3174,12 +3501,28 @@ a {
         overflow: hidden;
         text-overflow: ellipsis;
     }
+
+    .ambience-wings-svg {
+        width: 72px;
+        opacity: 0.2;
+    }
+
+    .ambience-horizon-svg {
+        height: 92px;
+        opacity: 0.24;
+    }
 }
 
 /* Reduced Motion Accessibility */
 @media (prefers-reduced-motion: reduce) {
     html {
         scroll-behavior: auto;
+    }
+
+    .world-ambience-stage,
+    .ambience-sky-glow,
+    .ambience-wings-svg {
+        transition: none;
     }
 
     .layer-sky,

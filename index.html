@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Ekspedisi Arsip 27: kuis interaktif, jalur kenangan 24 pos lintas 4 alam fantasi dari Agustus sampai November, polaroid scrapbook, kartu obrolan bareng, surat Puncak 27, dan photobooth berdua untuk Rara.">
+    <meta name="description" content="Ekspedisi Arsip 27: kuis 7 pertanyaan interaktif, jalur kenangan 27 pos lintas 4 alam fantasi dari Agustus sampai November, polaroid scrapbook, 7 kartu obrolan dan mini game berdua, surat Puncak 27, dan photobooth untuk Rara.">
     <link rel="icon" href="data:,">
     <title>Ekspedisi Arsip 27 | Untuk Rara</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,6 +12,44 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="world-ambience-stage" id="world-ambience-stage" data-biome="1" aria-hidden="true">
+        <div class="ambience-sky-glow"></div>
+        <svg class="ambience-wings-svg ambience-wings-left" viewBox="0 0 220 900" preserveAspectRatio="xMinYMid slice" fill="none">
+            <path d="M0 40C72 95 128 78 184 36" stroke="currentColor" stroke-width="2" stroke-opacity="0.45"/>
+            <path d="M52 72C42 54 22 52 14 68C30 78 42 78 52 72Z" fill="currentColor" fill-opacity="0.24"/>
+            <path d="M126 66C138 48 158 52 162 68C146 76 134 74 126 66Z" fill="currentColor" fill-opacity="0.22"/>
+            <line x1="94" y1="68" x2="94" y2="128" stroke="#D8A84E" stroke-width="1.6" stroke-opacity="0.72"/>
+            <circle cx="94" cy="150" r="28" fill="#F8C87A" fill-opacity="0.28"/>
+            <path d="M84 128H104L108 148L101 166H87L80 148L84 128Z" fill="currentColor" fill-opacity="0.16" stroke="currentColor" stroke-width="1.6" stroke-opacity="0.62"/>
+            <circle cx="94" cy="148" r="5" fill="#F8C87A" fill-opacity="0.88"/>
+            <path d="M0 360C54 395 82 440 46 508C26 544 10 568 0 595" stroke="currentColor" stroke-width="1.6" stroke-opacity="0.34" stroke-dasharray="5 6"/>
+            <path d="M44 432L47 441L56 444L47 447L44 456L41 447L32 444L41 441Z" fill="#D8A84E" fill-opacity="0.62"/>
+            <circle cx="26" cy="280" r="3" fill="#D8A84E" fill-opacity="0.58"/>
+            <circle cx="62" cy="590" r="2.8" fill="currentColor" fill-opacity="0.4"/>
+            <path d="M0 780L56 690L116 742L170 676L220 760V900H0V780Z" fill="currentColor" fill-opacity="0.14"/>
+        </svg>
+        <svg class="ambience-wings-svg ambience-wings-right" viewBox="0 0 220 900" preserveAspectRatio="xMaxYMid slice" fill="none">
+            <path d="M220 40C148 95 92 78 36 36" stroke="currentColor" stroke-width="2" stroke-opacity="0.45"/>
+            <path d="M168 72C178 54 198 52 206 68C190 78 178 78 168 72Z" fill="currentColor" fill-opacity="0.24"/>
+            <path d="M94 66C82 48 62 52 58 68C74 76 86 74 94 66Z" fill="currentColor" fill-opacity="0.22"/>
+            <line x1="126" y1="68" x2="126" y2="128" stroke="#D8A84E" stroke-width="1.6" stroke-opacity="0.72"/>
+            <circle cx="126" cy="150" r="28" fill="#F8C87A" fill-opacity="0.28"/>
+            <path d="M116 128H136L140 148L133 166H119L112 148L116 128Z" fill="currentColor" fill-opacity="0.16" stroke="currentColor" stroke-width="1.6" stroke-opacity="0.62"/>
+            <circle cx="126" cy="148" r="5" fill="#F8C87A" fill-opacity="0.88"/>
+            <path d="M220 350C166 390 144 438 174 506C194 548 208 574 220 600" stroke="currentColor" stroke-width="1.6" stroke-opacity="0.34" stroke-dasharray="5 6"/>
+            <path d="M174 422L177 431L186 434L177 437L174 446L171 437L162 434L171 431Z" fill="#D8A84E" fill-opacity="0.62"/>
+            <circle cx="192" cy="272" r="3" fill="#D8A84E" fill-opacity="0.58"/>
+            <circle cx="156" cy="596" r="2.8" fill="currentColor" fill-opacity="0.4"/>
+            <path d="M220 775L168 686L108 746L52 670L0 762V900H220V775Z" fill="currentColor" fill-opacity="0.14"/>
+        </svg>
+        <svg class="ambience-horizon-svg" viewBox="0 0 1440 220" preserveAspectRatio="none" fill="none">
+            <path d="M0 220V146L140 82L290 144L470 68L670 156L890 74L1090 140L1280 62L1440 132V220H0Z" fill="currentColor" fill-opacity="0.14"/>
+            <path d="M0 220C280 154 520 198 760 162C1020 124 1260 184 1440 150V220H0Z" fill="currentColor" fill-opacity="0.22"/>
+            <circle cx="320" cy="72" r="2.5" fill="#D8A84E" fill-opacity="0.56"/>
+            <circle cx="720" cy="48" r="2.8" fill="#D8A84E" fill-opacity="0.62"/>
+            <circle cx="1110" cy="64" r="2.5" fill="#D8A84E" fill-opacity="0.56"/>
+        </svg>
+    </div>
     <canvas id="ambient-world-canvas" class="ambient-world-canvas" aria-hidden="true"></canvas>
     <a class="skip-link" href="#main-content">Lewati ke isi utama</a>
 
@@ -223,7 +261,7 @@
                         Katanya ucapan ulang tahun 27 Agustus baru sempat utuh di tanggal 27 November, jadi sekalian aja kususun satu perjalanan kecil berisi arsip kenangan kita dari awal kenal sampai hari ini.
                     </p>
                     <p class="hero-sub reveal-line" style="--line-index: 3">
-                        Halaman ini disusun mengikuti nuansa dongeng, alam, dan pendakian yang kamu suka: ada pemanasan kuis &amp; stempel ekspedisi, 24 pos melintasi 4 zona warna lengkap dengan papan polaroid scrapbook, reka ulang chat dan 6 kartu obrolan bareng, surat puncak bersegel lilin, lalu ditutup photobooth berdua.
+                        Halaman ini disusun mengikuti nuansa dongeng, alam, dan pendakian yang kamu suka: ada pemanasan 7 pertanyaan kuis &amp; stempel ekspedisi, 27 pos melintasi 4 zona warna lengkap dengan papan polaroid scrapbook, mini game selingan di tiap pos, 7 kartu obrolan dan permainan bareng, surat puncak bersegel lilin, lalu ditutup photobooth berdua.
                     </p>
                     <div class="hero-cta-row reveal-line" style="--line-index: 4">
                         <a class="btn-hero-primary" href="#kuis">Mulai Pendakian</a>
@@ -256,7 +294,7 @@
                         </div>
                         <div>
                             <dt>Rute Ekspedisi</dt>
-                            <dd>24 Pos, 6 Stempel &amp; 4 Zona (Agu s/d Nov 2026)</dd>
+                            <dd>27 Pos, 7 Mini-Game, &amp; 4 Zona (Agu s/d Nov 2026)</dd>
                         </div>
                     </dl>
                     <p class="dispatch-scroll-cue reveal-line" style="--line-index: 3">
@@ -298,8 +336,8 @@
                         <circle cx="10" cy="10" r="2.2" fill="currentColor"/>
                     </svg>
                     <div class="notebook-topbar">
-                        <span class="mono-tag" id="quizStepLabel">LANGKAH 01 / 06</span>
-                        <div class="progress-meter" role="progressbar" aria-valuemin="1" aria-valuemax="6" aria-valuenow="1" id="quizProgressMeter">
+                        <span class="mono-tag" id="quizStepLabel">LANGKAH 01 / 07</span>
+                        <div class="progress-meter" role="progressbar" aria-valuemin="1" aria-valuemax="7" aria-valuenow="1" id="quizProgressMeter">
                             <div class="progress-meter-fill" id="quizProgressFill"></div>
                         </div>
                         <span class="mono-tag" id="quizScoreSavedTag">Tersimpan otomatis</span>
@@ -329,7 +367,7 @@
             </svg>
         </div>
 
-        <!-- BAB III: JALUR EKSPEDISI 4 ZONA & 24 POS KENANGAN -->
+        <!-- BAB III: JALUR EKSPEDISI 4 ZONA & 27 POS KENANGAN -->
         <section id="jalur" class="chapter-section chapter-jalur" aria-labelledby="jalur-heading">
             <div class="section-shell">
                 <header class="section-header reveal-group">
@@ -342,10 +380,10 @@
                     </div>
                     <p class="eyebrow reveal-line" style="--line-index: 0">BAB III // JALUR EKSPEDISI 4 ZONA</p>
                     <h2 id="jalur-heading" class="section-title reveal-line" style="--line-index: 1">
-                        24 Pos Perjalanan, Papan Polaroid, &amp; Kartu Obrolan Bareng.
+                        27 Pos Perjalanan, Mini Game Selingan, &amp; Kartu Obrolan Bareng.
                     </h2>
                     <p class="section-desc reveal-line" style="--line-index: 2">
-                        Sepanjang pendakian dari Agustus sampai November, sisi kiri dan kanan penuh oleh cerita obrolan kita bersama foto polaroid gantung atau ilustrasi kisah masing-masing pos. Gulir untuk mengumpulkan 6 stempel ekspedisi!
+                        Sepanjang pendakian dari Agustus sampai November, sisi kiri dan kanan penuh oleh cerita obrolan kita bersama foto polaroid gantung, ilustrasi kisah, plus mini game ringan buat selingan di tiap pos dan 7 pos istirahat. Gulir untuk mengumpulkan 6 stempel ekspedisi!
                     </p>
                 </header>
 
@@ -459,7 +497,7 @@
                         </div>
                         <p class="mono-tag">EX LIBRIS // 27 AGUSTUS -> 27 NOVEMBER 2026</p>
                         <h3 id="letter-title" class="letter-title">Untuk Anisa Rahma Eka Widyastuti (Rara)</h3>
-                        <p class="letter-subtitle-italic">Dari balik kamera FYP hingga dua puluh empat pos cerita bersama.</p>
+                        <p class="letter-subtitle-italic">Dari balik kamera FYP hingga dua puluh tujuh pos cerita bersama.</p>
                     </div>
 
                     <div class="letter-body">
@@ -813,7 +851,7 @@
 
     <aside class="story-stepper-dock" id="story-stepper-dock" aria-label="Navigasi pos demi pos" hidden>
         <button type="button" class="btn-stepper" id="stepPrevPosBtn" aria-label="Lihat pos sebelumnya">Pos Sebelumnya</button>
-        <span class="stepper-status mono-tag" id="stepperPosLabel">POS 01 / 24 // 100 MDPL</span>
+        <span class="stepper-status mono-tag" id="stepperPosLabel">POS 01 / 27 // 100 MDPL</span>
         <button type="button" class="btn-stepper btn-stepper--primary" id="stepNextPosBtn" aria-label="Lihat pos berikutnya">Pos Berikutnya</button>
     </aside>
 

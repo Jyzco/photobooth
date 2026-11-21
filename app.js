@@ -114,9 +114,35 @@
             ]
         },
         {
+            id: "step-kamus-typo",
+            type: "choice",
+            eyebrow: "POS BASECAMP 05 // KAMUS TYPO & LORE",
+            evidenceImg: "assets/moment-meme-heart.jpg",
+            evidenceCaption: "20 Nov 2026: totalitas recreate meme bareng",
+            question: "Typo atau julukan legendaris mana nih yang selalu sukses bikin kita langsung ngakak setiap diingat?",
+            options: [
+                {
+                    label: "\"Manual, di kos ku gaada mesin cucu\" -> \"cui, what this is cui\"",
+                    reaction: "Juara tak terbantahkan menjelang Puncak 27. Sampai sekarang kata 'cui' tetap terdengar kayak kode rahasia."
+                },
+                {
+                    label: "\"Call me rara not semprul\" + \"kaka noh kebo\"",
+                    reaction: "Dua julukan saling serang paling ikonik sejak akun second ber berry x jiddan side. dibuka!"
+                },
+                {
+                    label: "\"Pa mau nonton lau bercerita\" sebelum berangkat ke XXI",
+                    reaction: "Typo paling sopan sejagat sebelum akhirnya kita benar-benar duduk di kursi D9 dan D10."
+                },
+                {
+                    label: "\"Cabggung + canggung : nerveous\" di malam 17 September",
+                    reaction: "Bukti sejarah kalau dulunya kita sempat sejujur itu ngaku gugup sebelum akrab kayak sekarang."
+                }
+            ]
+        },
+        {
             id: "step-bareng-terus",
             type: "runaway",
-            eyebrow: "POS BASECAMP 05 // PERTANYAAN PENTING",
+            eyebrow: "POS BASECAMP 06 // PERTANYAAN PENTING",
             evidenceImg: "assets/chat-merbabu.jpg",
             evidenceCaption: "18 September 2026: wacana explore alam",
             question: "Jujur deh, setelah kenal dari Agustus sampai sekarang... nyesel gak dulu dadah ke kamera pas FYP dan follback aku?",
@@ -138,7 +164,7 @@
         {
             id: "step-rating-note",
             type: "rating",
-            eyebrow: "POS BASECAMP 06 // NILAI & PESAN PRIBADI",
+            eyebrow: "POS BASECAMP 07 // NILAI & PESAN PRIBADI",
             question: "Nilai pertemanan kita sejauh ini (1 sampai 100) plus satu pesan kecil buat masuk ke Kartu Rangkuman Kenangan:"
         }
     ];
@@ -156,73 +182,75 @@
 
     const REALM_SCENERY_SVGS = {
         1: `<div class="realm-scenery-top" aria-hidden="true">
-                <svg viewBox="0 0 1200 180" preserveAspectRatio="none" width="100%" height="150" fill="none">
-                    <path d="M0 30C90 78 190 52 290 22C180 4 90 12 0 30Z" fill="currentColor" fill-opacity="0.06"/>
-                    <path d="M1200 30C1110 78 1010 52 910 22C1020 4 1110 12 1200 30Z" fill="currentColor" fill-opacity="0.06"/>
-                    <circle cx="96" cy="54" r="3.5" fill="#D8A84E" fill-opacity="0.45"/>
-                    <circle cx="1104" cy="54" r="3.5" fill="#D8A84E" fill-opacity="0.45"/>
-                    <path d="M68 18C92 42 124 44 156 26" stroke="currentColor" stroke-opacity="0.22" stroke-width="1.4"/>
-                    <path d="M1132 18C1108 42 1076 44 1044 26" stroke="currentColor" stroke-opacity="0.22" stroke-width="1.4"/>
+                <svg viewBox="0 0 1200 190" preserveAspectRatio="none" width="100%" height="165" fill="none">
+                    <path d="M0 32C110 88 220 56 320 20C205 2 105 12 0 32Z" fill="currentColor" fill-opacity="0.14"/>
+                    <path d="M1200 32C1090 88 980 56 880 20C995 2 1095 12 1200 32Z" fill="currentColor" fill-opacity="0.14"/>
+                    <circle cx="96" cy="56" r="4" fill="#D8A84E" fill-opacity="0.68"/>
+                    <circle cx="1104" cy="56" r="4" fill="#D8A84E" fill-opacity="0.68"/>
+                    <path d="M56 16C92 48 134 50 178 26" stroke="currentColor" stroke-opacity="0.34" stroke-width="1.6"/>
+                    <path d="M1144 16C1108 48 1066 50 1022 26" stroke="currentColor" stroke-opacity="0.34" stroke-width="1.6"/>
+                    <path d="M180 42L183 51L192 54L183 57L180 66L177 57L168 54L177 51Z" fill="#D8A84E" fill-opacity="0.58"/>
+                    <path d="M1020 42L1023 51L1032 54L1023 57L1020 66L1017 57L1008 54L1017 51Z" fill="#D8A84E" fill-opacity="0.58"/>
                 </svg>
             </div>
             <div class="realm-scenery-bottom" aria-hidden="true">
-                <svg viewBox="0 0 1200 140" preserveAspectRatio="none" width="100%" height="120" fill="none">
-                    <path d="M0 140V92L64 46L128 104L210 34L296 112L388 64L468 122H0ZM740 140L820 68L910 116L998 42L1086 98L1152 54L1200 94V140H740Z" fill="currentColor" fill-opacity="0.05"/>
-                    <circle cx="152" cy="82" r="2.5" fill="#D8A84E" fill-opacity="0.5"/>
-                    <circle cx="1048" cy="76" r="2.5" fill="#D8A84E" fill-opacity="0.5"/>
+                <svg viewBox="0 0 1200 150" preserveAspectRatio="none" width="100%" height="130" fill="none">
+                    <path d="M0 150V96L64 46L128 106L210 34L296 116L388 64L480 130H0ZM720 150L820 68L910 120L998 42L1086 102L1152 54L1200 94V150H720Z" fill="currentColor" fill-opacity="0.12"/>
+                    <circle cx="152" cy="82" r="3" fill="#D8A84E" fill-opacity="0.66"/>
+                    <circle cx="1048" cy="76" r="3" fill="#D8A84E" fill-opacity="0.66"/>
                 </svg>
             </div>`,
         2: `<div class="realm-scenery-top" aria-hidden="true">
-                <svg viewBox="0 0 1200 180" preserveAspectRatio="none" width="100%" height="150" fill="none">
-                    <path d="M0 12C88 46 168 38 240 16" stroke="currentColor" stroke-opacity="0.24" stroke-width="1.5"/>
-                    <line x1="128" y1="31" x2="128" y2="66" stroke="#D8A84E" stroke-opacity="0.55" stroke-width="1.4"/>
-                    <circle cx="128" cy="80" r="18" fill="#F8C87A" fill-opacity="0.18"/>
-                    <path d="M120 66H136L139 79L134 91H122L117 79L120 66Z" stroke="currentColor" stroke-opacity="0.32" stroke-width="1.3"/>
-                    <circle cx="128" cy="79" r="3.5" fill="#D8A84E" fill-opacity="0.65"/>
-                    <path d="M1200 12C1112 46 1032 38 960 16" stroke="currentColor" stroke-opacity="0.24" stroke-width="1.5"/>
-                    <line x1="1072" y1="31" x2="1072" y2="66" stroke="#D8A84E" stroke-opacity="0.55" stroke-width="1.4"/>
-                    <circle cx="1072" cy="80" r="18" fill="#F8C87A" fill-opacity="0.18"/>
-                    <path d="M1064 66H1080L1083 79L1078 91H1066L1061 79L1064 66Z" stroke="currentColor" stroke-opacity="0.32" stroke-width="1.3"/>
-                    <circle cx="1072" cy="79" r="3.5" fill="#D8A84E" fill-opacity="0.65"/>
+                <svg viewBox="0 0 1200 190" preserveAspectRatio="none" width="100%" height="165" fill="none">
+                    <path d="M0 12C88 46 168 38 256 14" stroke="currentColor" stroke-opacity="0.36" stroke-width="1.8"/>
+                    <line x1="128" y1="31" x2="128" y2="68" stroke="#D8A84E" stroke-opacity="0.72" stroke-width="1.6"/>
+                    <circle cx="128" cy="84" r="24" fill="#F8C87A" fill-opacity="0.28"/>
+                    <path d="M120 68H136L140 82L134 95H122L116 82L120 68Z" fill="currentColor" fill-opacity="0.14" stroke="currentColor" stroke-opacity="0.48" stroke-width="1.4"/>
+                    <circle cx="128" cy="82" r="4.5" fill="#F8C87A" fill-opacity="0.88"/>
+                    <path d="M1200 12C1112 46 1032 38 944 14" stroke="currentColor" stroke-opacity="0.36" stroke-width="1.8"/>
+                    <line x1="1072" y1="31" x2="1072" y2="68" stroke="#D8A84E" stroke-opacity="0.72" stroke-width="1.6"/>
+                    <circle cx="1072" cy="84" r="24" fill="#F8C87A" fill-opacity="0.28"/>
+                    <path d="M1064 68H1080L1084 82L1078 95H1066L1060 82L1064 68Z" fill="currentColor" fill-opacity="0.14" stroke="currentColor" stroke-opacity="0.48" stroke-width="1.4"/>
+                    <circle cx="1072" cy="82" r="4.5" fill="#F8C87A" fill-opacity="0.88"/>
                 </svg>
             </div>
             <div class="realm-scenery-bottom" aria-hidden="true">
-                <svg viewBox="0 0 1200 140" preserveAspectRatio="none" width="100%" height="120" fill="none">
-                    <path d="M0 140C160 88 290 112 440 140H0ZM760 140C910 112 1040 88 1200 140H760Z" fill="currentColor" fill-opacity="0.06"/>
-                    <circle cx="180" cy="74" r="3" fill="#F8C87A" fill-opacity="0.52"/>
-                    <circle cx="240" cy="96" r="2.2" fill="#F8C87A" fill-opacity="0.48"/>
-                    <circle cx="960" cy="92" r="2.4" fill="#F8C87A" fill-opacity="0.48"/>
-                    <circle cx="1020" cy="70" r="3" fill="#F8C87A" fill-opacity="0.52"/>
+                <svg viewBox="0 0 1200 150" preserveAspectRatio="none" width="100%" height="130" fill="none">
+                    <path d="M0 150C160 88 300 112 460 150H0ZM740 150C900 112 1040 88 1200 150H740Z" fill="currentColor" fill-opacity="0.12"/>
+                    <circle cx="180" cy="74" r="3.5" fill="#F8C87A" fill-opacity="0.68"/>
+                    <circle cx="240" cy="98" r="2.8" fill="#F8C87A" fill-opacity="0.62"/>
+                    <circle cx="960" cy="94" r="2.8" fill="#F8C87A" fill-opacity="0.62"/>
+                    <circle cx="1020" cy="70" r="3.5" fill="#F8C87A" fill-opacity="0.68"/>
                 </svg>
             </div>`,
         3: `<div class="realm-scenery-top" aria-hidden="true">
-                <svg viewBox="0 0 1200 180" preserveAspectRatio="none" width="100%" height="150" fill="none">
-                    <path d="M92 34L95 43L104 46L95 49L92 58L89 49L80 46L89 43Z" fill="#D8A84E" fill-opacity="0.45"/>
-                    <path d="M1108 34L1111 43L1120 46L1111 49L1108 58L1105 49L1096 46L1105 43Z" fill="#D8A84E" fill-opacity="0.45"/>
-                    <path d="M168 62C154 66 146 80 149 94C152 106 162 114 174 115C158 119 143 109 140 94C137 78 147 62 162 60C164 60 166 61 168 62Z" fill="currentColor" fill-opacity="0.14"/>
-                    <path d="M1044 62C1030 66 1022 80 1025 94C1028 106 1038 114 1050 115C1034 119 1019 109 1016 94C1013 78 1023 62 1038 60C1040 60 1042 61 1044 62Z" fill="currentColor" fill-opacity="0.14"/>
-                    <polyline points="196,42 252,70 308,38" stroke="currentColor" stroke-opacity="0.18" stroke-width="1.2" stroke-dasharray="4 5"/>
-                    <polyline points="1004,42 948,70 892,38" stroke="currentColor" stroke-opacity="0.18" stroke-width="1.2" stroke-dasharray="4 5"/>
+                <svg viewBox="0 0 1200 190" preserveAspectRatio="none" width="100%" height="165" fill="none">
+                    <path d="M92 34L95 43L104 46L95 49L92 58L89 49L80 46L89 43Z" fill="#D8A84E" fill-opacity="0.68"/>
+                    <path d="M1108 34L1111 43L1120 46L1111 49L1108 58L1105 49L1096 46L1105 43Z" fill="#D8A84E" fill-opacity="0.68"/>
+                    <path d="M168 62C154 66 146 80 149 94C152 106 162 114 174 115C158 119 143 109 140 94C137 78 147 62 162 60C164 60 166 61 168 62Z" fill="currentColor" fill-opacity="0.24"/>
+                    <path d="M1044 62C1030 66 1022 80 1025 94C1028 106 1038 114 1050 115C1034 119 1019 109 1016 94C1013 78 1023 62 1038 60C1040 60 1042 61 1044 62Z" fill="currentColor" fill-opacity="0.24"/>
+                    <polyline points="196,42 252,70 308,38" stroke="currentColor" stroke-opacity="0.3" stroke-width="1.4" stroke-dasharray="4 5"/>
+                    <polyline points="1004,42 948,70 892,38" stroke="currentColor" stroke-opacity="0.3" stroke-width="1.4" stroke-dasharray="4 5"/>
                 </svg>
             </div>
             <div class="realm-scenery-bottom" aria-hidden="true">
-                <svg viewBox="0 0 1200 140" preserveAspectRatio="none" width="100%" height="120" fill="none">
-                    <path d="M0 140V84C95 54 185 88 270 116C340 86 410 102 475 140H0ZM725 140C790 102 860 86 930 116C1015 88 1105 54 1200 84V140H725Z" fill="currentColor" fill-opacity="0.06"/>
+                <svg viewBox="0 0 1200 150" preserveAspectRatio="none" width="100%" height="130" fill="none">
+                    <path d="M0 150V86C95 54 185 88 270 118C340 86 410 102 475 150H0ZM725 150C790 102 860 86 930 118C1015 88 1105 54 1200 86V150H725Z" fill="currentColor" fill-opacity="0.12"/>
                 </svg>
             </div>`,
         4: `<div class="realm-scenery-top" aria-hidden="true">
-                <svg viewBox="0 0 1200 180" preserveAspectRatio="none" width="100%" height="150" fill="none">
-                    <circle cx="116" cy="76" r="46" stroke="currentColor" stroke-opacity="0.16" stroke-width="1.2" stroke-dasharray="5 5"/>
-                    <circle cx="1084" cy="76" r="46" stroke="currentColor" stroke-opacity="0.16" stroke-width="1.2" stroke-dasharray="5 5"/>
-                    <path d="M116 48L120 68L140 76L120 84L116 104L112 84L92 76L112 68Z" fill="#D8A84E" fill-opacity="0.34"/>
-                    <path d="M1084 48L1088 68L1108 76L1088 84L1084 104L1080 84L1060 76L1080 68Z" fill="#D8A84E" fill-opacity="0.34"/>
-                    <line x1="210" y1="28" x2="278" y2="56" stroke="#D8A84E" stroke-opacity="0.32" stroke-width="1.4" stroke-linecap="round"/>
-                    <line x1="990" y1="28" x2="922" y2="56" stroke="#D8A84E" stroke-opacity="0.32" stroke-width="1.4" stroke-linecap="round"/>
+                <svg viewBox="0 0 1200 190" preserveAspectRatio="none" width="100%" height="165" fill="none">
+                    <circle cx="116" cy="76" r="46" stroke="currentColor" stroke-opacity="0.28" stroke-width="1.4" stroke-dasharray="5 5"/>
+                    <circle cx="1084" cy="76" r="46" stroke="currentColor" stroke-opacity="0.28" stroke-width="1.4" stroke-dasharray="5 5"/>
+                    <path d="M116 48L120 68L140 76L120 84L116 104L112 84L92 76L112 68Z" fill="#D8A84E" fill-opacity="0.52"/>
+                    <path d="M1084 48L1088 68L1108 76L1088 84L1084 104L1080 84L1060 76L1080 68Z" fill="#D8A84E" fill-opacity="0.52"/>
+                    <line x1="210" y1="28" x2="278" y2="56" stroke="#D8A84E" stroke-opacity="0.48" stroke-width="1.6" stroke-linecap="round"/>
+                    <line x1="990" y1="28" x2="922" y2="56" stroke="#D8A84E" stroke-opacity="0.48" stroke-width="1.6" stroke-linecap="round"/>
                 </svg>
             </div>
             <div class="realm-scenery-bottom" aria-hidden="true">
-                <svg viewBox="0 0 1200 140" preserveAspectRatio="none" width="100%" height="120" fill="none">
-                    <path d="M0 140L110 42L218 104L326 26L448 140H0ZM752 140L874 26L982 104L1090 42L1200 140H752Z" fill="currentColor" fill-opacity="0.06"/>
+                <svg viewBox="0 0 1200 150" preserveAspectRatio="none" width="100%" height="130" fill="none">
+                    <path d="M0 150L110 42L218 106L326 26L448 150H0ZM752 150L874 26L982 106L1090 42L1200 150H752Z" fill="currentColor" fill-opacity="0.12"/>
                 </svg>
             </div>`
     };
@@ -275,7 +303,14 @@
                     caption: "Notifikasi follback 19 Agustus beserta foto profil di Siwil Art",
                     contain: true
                 }
-            ]
+            ],
+            quickGame: {
+                prompt: "Selingan Pos 01 // Masih inget berapa menit jarak follback 19 Agustus?",
+                options: [
+                    { label: "32 menit tepat!", reply: "Betul! Tercatat resmi di arsip notifikasi Instagram." },
+                    { label: "Seharian penuh?", reply: "Enggak selama itu, cuma 32 menit langsung di-follback balik!" }
+                ]
+            }
         },
         {
             id: "pos-02",
@@ -307,7 +342,14 @@
                     ]
                 }
             ],
-            secretNote: "Baru kenal beberapa menit, tapi obrolannya langsung nyasar dari foto di Siwil Art Kota Lama, Klaten naturalisasi Jogja, sampai aku nulis satu esai penuh buat jelasin apa itu kimpul."
+            secretNote: "Baru kenal beberapa menit, tapi obrolannya langsung nyasar dari foto di Siwil Art Kota Lama, Klaten naturalisasi Jogja, sampai aku nulis satu esai penuh buat jelasin apa itu kimpul.",
+            quickGame: {
+                prompt: "Selingan Pos 02 // Sebutan geografis paling kocak di DM perdana:",
+                options: [
+                    { label: "Jogja topping Semarang", reply: "Ditambah sepaket materi soal kimpul yang belum dipanen." },
+                    { label: "Kuliah botani Kimpul", reply: "Baru kenal satu jam sudah keluar penjelasan agronomi lengkap!" }
+                ]
+            }
         },
         {
             id: "pos-03",
@@ -336,11 +378,29 @@
                     ]
                 }
             ],
+            quickGame: {
+                prompt: "Selingan Pos 03 // Naik turun tangga FYP sah gak jadi latihan muncak?",
+                options: [
+                    { label: "Harus olahraga beneran!", reply: "Kata mentor pendakian Andong, wajib cardio beneran dulu!" },
+                    { label: "Lumayan buat pemanasan", reply: "Lumayan sih, tapi pas nanjak beneran tetep butuh napas cadangan." }
+                ]
+            },
             talkAfter: {
-                badge: "KARTU OBROLAN BARENG #01",
-                teaser: "Berhenti sebentar di Lembah Awal buat nanya satu hal ke Rara.",
+                badge: "BERHENTI SEJENAK #01 // LEMBAH AWAL",
+                teaser: "Bahas topik pembuka dulu di sini, lalu mainkan mini game tebak chat bareng!",
                 question: "Jujur deh, pas pertama kali dapet DM 'Happy Bday!' tanggal 27 Agustus, impresi pertamamu soal aku waktu itu gimana? Sempat mikir aneh atau kaget gak?",
-                hint: "Coba ceritain versi jujurnya ke Jay sebelum lanjut scroll ke pos berikutnya."
+                hint: "Coba ceritain versi jujurnya ke Jay sebelum main mini game di bawah!",
+                miniGame: {
+                    type: "tebak-chat",
+                    badge: "MINI GAME #01 // TEBAK PENGIRIM",
+                    title: "Tebak Siapa yang Ngetik Kalimat Ini!",
+                    desc: "Tebak 3 kutipan asli dari obrolan kita: ini ketikan Jay atau Rara?",
+                    items: [
+                        { quote: "\"canggung + canggung : nerveous, combo luar biasa\"", answer: "Rara" },
+                        { quote: "\"ada kimpulnya yg ketanem, blm dipanen\"", answer: "Jay" },
+                        { quote: "\"kabur si aku ka\"", answer: "Rara" }
+                    ]
+                }
             }
         },
         {
@@ -375,7 +435,14 @@
                     caption: "16 Sep: Awal mula lore 'buat hantu' muncul",
                     contain: true
                 }
-            ]
+            ],
+            quickGame: {
+                prompt: "Selingan Pos 04 // Siapa paling cepat balas IG Notes jam 1 pagi?",
+                options: [
+                    { label: "Jay paling standby", reply: "Pukul 01.43 langsung pasang status SIAP MEN TUTOR!" },
+                    { label: "Dua-duanya peka!", reply: "Dari sakit sampai 'buat hantu', kode Notes selalu nyambung." }
+                ]
+            }
         },
         {
             id: "pos-05",
@@ -420,7 +487,14 @@
                     caption: "Nilai 100 pertama plus rencana kabur kalau ketemu",
                     contain: true
                 }
-            ]
+            ],
+            quickGame: {
+                prompt: "Selingan Pos 05 // Typing siapa sebenarnya yang paling Gen Alpha?",
+                options: [
+                    { label: "Tetap Jay haha", reply: "Sampai dibilang BRAINROT BGT YAK malam itu!" },
+                    { label: "Imbang kok sama 'cabggung'", reply: "Untung nilainya 100 di Matkul Deeptalk!" }
+                ]
+            }
         },
         {
             id: "pos-06",
@@ -442,7 +516,26 @@
                     contain: true
                 }
             ],
-            secretNote: "Semoga tantangan 'get you there' ke Merbabu suatu hari beneran kejadian, bukan cuma jadi arsip tangkapan layar ya."
+            secretNote: "Semoga tantangan 'get you there' ke Merbabu suatu hari beneran kejadian, bukan cuma jadi arsip tangkapan layar ya.",
+            quickGame: {
+                prompt: "Selingan Pos 06 // Siap kunci manifesting Merbabu jadi agenda nyata?",
+                options: [
+                    { label: "Kunci Merbabu!", reply: "Catat di arsip: tantangan 'get you there' masih berlaku." },
+                    { label: "Pemanasan Andong dulu", reply: "Boleh banget, mulai dari Andong dulu baru Merbabu!" }
+                ]
+            },
+            talkAfter: {
+                badge: "BERHENTI SEJENAK #02 // GERBANG LEMBAH",
+                teaser: "Obrolan singkat soal gunung impian berdua plus duel suit pendaki!",
+                question: "Kalau wacana muncak Andong atau Merbabu beneran kejadian, hal paling seru atau paling bikin khawatir buatmu pas naik gunung bareng apa nih?",
+                hint: "Bahas sebentar, lalu tentuin siapa yang bawa logistik paling banyak lewat suit di bawah!",
+                miniGame: {
+                    type: "suit-pendaki",
+                    badge: "MINI GAME #02 // SUIT PENDAKI",
+                    title: "Duel Suit Penentu Pembawa Logistik",
+                    desc: "Tantang tim pendaki! Yang kalah wajib traktir minuman hangat di pos berikutnya."
+                }
+            }
         },
         {
             id: "pos-07",
@@ -471,7 +564,14 @@
                         { from: "rara", text: "telatt bgt ka", time: "11:06" }
                     ]
                 }
-            ]
+            ],
+            quickGame: {
+                prompt: "Selingan Pos 07 // Tanggal 23 September status kita resmi naik jadi:",
+                options: [
+                    { label: "Bukan stranger lagi", reply: "Kan udah kenalan kemarin, tapi tetep ngucapin 'hai salam kenal'!" },
+                    { label: "Pendengar yang baik", reply: "Salah satu sifatmu yang paling bikin nyaman diajak ngobrol." }
+                ]
+            }
         },
         {
             id: "pos-08",
@@ -508,13 +608,20 @@
                     caption: "24 Sep 22.11 WIB: Bukti asli insiden gentayangan di DM",
                     contain: true
                 }
-            ]
+            ],
+            quickGame: {
+                prompt: "Selingan Pos 08 // Nilai kejutan prank 'RARA IH' malam itu:",
+                options: [
+                    { label: "100 / 100 sukses ngakak", reply: "Sampai beneran diviralin masuk ke website arsip ini!" },
+                    { label: "Bakat content creator!", reply: "Tinggal eksekusi bareng nanti kontennya." }
+                ]
+            }
         },
         {
             id: "pos-09",
             biome: 2,
             postNum: "09",
-            altitude: "1.000 mdpl",
+            altitude: "980 mdpl",
             date: "29 Sep 2026",
             title: "Penunggu Toko & Coklat Kunafa dari Hantu",
             vignette: "lantern-oak",
@@ -537,13 +644,20 @@
                     ]
                 }
             ],
-            footnote: "Besoknya tanggal 30 September, adekmu malah ikutan suka dan nanyain coklat dari hantu yang satu itu."
+            footnote: "Besoknya tanggal 30 September, adekmu malah ikutan suka dan nanyain coklat dari hantu yang satu itu.",
+            quickGame: {
+                prompt: "Selingan Pos 09 // Review jujur coklat kunafa dari 'hantu':",
+                options: [
+                    { label: "Enak banget sampai adek suka", reply: "Best review! Kapan-kapan boleh dong hantu-nya bawain lagi." },
+                    { label: "Agak ghoib tapi manis", reply: "Hantu baik hati memang beda." }
+                ]
+            }
         },
         {
             id: "pos-10",
             biome: 2,
             postNum: "10",
-            altitude: "1.120 mdpl",
+            altitude: "1.090 mdpl",
             date: "02-03 Okt 2026",
             title: "\"In This Economy Harga Buku\" & Gramed Jalma",
             vignette: "quill-arch",
@@ -591,18 +705,32 @@
                 }
             ],
             secretNote: "Hari itu sekaligus jadi malam perdana kita pindah dari DM Instagram ke WhatsApp, awalnya cuma gara-gara malas buka IG dan lanjut bahas wawancara EESE lewat Google Meet.",
+            quickGame: {
+                prompt: "Selingan Pos 10 // Momen terbaik di tanggal 3 Oktober versi kamu:",
+                options: [
+                    { label: "Kode Notes 'jalma -> maw maw'", reply: "Singkat, padat, langsung jadi jalan perdana!" },
+                    { label: "Makan malam & pindah WA", reply: "Sejak malam itu obrolannya makin panjang dan lancar." }
+                ]
+            },
             talkAfter: {
-                badge: "KARTU OBROLAN BARENG #02",
-                teaser: "Flashback ke jalan perdana tanggal 3 Oktober kemarin.",
+                badge: "BERHENTI SEJENAK #03 // HUTAN LENTERA",
+                teaser: "Flashback ke 3 Oktober kemarin plus main nyalain 5 lentera hutan!",
                 question: "Waktu pertama kali jalan bareng ke Gramed Jalma tanggal 3 Oktober, awalnya canggung banget gak sih? Momen apa yang bikin suasana hari itu tiba-tiba cair?",
-                hint: "Bahas sebentar versi POV Rara vs POV Jay sebelum naik ke hutan berikutnya!"
+                hint: "Bahas versi POV Rara vs POV Jay, terus nyalain ke-5 lenteranya di bawah!",
+                miniGame: {
+                    type: "lentera-hutan",
+                    badge: "MINI GAME #03 // LENTERA KENANGAN",
+                    title: "Nyalakan 5 Lentera Hutan Malam Ini",
+                    desc: "Klik tiap lentera satu per satu untuk menerangi 5 kata kunci babak Hutan Lentera!",
+                    lanterns: ["JALMA", "MAW MAW", "CANDID LAG", "EESE MEET", "PINDAH WA"]
+                }
             }
         },
         {
             id: "pos-11",
             biome: 2,
             postNum: "11",
-            altitude: "1.230 mdpl",
+            altitude: "1.200 mdpl",
             date: "08-09 Okt 2026",
             title: "Ketiduran Depan ThinkPad & Misteri Pabrik Permen Fumira",
             vignette: "teacup-stars",
@@ -628,19 +756,26 @@
                         { from: "jay", text: "After research, ternyata bukan dari fumira, tpi dari pabrik dibelakangnya namanya erela, pabrik obat, fumira tu ternyata pabrik atap seng galvalum..", time: "16:59" }
                     ]
                 }
-            ]
+            ],
+            quickGame: {
+                prompt: "Selingan Pos 11 // Asal bau permen sore hari ternyata dari:",
+                options: [
+                    { label: "Pabrik Erela!", reply: "Pantas dicari tahu beneran selama 11 menit lewat riset!" },
+                    { label: "Bukan Fumira si seng", reply: "Misteri berbulan-bulan akhirnya terpecahkan tuntas." }
+                ]
+            }
         },
         {
             id: "pos-12",
             biome: 2,
             postNum: "12",
-            altitude: "1.340 mdpl",
-            date: "12 & 15 Okt 2026",
-            title: "Khodam Silaturahmi & Fitur Otak Multitasking",
+            altitude: "1.300 mdpl",
+            date: "12 Okt 2026",
+            title: "Malam Khodam Silaturahmi",
             vignette: "lantern-oak",
             pullQuote: "\"Khodam kita perlu dipertemukan, biar mereka silaturahmi.\"",
             lines: [
-                "Dua sesi obrolan tengah malam dan siang di WhatsApp yang isinya makin lepas dan apa adanya."
+                "Memasuki pertengahan Oktober, chat WhatsApp jam sebelas malam mulai gak bisa diprediksi arahnya, sampai muncul wacana pertemuan khodam."
             ],
             chats: [
                 {
@@ -654,7 +789,29 @@
                         { from: "rara", text: "pake selimut tidur ka", time: "22:59" },
                         { from: "rara", text: "kaka udh mulai gila", time: "22:59" }
                     ]
-                },
+                }
+            ],
+            quickGame: {
+                prompt: "Selingan Pos 12 // Jam segini khodamnya masih aman atau waktunya selimutan?",
+                options: [
+                    { label: "Pake selimut tidur ka", reply: "Jawaban Rara paling realistis setiap Jay mulai random." },
+                    { label: "Biarkan silaturahmi dulu", reply: "Bentar lagi pasti muncul bahasan makin random nih." }
+                ]
+            }
+        },
+        {
+            id: "pos-13",
+            biome: 2,
+            postNum: "13",
+            altitude: "1.380 mdpl",
+            date: "15 Okt 2026",
+            title: "Fitur Otak Multitasking: Nyanyi Sambil Nyetir",
+            vignette: "headset-waves",
+            pullQuote: "\"I feel youu ka, tp jgn sering2 bahaya ka.\"",
+            lines: [
+                "Tiga hari kemudian giliran siang hari yang bikin heran karena ngaku sempat microsleep tapi suara tetap lanjut nyanyi."
+            ],
+            chats: [
                 {
                     platform: "WhatsApp // Rara si bingung",
                     date: "15 Okt 2026",
@@ -666,12 +823,36 @@
                         { from: "rara", text: "tp jgn sering2 bahaya ka", time: "11:30" }
                     ]
                 }
-            ]
+            ],
+            quickGame: {
+                prompt: "Selingan Pos 13 // Nasihat wajib kalau lagi nyetir jauh:",
+                options: [
+                    { label: "Jangan sering2 bahaya!", reply: "Siap bu dokter lalu lintas, istirahat dulu kalau ngantuk." },
+                    { label: "Nyanyi bareng aja", reply: "Kalau ada partner nyanyi di sebelahnya pasti langsung melek!" }
+                ]
+            },
+            talkAfter: {
+                badge: "BERHENTI SEJENAK #04 // UJUNG HUTAN",
+                teaser: "Uji ingatan jam-jam random kita sebelum buka pintu rahasia akun second!",
+                question: "Dari obrolan sore sampai hampir tengah malam di bulan September-Oktober, kebiasaan acak apa yang paling kerasa bedanya dibanding awal kita kenal?",
+                hint: "Bahas sebentar, lalu tes ketepatan jam begadang kalian lewat game di bawah!",
+                miniGame: {
+                    type: "tebak-jam",
+                    badge: "MINI GAME #04 // TEBAK JAM ARSIP",
+                    title: "Cocokkan Momen dengan Jam Kejadiannya",
+                    desc: "Tebak kapan momen legendaris ini terekam di log chat kita!",
+                    rounds: [
+                        { label: "IG Note 'UUU SAYA SIAP MEN TUTOR'", choices: ["01.43 WIB", "14.01 WIB"], correct: "01.43 WIB" },
+                        { label: "Insiden DM 'PRANKK -> RARA IH'", choices: ["22.10 WIB", "08.33 WIB"], correct: "22.10 WIB" },
+                        { label: "Sesi Khodam Silaturahmi", choices: ["22.58 WIB", "16.59 WIB"], correct: "22.58 WIB" }
+                    ]
+                }
+            }
         },
         {
-            id: "pos-13",
+            id: "pos-14",
             biome: 3,
-            postNum: "13",
+            postNum: "14",
             altitude: "1.520 mdpl",
             date: "17 Okt 2026",
             title: "Pintu Rahasia Akun Second: Kontrak Tak Tertulis",
@@ -696,12 +877,19 @@
                         { from: "rara", text: "tidak adil rasanya jika kontrak dilakukan tanpa persetujuan kedua pihak", time: "21:25" }
                     ]
                 }
-            ]
+            ],
+            quickGame: {
+                prompt: "Selingan Pos 14 // Status kontrak tak tertulis ber berry x jiddan side.:",
+                options: [
+                    { label: "Setuju & dilanjutkan!", reply: "Kontrak resmi lanjut ke obrolan akun second berikutnya." },
+                    { label: "Bidadari vs Sang Gila", reply: "Pembukaan paling dramatis sepanjang sejarah akun second!" }
+                ]
+            }
         },
         {
-            id: "pos-14",
+            id: "pos-15",
             biome: 3,
-            postNum: "14",
+            postNum: "15",
             altitude: "1.630 mdpl",
             date: "18-19 Okt 2026",
             title: "Era Saling Panggil \"Kebo\" & Diskusi Kopi vs Matcha",
@@ -732,12 +920,19 @@
                         { from: "jay", text: "IDIH meremehkan", time: "00:36" }
                     ]
                 }
-            ]
+            ],
+            quickGame: {
+                prompt: "Selingan Pos 15 // Pilih minuman wajib teman begadang:",
+                options: [
+                    { label: "Matcha manis", reply: "Aman buat mata dan tetap ramah di jam tidur!" },
+                    { label: "Kopi anti ngantuk", reply: "Resiko langsung melek sampai subuh!" }
+                ]
+            }
         },
         {
-            id: "pos-15",
+            id: "pos-16",
             biome: 3,
-            postNum: "15",
+            postNum: "16",
             altitude: "1.740 mdpl",
             date: "22-23 Okt 2026",
             title: "Dua Gelas Es, Telepon 1 Jam 22 Menit, & Selfie Locket",
@@ -764,17 +959,35 @@
                     caption: "23 Okt: Arsip Locket kacamata"
                 }
             ],
+            quickGame: {
+                prompt: "Selingan Pos 16 // Pas call 1 jam 22 menit itu terasa sebentar atau lama?",
+                options: [
+                    { label: "Tau-tau udah jam satu aja", reply: "Tandanya ngobrolnya emang gak kerasa sama sekali!" },
+                    { label: "Pengen ulangi lagi", reply: "Masih banyak topik seru buat dibahas berikutnya." }
+                ]
+            },
             talkAfter: {
-                badge: "KARTU OBROLAN BARENG #03",
-                teaser: "Mengingat sesi telponan 1 jam 22 menit itu lagi.",
+                badge: "BERHENTI SEJENAK #05 // GERBANG BIDADARI",
+                teaser: "Flashback ke telpon 1.22.46 plus Tes Telepati 3-2-1 Sebut Bareng!",
                 question: "Di call tengah malam 1 jam 22 menit itu, masih inget gak kita bahas apa aja sampai gak sadar udah lewat jam satu? Sebenarnya siapa yang paling susah tidur duluan di antara kita?",
-                hint: "Boleh cek lagi foto Locket-nya, terus saling lempar pembelaan sekarang."
+                hint: "Tatap jam 3-2-1 lalu jawab 3 pertanyaan telepati di bawah ini bersamaan!",
+                miniGame: {
+                    type: "kompak-123",
+                    badge: "MINI GAME #05 // TES TELEPATI 3-2-1",
+                    title: "Sebut Bareng Dalam Hitungan 3-2-1!",
+                    desc: "Untuk tiap tema, hitung 3-2-1 bareng Jay lalu sebut satu jawaban. Klik hasilnya!",
+                    prompts: [
+                        "Sebutkan 1 minuman favorit buat nemenin nugas!",
+                        "Sebutkan 1 tempat jalan bareng yang pengen diulang!",
+                        "Sebutkan 1 hal pertama yang terlintas kalau denger kata 'Merbabu'!"
+                    ]
+                }
             }
         },
         {
-            id: "pos-16",
+            id: "pos-17",
             biome: 3,
-            postNum: "16",
+            postNum: "17",
             altitude: "1.840 mdpl",
             date: "26 Okt 2026",
             title: "\"Modus Mau Mutual Discord\"",
@@ -797,12 +1010,19 @@
                         { from: "rara", text: "ak aj g pernah main", time: "21:59" }
                     ]
                 }
-            ]
+            ],
+            quickGame: {
+                prompt: "Selingan Pos 17 // Plot twist terbesar setelah download Discord:",
+                options: [
+                    { label: "Jadi Study Room 5 jam+", reply: "Dari gak pernah main jadi basecamp ambis & nobar!" },
+                    { label: "Mutualan paling sukses", reply: "Best download tahun ini!" }
+                ]
+            }
         },
         {
-            id: "pos-17",
+            id: "pos-18",
             biome: 3,
-            postNum: "17",
+            postNum: "18",
             altitude: "1.940 mdpl",
             date: "29-30 Okt 2026",
             title: "Spotify Blend 100%, Plot Horor Novel, & Typo \"Lau Bercerita\"",
@@ -832,12 +1052,19 @@
                         { from: "jay", text: "HIIII apipi ril date", time: "20:48" }
                     ]
                 }
-            ]
+            ],
+            quickGame: {
+                prompt: "Selingan Pos 18 // Skor Spotify Blend kita yang tembus 100% lagu andalannya:",
+                options: [
+                    { label: "La La Lost You", reply: "Auto masuk playlist wajib setiap lagi nugas bareng." },
+                    { label: "Judul baru 'Lau Bercerita'", reply: "Tetep berangkat nonton walaupun judulnya kepeleset dikit." }
+                ]
+            }
         },
         {
-            id: "pos-18",
+            id: "pos-19",
             biome: 3,
-            postNum: "18",
+            postNum: "19",
             altitude: "2.040 mdpl",
             date: "31 Okt 2026",
             title: "The Park XXI Kursi D9-D10, Mirror Selfie, & Kucing Oren",
@@ -862,12 +1089,19 @@
                     alt: "Kucing oranye lucu yang ditemui Rara",
                     caption: "Penampakan wajib: kucing oren"
                 }
-            ]
+            ],
+            quickGame: {
+                prompt: "Selingan Pos 19 // Bagian terbaik hari nonton tanggal 31 Oktober:",
+                options: [
+                    { label: "Mirror selfie & D9-D10", reply: "Tiketnya masih tersimpan rapi di arsip!" },
+                    { label: "Kucing oren lewat", reply: "Gak sah pulang kalau belum motret kucing di jalan." }
+                ]
+            }
         },
         {
-            id: "pos-19",
+            id: "pos-20",
             biome: 3,
-            postNum: "19",
+            postNum: "20",
             altitude: "2.150 mdpl",
             date: "01 Nov 2026",
             title: "Ambis 5 Jam 47 Menit, Dunia Fairy Tale & Morikei, Wave to Earth, & Pinned Chat",
@@ -908,18 +1142,36 @@
                 }
             ],
             secretNote: "Seluruh estetika dongeng, lentera, warna berry senja, dan puncak bintang di halaman ini terinspirasi langsung dari ceritamu jam 02.29 pagi ini.",
+            quickGame: {
+                prompt: "Selingan Pos 20 // Lagu atau vibe paling pas buat sesi Study Room 5 jam:",
+                options: [
+                    { label: "Playlist Wave to Earth", reply: "Bikin suasana fokus tapi tetap hangat sampai jam 02.30 pagi." },
+                    { label: "Dunia Fairy Tale & Morikei", reply: "Estetika utamanya langsung menginspirasi web ini!" }
+                ]
+            },
             talkAfter: {
-                badge: "KARTU OBROLAN BARENG #04",
-                teaser: "Ngomongin akun konten fairy tale & morikei impianmu.",
+                badge: "BERHENTI SEJENAK #06 // LANGIT MORIKEI",
+                teaser: "Ngomongin akun konten fairy tale impianmu plus game Susun Kata Typo!",
                 question: "Kalau akun konten bertema fairy tale & morikei impianmu udah mulai jalan nanti, lokasi atau konsep outfit pertama apa yang paling pengin kamu wujudin?",
-                hint: "Siapa tahu fotografer tim dokum FYP-mu bisa ikut bantu eksekusi nanti!"
+                hint: "Habis bahas lokasi pemotretan pertama, coba susun 3 frasa legenda kita di bawah!",
+                miniGame: {
+                    type: "susun-typo",
+                    badge: "MINI GAME #06 // SUSUN KATA LORE",
+                    title: "Rangkai Ulang 3 Frasa Legendaris",
+                    desc: "Pilih kata yang tepat untuk melengkapi potongan frasa ikonik kita!",
+                    puzzles: [
+                        { prefix: "pa mau nonton ___", choices: ["lau bercerita", "sang gila"], answer: "lau bercerita" },
+                        { prefix: "canggung + canggung = ___", choices: ["nerveous", "cabggung"], answer: "nerveous" },
+                        { prefix: "call me rara not ___", choices: ["semprul", "kebo"], answer: "semprul" }
+                    ]
+                }
             }
         },
         {
-            id: "pos-20",
+            id: "pos-21",
             biome: 4,
-            postNum: "20",
-            altitude: "2.260 mdpl",
+            postNum: "21",
+            altitude: "2.240 mdpl",
             date: "02 & 04 Nov 2026",
             title: "Atedoz Library Theme, Red Berry Tea, & #sayapunyakamera",
             vignette: "camera-stars",
@@ -951,19 +1203,26 @@
                         { from: "rara", text: "benerab meebabu?", time: "13:23" }
                     ]
                 }
-            ]
+            ],
+            quickGame: {
+                prompt: "Selingan Pos 21 // Tugas wajib pemilik tagar #sayapunyakamera saat trip nanti:",
+                options: [
+                    { label: "Motoin konten Rara terus", reply: "Kamera udah siap tempur sejak zaman FYP!" },
+                    { label: "Gantian foto berdua", reply: "Biar gak cuma candid, tapi banyak stok foto bareng juga." }
+                ]
+            }
         },
         {
-            id: "pos-21",
+            id: "pos-22",
             biome: 4,
-            postNum: "21",
-            altitude: "2.370 mdpl",
-            date: "07 & 09 Nov 2026",
-            title: "\"Call Me Rara Not Semprul\" & #SIAPJDIPENDAMPING",
+            postNum: "22",
+            altitude: "2.320 mdpl",
+            date: "07 Nov 2026",
+            title: "Protes Resmi: \"Call Me Rara Not Semprul\"",
             vignette: "quill-arch",
-            pullQuote: "\"Call me rara not semprul\" + \"#SIAPJDIPENDAMPING\".",
+            pullQuote: "\"Call me rara not semprul\" -> \"tpi cute loh\".",
             lines: [
-                "Dua obrolan paling ikonik di awal November: protes resmi soal panggilan 'semprul' di akun second, plus komitmen jadi pendamping belajar Bahasa Inggris."
+                "Tanggal 7 November malam akhirnya keluar nota protes resmi dari akun ber berry gara-gara dipanggil semprul."
             ],
             chats: [
                 {
@@ -975,7 +1234,29 @@
                         { from: "rara", text: "call me rara not semprul", time: "20:37" },
                         { from: "jay", text: "tpi cute loh", time: "20:44" }
                     ]
-                },
+                }
+            ],
+            quickGame: {
+                prompt: "Selingan Pos 22 // Pilih julukan yang boleh dipakai sekarang:",
+                options: [
+                    { label: "Rara saja (resmi)", reply: "Baik Tuan Putri Rara, resmi dicatat!" },
+                    { label: "Semprul pas lagi bercanda", reply: "Tetep cute kok kata arsip chat jam 20.44." }
+                ]
+            }
+        },
+        {
+            id: "pos-23",
+            biome: 4,
+            postNum: "23",
+            altitude: "2.400 mdpl",
+            date: "09 Nov 2026",
+            title: "Tagar #SIAPJDIPENDAMPING Belajar Bahasa Inggris",
+            vignette: "quill-arch",
+            pullQuote: "\"Kalo mau ditemenin belajar kyk jadi pendamping fine fine aja #SIAPJDIPENDAMPING.\"",
+            lines: [
+                "Dua hari berselang giliran bahas rencana nemenin belajar Bahasa Inggris bareng tanpa kesan menggurui."
+            ],
+            chats: [
                 {
                     platform: "WhatsApp // Rara si bingung",
                     date: "09 Nov 2026",
@@ -989,12 +1270,19 @@
                     ]
                 }
             ],
-            secretNote: "Tagar #SIAPJDIPENDAMPING resmi tercatat di arsip: kapan pun butuh teman belajar atau diskusi, pintu selalu kebuka."
+            secretNote: "Tagar #SIAPJDIPENDAMPING resmi tercatat di arsip: kapan pun butuh teman belajar atau diskusi, pintu selalu kebuka.",
+            quickGame: {
+                prompt: "Selingan Pos 23 // Agenda perdana kelas #SIAPJDIPENDAMPING:",
+                options: [
+                    { label: "Practice speaking santai", reply: "Biar lancar ngobrol bareng sambil ngopi atau Study Room." },
+                    { label: "Nonton film sub English", reply: "Belajar paling ampuh sambil nonton Ghibli atau fantasi!" }
+                ]
+            }
         },
         {
-            id: "pos-22",
+            id: "pos-24",
             biome: 4,
-            postNum: "22",
+            postNum: "24",
             altitude: "2.480 mdpl",
             date: "15 Nov 2026",
             title: "Nobar Fantasi Tengah Malam di Discord",
@@ -1016,24 +1304,25 @@
                     caption: "15 Nov 23.42: Adegan Fantastic Beasts"
                 }
             ],
-            talkAfter: {
-                badge: "KARTU OBROLAN BARENG #05",
-                teaser: "Nambahin daftar tontonan fantasi selanjutnya.",
-                question: "Habis nobar Fantastic Beasts tengah malam kemarin, film Studio Ghibli atau film dunia fantasi apa lagi nih yang wajib masuk jadwal tonton kita berikutnya?",
-                hint: "Langsung pilih satu judul sekarang biar gak cuma jadi wacana."
+            quickGame: {
+                prompt: "Selingan Pos 24 // Antrean tontonan nobar berikutnya:",
+                options: [
+                    { label: "Maraton Studio Ghibli", reply: "Dari Howl's Moving Castle sampai Spirited Away siap diputar!" },
+                    { label: "Lanjut film dunia sihir", reply: "Tinggal atur jam call malam di Study Room 1!" }
+                ]
             }
         },
         {
-            id: "pos-23",
+            id: "pos-25",
             biome: 4,
-            postNum: "23",
-            altitude: "2.590 mdpl",
-            date: "13-20 Nov 2026",
-            title: "Ramen, Dua Kartu Flazz, Kamera, & Totalitas 5 Meme Kita",
+            postNum: "25",
+            altitude: "2.560 mdpl",
+            date: "13-18 Nov 2026",
+            title: "Ramen Hangat, Dua Kartu Flazz, & Kamera Perpustakaan",
             vignette: "camera-stars",
-            pullQuote: "\"Setiap ad kamera ada rara\" sampai niat recreate 5 ekspresi meme dalam satu malam.",
+            pullQuote: "\"Setiap ad kamera ada rara\" dari mangkuk ramen sampai sudut perpus.",
             lines: [
-                "Pertengahan sampai akhir November penuh dengan momen kecil yang super niat: semangkuk ramen hangat, dua kartu Flazz berdampingan, momen kamu pegang kamera ('setiap ad kamera ada rara'), sampai bikin ulang 5 ekspresi meme sekaligus."
+                "Pertengahan November penuh momen kecil yang hangat: berburu semangkuk ramen bareng, foto dua kartu Flazz berdampingan tanggal 17 November, lalu esoknya kamera langsung diarahkan ke kamu di perpustakaan."
             ],
             photos: [
                 {
@@ -1051,7 +1340,29 @@
                     src: "assets/moment-camera.jpg",
                     alt: "Rara memegang kamera di perpustakaan",
                     caption: "18 Nov: 'setiap ad kamera ada rara'"
-                },
+                }
+            ],
+            quickGame: {
+                prompt: "Selingan Pos 25 // Misi cari makan paling gampang bikin happy berdua:",
+                options: [
+                    { label: "Semangkuk ramen hangat!", reply: "Cocok buat mengembalikan energi habis keliling kampus." },
+                    { label: "Foto booth & hunting spot", reply: "Kamera siap, kartu Flazz juga selalu berdampingan." }
+                ]
+            }
+        },
+        {
+            id: "pos-26",
+            biome: 4,
+            postNum: "26",
+            altitude: "2.630 mdpl",
+            date: "20 Nov 2026",
+            title: "Totalitas Recreate 5 Ekspresi Meme Kita",
+            vignette: "camera-stars",
+            pullQuote: "Lima pose ikonik: dari setengah hati vs jempol sampai doa penuh penghayatan.",
+            lines: [
+                "Malam 20 November mungkin salah satu sesi paling niat sepanjang sejarah kita kenalan: bikin ulang 5 ekspresi meme terkenal sekaligus dalam satu malam!"
+            ],
+            photos: [
                 {
                     src: "assets/moment-meme-heart.jpg",
                     alt: "Recreate meme tangan setengah hati dibalas jempol",
@@ -1077,19 +1388,26 @@
                     alt: "Recreate meme dua orang menutup mata berdoa dan pasrah",
                     caption: "20 Nov: Doa penuh penghayatan"
                 }
-            ]
+            ],
+            quickGame: {
+                prompt: "Selingan Pos 26 // Dari ke-5 recreate meme 20 November, juara akting jatuh ke:",
+                options: [
+                    { label: "Half-heart vs Jempol", reply: "Paling sering terjadi di dunia nyata nih posenya!" },
+                    { label: "Singa, Monyet & Doa Pasrah", reply: "Ekspresinya dapet banget sampai bikin ngakak gak berhenti." }
+                ]
+            }
         },
         {
-            id: "pos-24",
+            id: "pos-27",
             biome: 4,
-            postNum: "24",
+            postNum: "27",
             altitude: "2.700 mdpl",
-            date: "21 Nov 2026",
-            title: "Pemanasan Sebelum Puncak: \"What This Is Cui\"",
+            date: "21-27 Nov 2026",
+            title: "Puncak 27 & Typo Legendaris: \"What This Is Cui\"",
             vignette: "summit-crown",
             pullQuote: "\"Manual, di kos ku gaada mesin cucu\" -> \"cui, what this is cui\".",
             lines: [
-                "Tepat sebelum sampai di Puncak 27 dan sesi photobooth berdua, ini salah satu typo paling legendaris yang bikin ngakak gak berhenti."
+                "Di titik tertinggi Pos 27 menuju 27 November ini, kita tutup perjalanan panjang dari kamera FYP BINUS dengan satu typo paling legendaris yang bikin ketawa bareng."
             ],
             chats: [
                 {
@@ -1107,12 +1425,32 @@
                     ]
                 }
             ],
-            footnote: "Dari canggung setengah mati di bulan Agustus sampai ketawa gara-gara 'mesin cucu'... selamat datang di Puncak 27.",
+            footnote: "Dari canggung setengah mati di bulan Agustus sampai ketawa gara-gara 'mesin cucu'... selamat sampai di Puncak 27!",
+            quickGame: {
+                prompt: "Selingan Pos 27 // Predikat tertinggi buat typo sepanjang Agustus - November:",
+                options: [
+                    { label: "What this is cui (Juara 1)", reply: "Resmi dinobatkan menjadi kosakata penutup di Puncak 27!" },
+                    { label: "Mesin cucu di kosan", reply: "Semoga habis ini bajunya cepet kering ya!" }
+                ]
+            },
             talkAfter: {
-                badge: "KARTU OBROLAN BARENG #06",
-                teaser: "Pertanyaan penutup sebelum masuk ke Surat Puncak 27.",
-                question: "Kalau seluruh perjalanan 24 pos kita dari Agustus sampai hari ini dijadiin satu judul cerita fantasi atau film Ghibli, kira-kira judul apa yang paling cocok menurut kalian berdua?",
-                hint: "Simpan jawabannya buat bahan obrolan sambil baca surat dan foto berdua!"
+                badge: "BERHENTI SEJENAK #07 // MAHKOTA PUNCAK 27",
+                teaser: "Penutup 27 Pos sebelum baca Surat Puncak 27 & sesi Photobooth Berdua!",
+                question: "Kalau seluruh perjalanan 27 pos kita dari Agustus sampai hari ini dijadiin satu judul cerita fantasi atau film Ghibli, kira-kira judul apa yang paling cocok menurut kalian berdua?",
+                hint: "Simpan judul kalian, lalu putar tantangan Puncak 27 sebelum berpose di photobooth!",
+                miniGame: {
+                    type: "roda-tantangan",
+                    badge: "MINI GAME #07 // PUTAR TANTANGAN PUNCAK",
+                    title: "Putar Tantangan Seru Berdua Sebelum Surat & Photobooth!",
+                    desc: "Klik tombol putar untuk dapat 1 tantangan spontan buat kalian lakukan bareng hari ini.",
+                    dares: [
+                        "Bikin 1 pose recreate meme paling kocak langsung di Photobooth bawah nanti!",
+                        "Sebutkan secara bergantian 1 hal yang paling bikin bersyukur bisa kenal sejak Agustus.",
+                        "Pilih 1 judul film Studio Ghibli / fantasi buat jadwal nobar Discord terdekat!",
+                        "Foto high-five atau half-heart vs jempol tepat setelah baca Surat Puncak 27!",
+                        "Tulis kesan rahasia paling jujur di kolom Catatan Rara buat Kartu Rangkuman PNG!"
+                    ]
+                }
             }
         }
     ];
@@ -1227,11 +1565,14 @@
         trailTotalLength: 0,
         scrollRafPending: false,
         resizeTimer: null,
-        activePosIndex: 0
+        activePosIndex: 0,
+        currentBiome: 1,
+        quickGameAnswers: {}
     };
 
     const el = {
         root: document.documentElement,
+        worldAmbienceStage: document.getElementById("world-ambience-stage"),
         ambientWorldCanvas: document.getElementById("ambient-world-canvas"),
         basecamp: document.getElementById("basecamp"),
         jalurSection: document.getElementById("jalur"),
@@ -1330,8 +1671,15 @@
 
     const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
 
+    const AMBIENT_BIOME_TONES = {
+        1: { light: ["26, 79, 62", "180, 126, 36"], dark: ["126, 212, 189", "243, 214, 149"] },
+        2: { light: ["138, 59, 30", "198, 122, 24"], dark: ["248, 200, 122", "235, 192, 107"] },
+        3: { light: ["91, 44, 82", "180, 126, 36"], dark: ["240, 155, 176", "243, 214, 149"] },
+        4: { light: ["31, 59, 102", "180, 126, 36"], dark: ["150, 194, 247", "250, 246, 238"] }
+    };
+
     /**
-     * Renders gentle fireflies & starlight dust across the entire document backdrop.
+     * Renders biome-adaptive fireflies, drifting leaves/petals, and starlight across the page backdrop.
      */
     function initAmbientWorldCanvas() {
         const canvas = el.ambientWorldCanvas;
@@ -1345,14 +1693,15 @@
 
         let width = 0;
         let height = 0;
-        const motes = Array.from({ length: 42 }, (_, idx) => ({
+        const motes = Array.from({ length: 48 }, (_, idx) => ({
             x: (idx * 79) % 1000,
             y: (idx * 131) % 1000,
             vx: ((idx % 5) - 2) * 0.14,
             vy: -0.18 - (idx % 4) * 0.08,
-            radius: 1.4 + (idx % 3) * 0.9,
+            radius: 1.5 + (idx % 3) * 0.9,
             phase: idx * 0.55,
-            isStar: idx % 5 === 0
+            isStar: idx % 4 === 0,
+            toneIdx: idx % 2
         }));
 
         function resizeAmbient() {
@@ -1364,21 +1713,24 @@
 
         function drawAmbientFrame() {
             const isDark = state.theme === "dark";
+            const biomeTones = AMBIENT_BIOME_TONES[state.currentBiome] || AMBIENT_BIOME_TONES[1];
+            const palettePair = isDark ? biomeTones.dark : biomeTones.light;
+
             ctx.clearRect(0, 0, width, height);
             motes.forEach((m) => {
                 m.x = (m.x + m.vx + width) % width;
                 m.y = (m.y + m.vy + height) % height;
                 m.phase += 0.025;
                 const pulse = 0.45 + 0.55 * Math.sin(m.phase);
-                const alpha = (isDark ? 0.42 : 0.34) * pulse;
-                const color = isDark ? "243, 214, 149" : "180, 126, 36";
+                const alpha = (isDark ? 0.48 : 0.4) * pulse;
+                const color = palettePair[m.toneIdx] || palettePair[0];
 
                 if (m.isStar) {
-                    drawFourPointStar(ctx, m.x, m.y, m.radius * 2.4, `rgba(${color}, 1)`, alpha);
+                    drawFourPointStar(ctx, m.x, m.y, m.radius * 2.5, `rgba(${color}, 1)`, alpha);
                 } else {
                     ctx.beginPath();
-                    ctx.arc(m.x, m.y, m.radius * 2.2, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(${color}, ${(alpha * 0.32).toFixed(3)})`;
+                    ctx.arc(m.x, m.y, m.radius * 2.3, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(${color}, ${(alpha * 0.34).toFixed(3)})`;
                     ctx.fill();
 
                     ctx.beginPath();
@@ -1846,6 +2198,390 @@
         return li;
     }
 
+    /**
+     * Builds the compact 1-tap selingan mini-game attached to each checkpoint card.
+     */
+    function createPosQuickGame(cp) {
+        const qg = cp.quickGame;
+        if (!qg || !Array.isArray(qg.options) || qg.options.length === 0) {
+            return null;
+        }
+        const box = document.createElement("div");
+        box.className = "pos-selingan-box";
+
+        const kicker = document.createElement("p");
+        kicker.className = "selingan-kicker";
+        kicker.textContent = `MINI SELINGAN // POS ${cp.postNum}`;
+
+        const prompt = document.createElement("p");
+        prompt.className = "selingan-prompt";
+        prompt.textContent = qg.prompt;
+
+        const choicesRow = document.createElement("div");
+        choicesRow.className = "selingan-choices";
+
+        const resultBox = document.createElement("p");
+        resultBox.className = "selingan-result";
+        resultBox.hidden = true;
+
+        qg.options.forEach((opt) => {
+            const optBtn = document.createElement("button");
+            optBtn.type = "button";
+            optBtn.className = "btn-selingan";
+            optBtn.textContent = opt.label;
+            optBtn.addEventListener("click", () => {
+                choicesRow.querySelectorAll(".btn-selingan").forEach((b) => b.classList.remove("is-picked"));
+                optBtn.classList.add("is-picked");
+                state.quickGameAnswers[cp.id] = opt.label;
+                resultBox.textContent = opt.reply;
+                resultBox.hidden = false;
+                scheduleTrailGeometryUpdate();
+            });
+            choicesRow.appendChild(optBtn);
+        });
+
+        box.append(kicker, prompt, choicesRow, resultBox);
+        return box;
+    }
+
+    function normalizeGameRounds(game) {
+        if (game.type === "tebak-chat" && Array.isArray(game.items)) {
+            return game.items.map((item) => ({
+                promptText: item.quote,
+                choices: ["Jay", "Rara"],
+                correctAnswer: item.answer
+            }));
+        }
+        if (game.type === "tebak-jam" && Array.isArray(game.rounds)) {
+            return game.rounds.map((r) => ({
+                promptText: r.label,
+                choices: r.choices,
+                correctAnswer: r.correct
+            }));
+        }
+        if (game.type === "susun-typo" && Array.isArray(game.puzzles)) {
+            return game.puzzles.map((p) => ({
+                promptText: p.prefix,
+                choices: p.choices,
+                correctAnswer: p.answer
+            }));
+        }
+        return [];
+    }
+
+    function buildRoundMiniGame(game, stage, scoreEl) {
+        const rounds = normalizeGameRounds(game);
+        let roundIdx = 0;
+        let score = 0;
+
+        function renderRound() {
+            stage.replaceChildren();
+            if (roundIdx >= rounds.length) {
+                scoreEl.textContent = `Skor Akhir: ${score} / ${rounds.length}`;
+                const done = document.createElement("p");
+                done.className = "minigame-feedback";
+                done.textContent =
+                    score === rounds.length
+                        ? `Kompak maksimal! Skor sempurna ${score} / ${rounds.length}.`
+                        : `Skor kalian ${score} / ${rounds.length}. Lumayan banget buat kenang-kenangan!`;
+
+                const retryBtn = document.createElement("button");
+                retryBtn.type = "button";
+                retryBtn.className = "minigame-btn";
+                retryBtn.textContent = "Main Lagi";
+                retryBtn.addEventListener("click", () => {
+                    roundIdx = 0;
+                    score = 0;
+                    renderRound();
+                    scheduleTrailGeometryUpdate();
+                });
+
+                stage.append(done, retryBtn);
+                return;
+            }
+
+            const cur = rounds[roundIdx];
+            scoreEl.textContent = `Ronde ${roundIdx + 1} / ${rounds.length} | Skor: ${score}`;
+
+            const qCard = document.createElement("div");
+            qCard.className = "minigame-quote-card";
+            qCard.textContent = cur.promptText;
+
+            const actions = document.createElement("div");
+            actions.className = "minigame-actions";
+
+            const fb = document.createElement("p");
+            fb.className = "minigame-feedback";
+            fb.hidden = true;
+
+            const nextBtn = document.createElement("button");
+            nextBtn.type = "button";
+            nextBtn.className = "minigame-btn is-active";
+            nextBtn.textContent = roundIdx === rounds.length - 1 ? "Lihat Skor Akhir" : "Lanjut Ronde Berikutnya";
+            nextBtn.hidden = true;
+
+            let answered = false;
+            cur.choices.forEach((choice) => {
+                const cBtn = document.createElement("button");
+                cBtn.type = "button";
+                cBtn.className = "minigame-btn";
+                cBtn.textContent = choice;
+                cBtn.addEventListener("click", () => {
+                    if (answered) {
+                        return;
+                    }
+                    answered = true;
+                    const isRight = choice === cur.correctAnswer;
+                    if (isRight) {
+                        score += 1;
+                    }
+                    cBtn.classList.add("is-active");
+                    actions.querySelectorAll(".minigame-btn").forEach((b) => {
+                        b.disabled = true;
+                    });
+                    fb.textContent = isRight
+                        ? `Tepat! Jawabannya memang ${cur.correctAnswer}.`
+                        : `Hampir! Jawaban tepatnya: ${cur.correctAnswer}.`;
+                    fb.hidden = false;
+                    nextBtn.hidden = false;
+                    scoreEl.textContent = `Ronde ${roundIdx + 1} / ${rounds.length} | Skor: ${score}`;
+                    scheduleTrailGeometryUpdate();
+                });
+                actions.appendChild(cBtn);
+            });
+
+            nextBtn.addEventListener("click", () => {
+                roundIdx += 1;
+                renderRound();
+                scheduleTrailGeometryUpdate();
+            });
+
+            stage.append(qCard, actions, fb, nextBtn);
+        }
+
+        renderRound();
+    }
+
+    function buildSuitMiniGame(stage, scoreEl) {
+        const moves = ["Batu Gunung", "Gunting Ranting", "Kertas Peta"];
+        const beats = {
+            "Batu Gunung": "Gunting Ranting",
+            "Gunting Ranting": "Kertas Peta",
+            "Kertas Peta": "Batu Gunung"
+        };
+        let wins = 0;
+        let plays = 0;
+
+        const actions = document.createElement("div");
+        actions.className = "minigame-actions";
+        const fb = document.createElement("p");
+        fb.className = "minigame-feedback";
+        fb.textContent = "Pilih jagoanmu dulu buat mulai ronde suit!";
+
+        scoreEl.textContent = "Menang: 0 / 0";
+
+        moves.forEach((move) => {
+            const btn = document.createElement("button");
+            btn.type = "button";
+            btn.className = "minigame-btn";
+            btn.textContent = move;
+            btn.addEventListener("click", () => {
+                const opp = moves[Math.floor(Math.random() * moves.length)];
+                plays += 1;
+                actions.querySelectorAll(".minigame-btn").forEach((b) => b.classList.remove("is-active"));
+                btn.classList.add("is-active");
+
+                if (move === opp) {
+                    fb.textContent = `Seri! Sama-sama pilih ${move}. Ulangi lagi biar ketauan siapa bawa logistik!`;
+                } else if (beats[move] === opp) {
+                    wins += 1;
+                    fb.textContent = `Menang! ${move} mengalahkan ${opp}. Jay kebagian bawain air minum ya!`;
+                } else {
+                    fb.textContent = `Kalah tipis! ${opp} mengalahkan ${move}. Rara siap-siap traktir es di pos depan ya!`;
+                }
+                scoreEl.textContent = `Menang: ${wins} / ${plays}`;
+                scheduleTrailGeometryUpdate();
+            });
+            actions.appendChild(btn);
+        });
+
+        stage.append(actions, fb);
+    }
+
+    function buildLanternMiniGame(game, stage, scoreEl) {
+        const grid = document.createElement("div");
+        grid.className = "lantern-grid";
+        const litSet = new Set();
+
+        const fb = document.createElement("p");
+        fb.className = "minigame-feedback";
+        fb.textContent = "Klik ke-5 lentera untuk membuka kata kunci Hutan Lentera.";
+
+        scoreEl.textContent = `Menyala: 0 / ${game.lanterns.length}`;
+
+        game.lanterns.forEach((word, idx) => {
+            const lBtn = document.createElement("button");
+            lBtn.type = "button";
+            lBtn.className = "lantern-node-btn";
+            lBtn.textContent = `Lentera ${String(idx + 1).padStart(2, "0")}`;
+            lBtn.addEventListener("click", () => {
+                if (!litSet.has(idx)) {
+                    litSet.add(idx);
+                    lBtn.classList.add("is-lit");
+                    lBtn.textContent = word;
+                }
+                scoreEl.textContent = `Menyala: ${litSet.size} / ${game.lanterns.length}`;
+                fb.textContent =
+                    litSet.size === game.lanterns.length
+                        ? "Semua 5 Lentera Hutan menyala terang! Babak selanjutnya siap dimulai."
+                        : `Lentera #${idx + 1} menyala (${word}). Nyalakan ${game.lanterns.length - litSet.size} lagi!`;
+                scheduleTrailGeometryUpdate();
+            });
+            grid.appendChild(lBtn);
+        });
+
+        stage.append(grid, fb);
+    }
+
+    function buildTelepathyMiniGame(game, stage, scoreEl) {
+        let idx = 0;
+        let matchCount = 0;
+
+        function renderPrompt() {
+            stage.replaceChildren();
+            if (idx >= game.prompts.length) {
+                scoreEl.textContent = `Telepati: ${matchCount} / ${game.prompts.length}`;
+                const fb = document.createElement("p");
+                fb.className = "minigame-feedback";
+                fb.textContent =
+                    matchCount === game.prompts.length
+                        ? "Telepati 100% tembus, persis kayak Spotify Blend kita!"
+                        : `Skor telepati ${matchCount} / ${game.prompts.length}! Tetep seru walau jawabannya beda.`;
+                const retryBtn = document.createElement("button");
+                retryBtn.type = "button";
+                retryBtn.className = "minigame-btn";
+                retryBtn.textContent = "Ulangi Tes";
+                retryBtn.addEventListener("click", () => {
+                    idx = 0;
+                    matchCount = 0;
+                    renderPrompt();
+                    scheduleTrailGeometryUpdate();
+                });
+                stage.append(fb, retryBtn);
+                return;
+            }
+
+            scoreEl.textContent = `Tema ${idx + 1} / ${game.prompts.length} | Kompak: ${matchCount}`;
+            const card = document.createElement("div");
+            card.className = "minigame-quote-card";
+            card.textContent = game.prompts[idx];
+
+            const actions = document.createElement("div");
+            actions.className = "minigame-actions";
+
+            const sameBtn = document.createElement("button");
+            sameBtn.type = "button";
+            sameBtn.className = "minigame-btn is-active";
+            sameBtn.textContent = "Kompak Sama! (+1)";
+            sameBtn.addEventListener("click", () => {
+                matchCount += 1;
+                idx += 1;
+                renderPrompt();
+                scheduleTrailGeometryUpdate();
+            });
+
+            const diffBtn = document.createElement("button");
+            diffBtn.type = "button";
+            diffBtn.className = "minigame-btn";
+            diffBtn.textContent = "Beda Jawaban";
+            diffBtn.addEventListener("click", () => {
+                idx += 1;
+                renderPrompt();
+                scheduleTrailGeometryUpdate();
+            });
+
+            actions.append(sameBtn, diffBtn);
+            stage.append(card, actions);
+        }
+
+        renderPrompt();
+    }
+
+    function buildWheelMiniGame(game, stage, scoreEl) {
+        let spins = 0;
+        let lastIdx = -1;
+
+        scoreEl.textContent = "Putaran: 0";
+        const spinBtn = document.createElement("button");
+        spinBtn.type = "button";
+        spinBtn.className = "minigame-btn is-active";
+        spinBtn.textContent = "Putar Tantangan Puncak 27!";
+
+        const fb = document.createElement("p");
+        fb.className = "minigame-feedback";
+        fb.textContent = "Klik tombol di atas buat dapet tantangan spontan sebelum ke Photobooth!";
+
+        spinBtn.addEventListener("click", () => {
+            let pick = Math.floor(Math.random() * game.dares.length);
+            if (game.dares.length > 1 && pick === lastIdx) {
+                pick = (pick + 1) % game.dares.length;
+            }
+            lastIdx = pick;
+            spins += 1;
+            scoreEl.textContent = `Putaran: ${spins}`;
+            fb.textContent = `Tantangan Terpilih: ${game.dares[pick]}`;
+            scheduleTrailGeometryUpdate();
+        });
+
+        stage.append(spinBtn, fb);
+    }
+
+    /**
+     * Renders the playful interactive mini-game embedded inside each rest-stop card.
+     */
+    function createTalkMiniGame(game) {
+        if (!game) {
+            return null;
+        }
+        const wrap = document.createElement("div");
+        wrap.className = "talk-minigame";
+
+        const head = document.createElement("div");
+        head.className = "minigame-head";
+        const badge = document.createElement("span");
+        badge.className = "minigame-badge";
+        badge.textContent = game.badge;
+        const scoreEl = document.createElement("span");
+        scoreEl.className = "minigame-score";
+        head.append(badge, scoreEl);
+
+        const title = document.createElement("h4");
+        title.className = "minigame-title";
+        title.textContent = game.title;
+
+        const desc = document.createElement("p");
+        desc.className = "minigame-desc";
+        desc.textContent = game.desc;
+
+        const stage = document.createElement("div");
+        stage.className = "minigame-stage";
+
+        if (game.type === "tebak-chat" || game.type === "tebak-jam" || game.type === "susun-typo") {
+            buildRoundMiniGame(game, stage, scoreEl);
+        } else if (game.type === "suit-pendaki") {
+            buildSuitMiniGame(stage, scoreEl);
+        } else if (game.type === "lentera-hutan") {
+            buildLanternMiniGame(game, stage, scoreEl);
+        } else if (game.type === "kompak-123") {
+            buildTelepathyMiniGame(game, stage, scoreEl);
+        } else if (game.type === "roda-tantangan") {
+            buildWheelMiniGame(game, stage, scoreEl);
+        }
+
+        wrap.append(head, title, desc, stage);
+        return wrap;
+    }
+
     function createTalkCardItem(talk, biomeId) {
         const li = document.createElement("li");
         li.className = `talk-card-item biome-${biomeId}`;
@@ -1890,6 +2626,12 @@
         });
 
         card.append(badge, teaser, btn, panel);
+
+        const miniGame = createTalkMiniGame(talk.miniGame);
+        if (miniGame) {
+            card.appendChild(miniGame);
+        }
+
         li.appendChild(card);
         return li;
     }
@@ -2205,6 +2947,11 @@
                 card.appendChild(secretWrap);
             }
 
+            const quickGameBox = createPosQuickGame(cp);
+            if (quickGameBox) {
+                card.appendChild(quickGameBox);
+            }
+
             const companion = createCheckpointCompanion(cp);
             li.append(node, card, companion);
             realmList.appendChild(li);
@@ -2330,6 +3077,21 @@
         }
         if (el.stepNextPosBtn) {
             el.stepNextPosBtn.disabled = bestIdx >= TRAIL_CHECKPOINTS.length - 1;
+        }
+
+        let targetBiome = activeCp ? activeCp.biome : 1;
+        if (jalurRect) {
+            if (jalurRect.top > window.innerHeight * 0.72) {
+                targetBiome = 1;
+            } else if (jalurRect.bottom <= 180) {
+                targetBiome = 4;
+            }
+        }
+        if (state.currentBiome !== targetBiome) {
+            state.currentBiome = targetBiome;
+        }
+        if (el.worldAmbienceStage && el.worldAmbienceStage.getAttribute("data-biome") !== String(targetBiome)) {
+            el.worldAmbienceStage.setAttribute("data-biome", String(targetBiome));
         }
     }
 
@@ -2477,7 +3239,8 @@
             { label: "02. Matkul 17 Sep", answer: state.quizAnswers["step-deeptalk"] || fallback },
             { label: "03. Malam Gramed Jalma", answer: state.quizAnswers["step-gramed-jalma"] || fallback },
             { label: "04. Momen Paling Kita", answer: state.quizAnswers["step-momen-kita"] || fallback },
-            { label: "05. Nyesel Follback?", answer: state.quizAnswers["step-bareng-terus"] || fallback }
+            { label: "05. Kamus Typo & Lore", answer: state.quizAnswers["step-kamus-typo"] || fallback },
+            { label: "06. Nyesel Follback?", answer: state.quizAnswers["step-bareng-terus"] || fallback }
         ];
     }
 
@@ -2526,7 +3289,7 @@
         scoreBox.className = "summary-row";
         const sq = document.createElement("p");
         sq.className = "summary-q";
-        sq.textContent = "06. NILAI PERTEMANAN & CATATAN";
+        sq.textContent = "07. NILAI PERTEMANAN & CATATAN";
         const sa = document.createElement("p");
         sa.className = "summary-a";
         sa.textContent = cleanNote
@@ -2696,7 +3459,7 @@
 
         const canvas = el.summaryCanvas;
         const width = 800;
-        const height = 1240;
+        const height = 1360;
         canvas.width = width;
         canvas.height = height;
         const pad = 52;
@@ -2774,7 +3537,7 @@
 
         ctx.fillStyle = "#8F2631";
         ctx.font = '600 14px "JetBrains Mono", Consolas, monospace';
-        ctx.fillText("06. NILAI PERTEMANAN KENAL JAY", pad, y + 6);
+        ctx.fillText("07. NILAI PERTEMANAN KENAL JAY", pad, y + 6);
         y += 40;
 
         ctx.fillStyle = "#1A4F3E";
@@ -3002,7 +3765,7 @@
         ctx.fillStyle = palette.text;
         ctx.font = '600 11.5px "JetBrains Mono", Consolas, monospace';
         ctx.textBaseline = "middle";
-        ctx.fillText("JAY & RARA // 24 POS KENANGAN // 2.700 MDPL", cx, pillY + 14.5);
+        ctx.fillText("JAY & RARA // 27 POS KENANGAN // 2.700 MDPL", cx, pillY + 14.5);
 
         // Decorative rule under header
         ctx.textBaseline = "alphabetic";
