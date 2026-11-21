@@ -1,0 +1,10 @@
+# Raw private archives
+rara's/
+rara_2786105505104541/
+berberry_1793090248589998/
+*.zip
+
+# Local / OS artifacts
+.playwright-mcp/
+.DS_Store
+Thumbs.db
