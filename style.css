@@ -244,13 +244,31 @@ a {
     border-color: rgba(235, 192, 107, 0.18);
 }
 
+/* Full-page subtle ambient fireflies & starlight canvas */
+.ambient-world-canvas {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+}
+
 /* Ornamental SVG Divider between Chapters */
 .storybook-divider {
+    position: relative;
+    z-index: 1;
     display: flex;
     justify-content: center;
-    padding: 8px 18px;
+    padding: 12px 18px;
     color: var(--gold);
-    background: var(--bg);
+    background: transparent;
+}
+
+.chapter-crest {
+    display: inline-flex;
+    color: var(--gold);
+    margin-bottom: 8px;
 }
 
 /* Sticky Top Compass Bar */
@@ -554,8 +572,8 @@ a {
 .reveal-line {
     opacity: 0;
     transform: translateY(16px);
-    transition: opacity 540ms cubic-bezier(0.22, 1, 0.36, 1), transform 540ms cubic-bezier(0.22, 1, 0.36, 1);
-    transition-delay: calc(var(--line-index, 0) * 80ms);
+    transition: opacity 560ms cubic-bezier(0.22, 1, 0.36, 1), transform 560ms cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: calc(var(--line-index, 0) * 110ms);
 }
 
 .reveal-group.is-visible .reveal-line,
@@ -785,12 +803,58 @@ a {
     color: #F3D695;
 }
 
-/* Shared Section Container */
+/* Shared Section Container & Fantasy Aurora Washes */
 .chapter-section {
-    padding: 64px 18px;
+    position: relative;
+    z-index: 1;
+    padding: 68px 18px;
+}
+
+.chapter-kuis {
+    background:
+        radial-gradient(ellipse 68% 42% at 14% 12%, rgba(26, 79, 62, 0.08), transparent 70%),
+        radial-gradient(ellipse 56% 40% at 88% 85%, rgba(216, 168, 78, 0.11), transparent 72%);
+}
+
+.chapter-jalur {
+    background:
+        radial-gradient(ellipse 60% 20% at 86% 6%, rgba(138, 59, 30, 0.07), transparent 70%),
+        radial-gradient(ellipse 60% 20% at 12% 94%, rgba(91, 44, 82, 0.07), transparent 70%);
+}
+
+.chapter-puncak {
+    background:
+        radial-gradient(ellipse 65% 48% at 50% 24%, rgba(216, 168, 78, 0.14), transparent 72%),
+        radial-gradient(ellipse 55% 40% at 16% 84%, rgba(143, 38, 49, 0.07), transparent 72%);
+}
+
+.chapter-booth {
+    background:
+        radial-gradient(ellipse 68% 45% at 85% 15%, rgba(31, 59, 102, 0.09), transparent 72%),
+        radial-gradient(ellipse 58% 42% at 15% 88%, rgba(216, 168, 78, 0.11), transparent 72%);
+}
+
+[data-theme="dark"] .chapter-kuis {
+    background:
+        radial-gradient(ellipse 68% 42% at 14% 12%, rgba(126, 212, 189, 0.07), transparent 70%),
+        radial-gradient(ellipse 56% 40% at 88% 85%, rgba(235, 192, 107, 0.07), transparent 72%);
+}
+
+[data-theme="dark"] .chapter-puncak {
+    background:
+        radial-gradient(ellipse 65% 48% at 50% 24%, rgba(235, 192, 107, 0.09), transparent 72%),
+        radial-gradient(ellipse 55% 40% at 16% 84%, rgba(240, 155, 176, 0.06), transparent 72%);
+}
+
+[data-theme="dark"] .chapter-booth {
+    background:
+        radial-gradient(ellipse 68% 45% at 85% 15%, rgba(150, 194, 247, 0.08), transparent 72%),
+        radial-gradient(ellipse 58% 42% at 15% 88%, rgba(235, 192, 107, 0.07), transparent 72%);
 }
 
 .section-shell {
+    position: relative;
+    z-index: 1;
     max-width: 1180px;
     margin: 0 auto;
 }
@@ -1149,7 +1213,7 @@ a {
 .biome-realm {
     position: relative;
     border-radius: 26px;
-    padding: 30px 26px 38px;
+    padding: 36px 26px 46px;
 }
 
 .biome-realm::before {
@@ -1157,42 +1221,90 @@ a {
     position: absolute;
     inset: 0;
     border-radius: inherit;
-    border: 1px solid var(--biome-border);
-    box-shadow: inset 0 0 0 1px rgba(131, 88, 17, 0.14);
+    border: 1.5px solid var(--biome-border);
+    box-shadow: inset 0 0 0 5px rgba(216, 168, 78, 0.14), inset 0 0 0 6px rgba(131, 88, 17, 0.18);
     z-index: 0;
     pointer-events: none;
 }
 
 .biome-realm--1::before {
-    background: linear-gradient(180deg, #EEF4EC 0%, #F5F2E4 100%);
+    background:
+        radial-gradient(circle at 12% 14%, rgba(26, 79, 62, 0.12), transparent 46%),
+        radial-gradient(circle at 88% 82%, rgba(216, 168, 78, 0.16), transparent 48%),
+        linear-gradient(180deg, #EBF3E8 0%, #F5F1E0 100%);
 }
 
 .biome-realm--2::before {
-    background: linear-gradient(180deg, #FAF0E2 0%, #F4E6D3 100%);
+    background:
+        radial-gradient(circle at 16% 18%, rgba(216, 168, 78, 0.18), transparent 44%),
+        radial-gradient(circle at 85% 78%, rgba(138, 59, 30, 0.12), transparent 46%),
+        linear-gradient(180deg, #FBEEE0 0%, #F3E2CE 100%);
 }
 
 .biome-realm--3::before {
-    background: linear-gradient(180deg, #F7ECF3 0%, #EFE5F4 100%);
+    background:
+        radial-gradient(circle at 15% 15%, rgba(91, 44, 82, 0.12), transparent 46%),
+        radial-gradient(circle at 86% 84%, rgba(240, 155, 176, 0.14), transparent 48%),
+        linear-gradient(180deg, #F7E9F3 0%, #EDE2F3 100%);
 }
 
 .biome-realm--4::before {
-    background: linear-gradient(180deg, #EAF0F9 0%, #F4EFE4 100%);
+    background:
+        radial-gradient(circle at 50% 10%, rgba(216, 168, 78, 0.18), transparent 50%),
+        radial-gradient(circle at 86% 82%, rgba(31, 59, 102, 0.12), transparent 46%),
+        linear-gradient(180deg, #E6EEF9 0%, #F4EEE1 100%);
 }
 
 [data-theme="dark"] .biome-realm--1::before {
-    background: linear-gradient(180deg, #0E1B1A 0%, #101E20 100%);
+    background:
+        radial-gradient(circle at 12% 14%, rgba(126, 212, 189, 0.1), transparent 46%),
+        radial-gradient(circle at 88% 82%, rgba(235, 192, 107, 0.08), transparent 48%),
+        linear-gradient(180deg, #0D1B1A 0%, #101E20 100%);
 }
 
 [data-theme="dark"] .biome-realm--2::before {
-    background: linear-gradient(180deg, #1B1514 0%, #1E1818 100%);
+    background:
+        radial-gradient(circle at 16% 18%, rgba(235, 192, 107, 0.1), transparent 44%),
+        radial-gradient(circle at 85% 78%, rgba(196, 114, 71, 0.09), transparent 46%),
+        linear-gradient(180deg, #1B1514 0%, #1E1818 100%);
 }
 
 [data-theme="dark"] .biome-realm--3::before {
-    background: linear-gradient(180deg, #1A1322 0%, #1D1529 100%);
+    background:
+        radial-gradient(circle at 15% 15%, rgba(240, 155, 176, 0.09), transparent 46%),
+        radial-gradient(circle at 86% 84%, rgba(185, 142, 177, 0.08), transparent 48%),
+        linear-gradient(180deg, #1A1322 0%, #1D1529 100%);
 }
 
 [data-theme="dark"] .biome-realm--4::before {
-    background: linear-gradient(180deg, #0E1626 0%, #10192D 100%);
+    background:
+        radial-gradient(circle at 50% 10%, rgba(235, 192, 107, 0.1), transparent 50%),
+        radial-gradient(circle at 86% 82%, rgba(150, 194, 247, 0.1), transparent 46%),
+        linear-gradient(180deg, #0E1626 0%, #10192D 100%);
+}
+
+.realm-scenery-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+    border-radius: inherit;
+    color: var(--biome-accent);
+}
+
+.realm-scenery-top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+.realm-scenery-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
 
 .realm-list {
@@ -1201,7 +1313,7 @@ a {
     margin: 0;
     padding: 0;
     display: grid;
-    gap: 44px;
+    gap: 88px;
 }
 
 /* Illustrated Biome Archway Banner */
@@ -1214,14 +1326,31 @@ a {
 
 .biome-banner {
     width: min(760px, 100%);
-    background: var(--surface);
-    border: 1px solid var(--biome-border);
+    background: linear-gradient(180deg, var(--surface) 0%, var(--biome-tint) 100%);
+    border: 1.5px solid var(--biome-border);
     border-top: 4px solid var(--biome-accent);
     border-radius: var(--radius-lg);
-    padding: 24px 28px;
+    padding: 26px 28px;
     text-align: center;
     box-shadow: 0 0 0 6px var(--biome-tint), var(--shadow-card);
     position: relative;
+    opacity: 0;
+    transform: translateY(28px) scale(0.96);
+    transition: opacity 620ms cubic-bezier(0.22, 1, 0.36, 1), transform 620ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.biome-banner.is-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.biome-banner::after {
+    content: "";
+    position: absolute;
+    inset: 7px;
+    border: 1px solid rgba(216, 168, 78, 0.34);
+    border-radius: calc(var(--radius-lg) - 7px);
+    pointer-events: none;
 }
 
 .biome-banner-art {
@@ -1267,20 +1396,28 @@ a {
 
 .talk-card {
     width: min(680px, 100%);
-    background: var(--surface);
+    background: linear-gradient(180deg, var(--surface) 0%, var(--biome-tint) 100%);
     border: 1.5px solid var(--biome-border);
     border-radius: var(--radius-lg);
-    padding: 22px 26px;
+    padding: 24px 26px;
     box-shadow: 0 0 0 6px var(--biome-tint), var(--shadow-card);
     text-align: center;
     position: relative;
+    opacity: 0;
+    transform: translateY(24px) scale(0.96);
+    transition: opacity 580ms cubic-bezier(0.22, 1, 0.36, 1), transform 580ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.talk-card.is-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
 }
 
 .talk-card::before {
     content: "";
     position: absolute;
     inset: 6px;
-    border: 1px solid rgba(131, 88, 17, 0.2);
+    border: 1px solid rgba(131, 88, 17, 0.28);
     border-radius: calc(var(--radius-lg) - 6px);
     pointer-events: none;
 }
@@ -1349,7 +1486,7 @@ a {
     color: var(--muted);
 }
 
-/* Dual-Side Storybook Spreads (BOTH sides lush, ZERO empty half!) */
+/* Dual-Side Storybook Spreads & 5-Stage Unfold Choreography */
 .checkpoint-item {
     position: relative;
     z-index: 2;
@@ -1357,12 +1494,18 @@ a {
     display: grid;
     grid-template-columns: minmax(0, 1fr) 82px minmax(0, 1fr);
     align-items: start;
+    scroll-margin-top: 124px;
 }
 
 .checkpoint-node,
 .checkpoint-card,
 .checkpoint-companion {
     pointer-events: auto;
+}
+
+@keyframes nodeOrbitSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
 }
 
 .checkpoint-node {
@@ -1372,8 +1515,8 @@ a {
     grid-row: 1;
     justify-self: center;
     margin-top: 22px;
-    width: 52px;
-    height: 52px;
+    width: 54px;
+    height: 54px;
     border-radius: 50%;
     background: var(--surface);
     border: 2.5px solid var(--biome-border);
@@ -1385,14 +1528,35 @@ a {
     font-size: 13px;
     font-weight: 700;
     color: var(--ink);
-    transition: background-color 280ms ease, color 280ms ease, border-color 280ms ease, transform 280ms ease;
+    transition: background-color 320ms ease, color 320ms ease, border-color 320ms ease, transform 360ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 320ms ease;
+}
+
+.checkpoint-node::after {
+    content: "";
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    border: 1.5px dashed var(--gold-bright);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 320ms ease;
 }
 
 .checkpoint-item.is-visible .checkpoint-node {
     background: var(--biome-bubble-jay);
     color: #FAF6EE;
     border-color: var(--gold-bright);
-    transform: scale(1.05);
+    transform: scale(1.06);
+}
+
+.checkpoint-item.is-active-stage .checkpoint-node {
+    transform: scale(1.16);
+    box-shadow: 0 0 0 5px var(--surface), 0 0 0 9px rgba(216, 168, 78, 0.34), var(--shadow-card);
+}
+
+.checkpoint-item.is-active-stage .checkpoint-node::after {
+    opacity: 0.9;
+    animation: nodeOrbitSpin 16s linear infinite;
 }
 
 .checkpoint--left .checkpoint-card {
@@ -1415,43 +1579,135 @@ a {
     grid-row: 1;
 }
 
+/* Maximalist Scrapbook Checkpoint Card */
 .checkpoint-card {
     position: relative;
-    background: var(--surface);
-    border: 1px solid var(--biome-border);
-    border-top: 3.5px solid var(--biome-accent);
+    background: linear-gradient(168deg, var(--surface) 0%, var(--biome-tint) 100%);
+    border: 1.5px solid var(--biome-border);
+    border-top: 4px solid var(--biome-accent);
     border-radius: var(--radius-lg);
-    padding: 22px;
-    box-shadow: var(--shadow-card);
+    padding: 28px 24px 24px;
+    box-shadow: var(--shadow-card), inset 0 0 0 1px rgba(216, 168, 78, 0.22);
     opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 540ms cubic-bezier(0.22, 1, 0.36, 1), transform 540ms cubic-bezier(0.22, 1, 0.36, 1);
+    transition:
+        opacity 680ms cubic-bezier(0.22, 1, 0.36, 1) 70ms,
+        transform 680ms cubic-bezier(0.22, 1, 0.36, 1) 70ms,
+        border-color 280ms ease,
+        box-shadow 280ms ease;
+}
+
+.checkpoint-card::after {
+    content: "";
+    position: absolute;
+    inset: 6px;
+    border: 1px solid rgba(216, 168, 78, 0.26);
+    border-radius: calc(var(--radius-lg) - 6px);
+    pointer-events: none;
+}
+
+/* Decorative Washi Tape Strip at Top of Card */
+.card-washi-tape {
+    position: absolute;
+    top: -10px;
+    left: 28px;
+    width: 84px;
+    height: 18px;
+    border-radius: 3px;
+    background: linear-gradient(90deg, rgba(216, 168, 78, 0.44), rgba(143, 38, 49, 0.24));
+    border: 1px solid rgba(131, 88, 17, 0.32);
+    transform: rotate(-2.5deg);
+    pointer-events: none;
+}
+
+.checkpoint--right .card-washi-tape {
+    left: auto;
+    right: 28px;
+    transform: rotate(2.5deg);
+}
+
+.checkpoint--left .checkpoint-card {
+    transform: perspective(1100px) translate3d(-34px, 32px, 0) rotateY(6deg) scale(0.94);
+}
+
+.checkpoint--right .checkpoint-card {
+    transform: perspective(1100px) translate3d(34px, 32px, 0) rotateY(-6deg) scale(0.94);
 }
 
 .checkpoint-companion {
     opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 580ms cubic-bezier(0.22, 1, 0.36, 1) 80ms, transform 580ms cubic-bezier(0.22, 1, 0.36, 1) 80ms;
+    transition:
+        opacity 700ms cubic-bezier(0.22, 1, 0.36, 1) 170ms,
+        transform 700ms cubic-bezier(0.22, 1, 0.36, 1) 170ms;
+}
+
+.checkpoint--left .checkpoint-companion {
+    transform: perspective(1100px) translate3d(34px, 32px, 0) rotateY(-6deg) scale(0.94);
+}
+
+.checkpoint--right .checkpoint-companion {
+    transform: perspective(1100px) translate3d(-34px, 32px, 0) rotateY(6deg) scale(0.94);
 }
 
 .checkpoint-item.is-visible .checkpoint-card,
 .checkpoint-item.is-visible .checkpoint-companion {
     opacity: 1;
-    transform: translateY(0);
+    transform: perspective(1100px) translate3d(0, 0, 0) rotateY(0deg) scale(1);
 }
 
-.checkpoint-meta-inline {
-    margin: 0 0 8px;
+.checkpoint-item.is-active-stage .checkpoint-card,
+.checkpoint-item.is-active-stage .polaroid-board,
+.checkpoint-item.is-active-stage .story-vignette {
+    border-color: var(--gold-bright);
+    box-shadow: 0 0 0 2px rgba(216, 168, 78, 0.3), var(--shadow-card);
+}
+
+.card-head-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.pos-pill-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.pos-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: var(--biome-tint);
+    border: 1px solid var(--biome-border);
     font-family: var(--font-mono);
-    font-size: 11.5px;
+    font-size: 11px;
     font-weight: 600;
-    color: var(--biome-accent);
+    color: var(--ink);
+}
+
+.card-wax-mini {
+    flex-shrink: 0;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--wax);
+    color: #FAF6EE;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 700;
+    box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.25), 0 3px 8px rgba(143, 38, 49, 0.28);
 }
 
 .checkpoint-title {
     margin: 0 0 10px;
     font-family: var(--font-display);
-    font-size: clamp(1.18rem, 1.9vw, 1.42rem);
+    font-size: clamp(1.18rem, 1.9vw, 1.44rem);
     font-weight: 600;
     line-height: 1.28;
     color: var(--ink);
@@ -1500,29 +1756,42 @@ a {
     color: var(--ink);
 }
 
-/* Companion Side: Story Vignette Plate (for Chat-only Checkpoints) */
+/* Companion Side: Ornate Tarot / Storybook Illustration Plate */
 .story-vignette {
     position: relative;
-    background: var(--surface);
-    border: 1px solid var(--biome-border);
+    background:
+        radial-gradient(circle at 50% 44%, rgba(216, 168, 78, 0.16), transparent 62%),
+        linear-gradient(172deg, var(--surface) 0%, var(--biome-tint) 100%);
+    border: 1.5px solid var(--biome-border);
     border-radius: var(--radius-lg);
-    padding: 26px 24px;
+    padding: 28px 24px 24px;
     text-align: center;
     box-shadow: var(--shadow-card);
+    transition: border-color 280ms ease, box-shadow 280ms ease;
 }
 
 .story-vignette::before {
     content: "";
     position: absolute;
-    inset: 6px;
-    border: 1px solid rgba(131, 88, 17, 0.24);
-    border-radius: calc(var(--radius-lg) - 6px);
+    inset: 7px;
+    border: 1px solid rgba(131, 88, 17, 0.3);
+    border-radius: calc(var(--radius-lg) - 7px);
     pointer-events: none;
+}
+
+.vignette-arch-halo {
+    width: min(240px, 100%);
+    margin: 6px auto 14px;
+    padding: 16px 14px;
+    border-radius: 120px 120px 18px 18px;
+    background: radial-gradient(circle at center, rgba(243, 214, 149, 0.24), transparent 72%), var(--surface);
+    border: 1.5px solid var(--biome-border);
+    box-shadow: inset 0 0 0 4px var(--biome-tint);
 }
 
 .vignette-stamp {
     display: inline-block;
-    margin: 0 0 14px;
+    margin: 0 0 12px;
     padding: 5px 12px;
     border-radius: 999px;
     background: var(--biome-tint);
@@ -1536,12 +1805,11 @@ a {
 .vignette-svg-wrap {
     display: flex;
     justify-content: center;
-    margin: 4px 0 16px;
     color: var(--biome-accent);
 }
 
 .vignette-quote {
-    margin: 0 auto;
+    margin: 0 auto 14px;
     max-width: 34ch;
     padding-top: 14px;
     border-top: 1px solid var(--border);
@@ -1552,23 +1820,46 @@ a {
     color: var(--ink);
 }
 
-/* Companion Side: Scrapbook Polaroid Pinboard (for Photo Checkpoints) */
+.vignette-wax-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    border-radius: 999px;
+    background: var(--wax);
+    color: #FAF6EE;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+}
+
+/* Companion Side: Maximalist Scrapbook Polaroid Pinboard */
 .polaroid-board {
-    background: var(--surface);
-    border: 1px solid var(--biome-border);
+    position: relative;
+    background-color: var(--surface);
+    background-image: radial-gradient(rgba(131, 88, 17, 0.14) 1px, transparent 1px);
+    background-size: 18px 18px;
+    border: 1.5px solid var(--biome-border);
     border-radius: var(--radius-lg);
-    padding: 18px;
-    box-shadow: var(--shadow-card);
+    padding: 24px 18px 18px;
+    box-shadow: var(--shadow-card), inset 0 0 0 5px var(--biome-tint);
+    transition: border-color 280ms ease, box-shadow 280ms ease;
+}
+
+[data-theme="dark"] .polaroid-board {
+    background-image: radial-gradient(rgba(235, 192, 107, 0.12) 1px, transparent 1px);
 }
 
 .polaroid-board-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
     gap: 8px;
     margin-bottom: 14px;
     padding-bottom: 8px;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px dashed var(--border-strong);
 }
 
 .polaroid-grid {
@@ -1594,7 +1885,7 @@ a {
     position: relative;
     display: flex;
     flex-direction: column;
-    padding: 12px 10px 10px;
+    padding: 14px 10px 10px;
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 6px;
@@ -1602,34 +1893,41 @@ a {
     text-align: left;
     cursor: zoom-in;
     min-height: 44px;
-    transition: transform 200ms ease, border-color 180ms ease;
+    opacity: 0;
+    transform: translateY(18px) scale(0.95);
+    transition:
+        opacity 480ms cubic-bezier(0.22, 1, 0.36, 1) calc(160ms + var(--photo-idx, 0) * 120ms),
+        transform 480ms cubic-bezier(0.22, 1, 0.36, 1) calc(160ms + var(--photo-idx, 0) * 120ms),
+        border-color 180ms ease;
 }
 
-/* Subtle brass push-pin head at top center */
+/* Brass push-pin head at top center */
 .polaroid-item::before {
     content: "";
     position: absolute;
     top: 4px;
     left: 50%;
     transform: translateX(-50%);
-    width: 8px;
-    height: 8px;
+    width: 9px;
+    height: 9px;
     border-radius: 50%;
     background: var(--gold-bright);
     border: 1.5px solid var(--gold);
 }
 
-.polaroid-item:nth-child(odd) {
+.checkpoint-item.is-visible .polaroid-item:nth-child(odd) {
+    opacity: 1;
     transform: rotate(-1.3deg);
 }
 
-.polaroid-item:nth-child(even) {
+.checkpoint-item.is-visible .polaroid-item:nth-child(even) {
+    opacity: 1;
     transform: rotate(1.3deg);
 }
 
-.polaroid-item:hover,
-.polaroid-item:focus-visible {
-    transform: rotate(0deg) translateY(-2px);
+.checkpoint-item.is-visible .polaroid-item:hover,
+.checkpoint-item.is-visible .polaroid-item:focus-visible {
+    transform: rotate(0deg) translateY(-3px);
     border-color: var(--gold);
 }
 
@@ -1648,8 +1946,22 @@ a {
     padding: 4px;
 }
 
+.polaroid-stamp-tag {
+    align-self: flex-start;
+    margin-top: 7px;
+    padding: 2px 7px;
+    border-radius: 4px;
+    background: var(--surface-soft);
+    border: 1px solid var(--border);
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: var(--ink);
+}
+
 .polaroid-caption {
-    margin-top: 8px;
+    margin-top: 6px;
     font-family: var(--font-serif-italic);
     font-style: italic;
     font-size: 16px;
@@ -1745,8 +2057,8 @@ a {
     border-radius: 13px;
     opacity: 0;
     transform: translateY(10px) scale(0.98);
-    transition: opacity 380ms cubic-bezier(0.22, 1, 0.36, 1), transform 380ms cubic-bezier(0.22, 1, 0.36, 1);
-    transition-delay: calc(var(--msg-idx, 0) * 100ms);
+    transition: opacity 420ms cubic-bezier(0.22, 1, 0.36, 1), transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: calc(220ms + var(--msg-idx, 0) * 130ms);
 }
 
 .chat-mockup.is-visible .chat-bubble {
@@ -2603,6 +2915,69 @@ a {
     gap: 8px;
 }
 
+/* Floating Pos-by-Pos Stepper Dock */
+.story-stepper-dock {
+    position: fixed;
+    right: 18px;
+    bottom: 18px;
+    z-index: 110;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    border-radius: 999px;
+    background: var(--surface);
+    border: 1.5px solid var(--gold);
+    box-shadow: 0 12px 30px rgba(20, 24, 38, 0.22), inset 0 0 0 3px var(--surface-soft);
+}
+
+.btn-stepper {
+    min-height: 44px;
+    padding: 0 14px;
+    border-radius: 999px;
+    border: 1px solid var(--border-strong);
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 150ms ease, transform 120ms ease;
+}
+
+.btn-stepper:hover:not(:disabled) {
+    background: var(--surface-soft);
+}
+
+.btn-stepper--primary {
+    background: var(--forest);
+    color: var(--on-forest);
+    border-color: var(--forest);
+}
+
+.btn-stepper--primary:hover:not(:disabled) {
+    background: var(--forest-hover);
+}
+
+[data-theme="dark"] .btn-stepper--primary {
+    background: var(--gold-light);
+    color: #121C34;
+    border-color: var(--gold-light);
+}
+
+.btn-stepper:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.stepper-status {
+    padding: 0 8px;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--ink);
+    white-space: nowrap;
+}
+
 /* Responsive Breakpoints */
 @media (max-width: 960px) {
     .hero-content-wrap {
@@ -2631,13 +3006,13 @@ a {
     }
 
     .biome-realm {
-        padding: 18px 12px 24px;
+        padding: 18px 12px 28px;
         border-radius: 18px;
     }
 
     .realm-list {
         padding-left: 36px;
-        gap: 28px;
+        gap: 44px;
     }
 
     .biome-banner-item,
@@ -2649,19 +3024,22 @@ a {
         grid-template-columns: 1fr;
         gap: 14px;
         position: relative;
+        scroll-margin-top: 142px;
     }
 
     .checkpoint--left .checkpoint-card,
     .checkpoint--right .checkpoint-card {
         grid-column: 1;
         grid-row: 1;
-        padding: 18px 16px;
+        padding: 24px 16px 18px;
+        transform: translate3d(0, 24px, 0) scale(0.96);
     }
 
     .checkpoint--left .checkpoint-companion,
     .checkpoint--right .checkpoint-companion {
         grid-column: 1;
         grid-row: 2;
+        transform: translate3d(0, 24px, 0) scale(0.96);
     }
 
     .checkpoint-node {
@@ -2677,7 +3055,9 @@ a {
     }
 
     .polaroid-item:nth-child(odd),
-    .polaroid-item:nth-child(even) {
+    .polaroid-item:nth-child(even),
+    .checkpoint-item.is-visible .polaroid-item:nth-child(odd),
+    .checkpoint-item.is-visible .polaroid-item:nth-child(even) {
         transform: none;
     }
 
@@ -2773,6 +3153,27 @@ a {
     .vf-vine-crest {
         width: 108px;
     }
+
+    .story-stepper-dock {
+        left: 10px;
+        right: 10px;
+        bottom: 10px;
+        justify-content: space-between;
+        gap: 6px;
+        padding: 6px 8px;
+    }
+
+    .btn-stepper {
+        padding: 0 10px;
+        font-size: 12px;
+    }
+
+    .stepper-status {
+        font-size: 10.5px;
+        padding: 0 4px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 }
 
 /* Reduced Motion Accessibility */
@@ -2792,12 +3193,19 @@ a {
     }
 
     .reveal-line,
+    .biome-banner,
+    .talk-card,
     .checkpoint-card,
     .checkpoint-companion,
+    .polaroid-item,
     .chat-bubble {
         opacity: 1;
         transform: none;
         transition: none;
+    }
+
+    .checkpoint-item.is-active-stage .checkpoint-node::after {
+        animation: none;
     }
 
     .trail-path-active {

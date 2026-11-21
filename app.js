@@ -154,6 +154,79 @@
         "summit-crown": '<svg viewBox="0 0 180 116" width="160" height="104" fill="none"><path d="M22 96L58 46L82 72L90 34L104 72L126 48L158 96H22Z" fill="currentColor" fill-opacity="0.14" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M90 12L94 21L103 25L94 29L90 38L86 29L77 25L86 21Z" fill="#D8A84E"/><circle cx="52" cy="26" r="2.5" fill="#8F2631"/><circle cx="128" cy="26" r="2.5" fill="#8F2631"/></svg>'
     };
 
+    const REALM_SCENERY_SVGS = {
+        1: `<div class="realm-scenery-top" aria-hidden="true">
+                <svg viewBox="0 0 1200 180" preserveAspectRatio="none" width="100%" height="150" fill="none">
+                    <path d="M0 30C90 78 190 52 290 22C180 4 90 12 0 30Z" fill="currentColor" fill-opacity="0.06"/>
+                    <path d="M1200 30C1110 78 1010 52 910 22C1020 4 1110 12 1200 30Z" fill="currentColor" fill-opacity="0.06"/>
+                    <circle cx="96" cy="54" r="3.5" fill="#D8A84E" fill-opacity="0.45"/>
+                    <circle cx="1104" cy="54" r="3.5" fill="#D8A84E" fill-opacity="0.45"/>
+                    <path d="M68 18C92 42 124 44 156 26" stroke="currentColor" stroke-opacity="0.22" stroke-width="1.4"/>
+                    <path d="M1132 18C1108 42 1076 44 1044 26" stroke="currentColor" stroke-opacity="0.22" stroke-width="1.4"/>
+                </svg>
+            </div>
+            <div class="realm-scenery-bottom" aria-hidden="true">
+                <svg viewBox="0 0 1200 140" preserveAspectRatio="none" width="100%" height="120" fill="none">
+                    <path d="M0 140V92L64 46L128 104L210 34L296 112L388 64L468 122H0ZM740 140L820 68L910 116L998 42L1086 98L1152 54L1200 94V140H740Z" fill="currentColor" fill-opacity="0.05"/>
+                    <circle cx="152" cy="82" r="2.5" fill="#D8A84E" fill-opacity="0.5"/>
+                    <circle cx="1048" cy="76" r="2.5" fill="#D8A84E" fill-opacity="0.5"/>
+                </svg>
+            </div>`,
+        2: `<div class="realm-scenery-top" aria-hidden="true">
+                <svg viewBox="0 0 1200 180" preserveAspectRatio="none" width="100%" height="150" fill="none">
+                    <path d="M0 12C88 46 168 38 240 16" stroke="currentColor" stroke-opacity="0.24" stroke-width="1.5"/>
+                    <line x1="128" y1="31" x2="128" y2="66" stroke="#D8A84E" stroke-opacity="0.55" stroke-width="1.4"/>
+                    <circle cx="128" cy="80" r="18" fill="#F8C87A" fill-opacity="0.18"/>
+                    <path d="M120 66H136L139 79L134 91H122L117 79L120 66Z" stroke="currentColor" stroke-opacity="0.32" stroke-width="1.3"/>
+                    <circle cx="128" cy="79" r="3.5" fill="#D8A84E" fill-opacity="0.65"/>
+                    <path d="M1200 12C1112 46 1032 38 960 16" stroke="currentColor" stroke-opacity="0.24" stroke-width="1.5"/>
+                    <line x1="1072" y1="31" x2="1072" y2="66" stroke="#D8A84E" stroke-opacity="0.55" stroke-width="1.4"/>
+                    <circle cx="1072" cy="80" r="18" fill="#F8C87A" fill-opacity="0.18"/>
+                    <path d="M1064 66H1080L1083 79L1078 91H1066L1061 79L1064 66Z" stroke="currentColor" stroke-opacity="0.32" stroke-width="1.3"/>
+                    <circle cx="1072" cy="79" r="3.5" fill="#D8A84E" fill-opacity="0.65"/>
+                </svg>
+            </div>
+            <div class="realm-scenery-bottom" aria-hidden="true">
+                <svg viewBox="0 0 1200 140" preserveAspectRatio="none" width="100%" height="120" fill="none">
+                    <path d="M0 140C160 88 290 112 440 140H0ZM760 140C910 112 1040 88 1200 140H760Z" fill="currentColor" fill-opacity="0.06"/>
+                    <circle cx="180" cy="74" r="3" fill="#F8C87A" fill-opacity="0.52"/>
+                    <circle cx="240" cy="96" r="2.2" fill="#F8C87A" fill-opacity="0.48"/>
+                    <circle cx="960" cy="92" r="2.4" fill="#F8C87A" fill-opacity="0.48"/>
+                    <circle cx="1020" cy="70" r="3" fill="#F8C87A" fill-opacity="0.52"/>
+                </svg>
+            </div>`,
+        3: `<div class="realm-scenery-top" aria-hidden="true">
+                <svg viewBox="0 0 1200 180" preserveAspectRatio="none" width="100%" height="150" fill="none">
+                    <path d="M92 34L95 43L104 46L95 49L92 58L89 49L80 46L89 43Z" fill="#D8A84E" fill-opacity="0.45"/>
+                    <path d="M1108 34L1111 43L1120 46L1111 49L1108 58L1105 49L1096 46L1105 43Z" fill="#D8A84E" fill-opacity="0.45"/>
+                    <path d="M168 62C154 66 146 80 149 94C152 106 162 114 174 115C158 119 143 109 140 94C137 78 147 62 162 60C164 60 166 61 168 62Z" fill="currentColor" fill-opacity="0.14"/>
+                    <path d="M1044 62C1030 66 1022 80 1025 94C1028 106 1038 114 1050 115C1034 119 1019 109 1016 94C1013 78 1023 62 1038 60C1040 60 1042 61 1044 62Z" fill="currentColor" fill-opacity="0.14"/>
+                    <polyline points="196,42 252,70 308,38" stroke="currentColor" stroke-opacity="0.18" stroke-width="1.2" stroke-dasharray="4 5"/>
+                    <polyline points="1004,42 948,70 892,38" stroke="currentColor" stroke-opacity="0.18" stroke-width="1.2" stroke-dasharray="4 5"/>
+                </svg>
+            </div>
+            <div class="realm-scenery-bottom" aria-hidden="true">
+                <svg viewBox="0 0 1200 140" preserveAspectRatio="none" width="100%" height="120" fill="none">
+                    <path d="M0 140V84C95 54 185 88 270 116C340 86 410 102 475 140H0ZM725 140C790 102 860 86 930 116C1015 88 1105 54 1200 84V140H725Z" fill="currentColor" fill-opacity="0.06"/>
+                </svg>
+            </div>`,
+        4: `<div class="realm-scenery-top" aria-hidden="true">
+                <svg viewBox="0 0 1200 180" preserveAspectRatio="none" width="100%" height="150" fill="none">
+                    <circle cx="116" cy="76" r="46" stroke="currentColor" stroke-opacity="0.16" stroke-width="1.2" stroke-dasharray="5 5"/>
+                    <circle cx="1084" cy="76" r="46" stroke="currentColor" stroke-opacity="0.16" stroke-width="1.2" stroke-dasharray="5 5"/>
+                    <path d="M116 48L120 68L140 76L120 84L116 104L112 84L92 76L112 68Z" fill="#D8A84E" fill-opacity="0.34"/>
+                    <path d="M1084 48L1088 68L1108 76L1088 84L1084 104L1080 84L1060 76L1080 68Z" fill="#D8A84E" fill-opacity="0.34"/>
+                    <line x1="210" y1="28" x2="278" y2="56" stroke="#D8A84E" stroke-opacity="0.32" stroke-width="1.4" stroke-linecap="round"/>
+                    <line x1="990" y1="28" x2="922" y2="56" stroke="#D8A84E" stroke-opacity="0.32" stroke-width="1.4" stroke-linecap="round"/>
+                </svg>
+            </div>
+            <div class="realm-scenery-bottom" aria-hidden="true">
+                <svg viewBox="0 0 1200 140" preserveAspectRatio="none" width="100%" height="120" fill="none">
+                    <path d="M0 140L110 42L218 104L326 26L448 140H0ZM752 140L874 26L982 104L1090 42L1200 140H752Z" fill="currentColor" fill-opacity="0.06"/>
+                </svg>
+            </div>`
+    };
+
     const BIOME_META = {
         1: {
             kicker: "ZONA I // 100 - 650 MDPL // AGUSTUS - PERTENGAHAN SEPTEMBER",
@@ -1153,12 +1226,15 @@
         lastFocusedBeforeDialog: null,
         trailTotalLength: 0,
         scrollRafPending: false,
-        resizeTimer: null
+        resizeTimer: null,
+        activePosIndex: 0
     };
 
     const el = {
         root: document.documentElement,
+        ambientWorldCanvas: document.getElementById("ambient-world-canvas"),
         basecamp: document.getElementById("basecamp"),
+        jalurSection: document.getElementById("jalur"),
         starlightCanvas: document.getElementById("starlight-canvas"),
         navPills: document.querySelectorAll(".nav-pill"),
         sections: ["basecamp", "kuis", "jalur", "puncak", "photobooth"]
@@ -1245,10 +1321,79 @@
         dialogNextBtn: document.getElementById("dialogNextBtn"),
         dialogDownloadBtn: document.getElementById("dialogDownloadBtn"),
         dialogCloseTop: document.getElementById("dialogCloseTop"),
-        dialogCloseBottom: document.getElementById("dialogCloseBottom")
+        dialogCloseBottom: document.getElementById("dialogCloseBottom"),
+        storyStepperDock: document.getElementById("story-stepper-dock"),
+        stepPrevPosBtn: document.getElementById("stepPrevPosBtn"),
+        stepperPosLabel: document.getElementById("stepperPosLabel"),
+        stepNextPosBtn: document.getElementById("stepNextPosBtn")
     };
 
     const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    /**
+     * Renders gentle fireflies & starlight dust across the entire document backdrop.
+     */
+    function initAmbientWorldCanvas() {
+        const canvas = el.ambientWorldCanvas;
+        if (!canvas || reducedMotionQuery.matches) {
+            return;
+        }
+        const ctx = canvas.getContext("2d");
+        if (!ctx) {
+            return;
+        }
+
+        let width = 0;
+        let height = 0;
+        const motes = Array.from({ length: 42 }, (_, idx) => ({
+            x: (idx * 79) % 1000,
+            y: (idx * 131) % 1000,
+            vx: ((idx % 5) - 2) * 0.14,
+            vy: -0.18 - (idx % 4) * 0.08,
+            radius: 1.4 + (idx % 3) * 0.9,
+            phase: idx * 0.55,
+            isStar: idx % 5 === 0
+        }));
+
+        function resizeAmbient() {
+            width = Math.max(320, window.innerWidth);
+            height = Math.max(400, window.innerHeight);
+            canvas.width = width;
+            canvas.height = height;
+        }
+
+        function drawAmbientFrame() {
+            const isDark = state.theme === "dark";
+            ctx.clearRect(0, 0, width, height);
+            motes.forEach((m) => {
+                m.x = (m.x + m.vx + width) % width;
+                m.y = (m.y + m.vy + height) % height;
+                m.phase += 0.025;
+                const pulse = 0.45 + 0.55 * Math.sin(m.phase);
+                const alpha = (isDark ? 0.42 : 0.34) * pulse;
+                const color = isDark ? "243, 214, 149" : "180, 126, 36";
+
+                if (m.isStar) {
+                    drawFourPointStar(ctx, m.x, m.y, m.radius * 2.4, `rgba(${color}, 1)`, alpha);
+                } else {
+                    ctx.beginPath();
+                    ctx.arc(m.x, m.y, m.radius * 2.2, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(${color}, ${(alpha * 0.32).toFixed(3)})`;
+                    ctx.fill();
+
+                    ctx.beginPath();
+                    ctx.arc(m.x, m.y, m.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(${color}, ${alpha.toFixed(3)})`;
+                    ctx.fill();
+                }
+            });
+            window.requestAnimationFrame(drawAmbientFrame);
+        }
+
+        resizeAmbient();
+        window.addEventListener("resize", resizeAmbient);
+        window.requestAnimationFrame(drawAmbientFrame);
+    }
 
     /**
      * Renders multi-tone glowing firefly starlight inside hero and pauses when offscreen.
@@ -1804,7 +1949,7 @@
     }
 
     /**
-     * Builds the opposite-column visual companion (Scrapbook Polaroid Pinboard or Illustrated Vignette Plate).
+     * Builds the opposite-column visual companion (Scrapbook Polaroid Pinboard or Tarot Illustration Plate).
      */
     function createCheckpointCompanion(cp) {
         const companion = document.createElement("aside");
@@ -1815,6 +1960,11 @@
         if (hasPhotos) {
             const board = document.createElement("div");
             board.className = "polaroid-board";
+
+            const tape = document.createElement("span");
+            tape.className = "card-washi-tape";
+            tape.setAttribute("aria-hidden", "true");
+            board.appendChild(tape);
 
             const boardHeader = document.createElement("div");
             boardHeader.className = "polaroid-board-header";
@@ -1829,10 +1979,11 @@
 
             const grid = document.createElement("div");
             grid.className = `polaroid-grid polaroid-grid--${cp.photos.length}`;
-            cp.photos.forEach((photo) => {
+            cp.photos.forEach((photo, photoIdx) => {
                 const tile = document.createElement("button");
                 tile.type = "button";
                 tile.className = `polaroid-item${photo.contain ? " polaroid-item--contain" : ""}`;
+                tile.style.setProperty("--photo-idx", String(photoIdx));
                 tile.setAttribute("aria-label", `Perbesar foto: ${photo.caption}`);
 
                 const img = document.createElement("img");
@@ -1843,11 +1994,15 @@
                 img.loading = "lazy";
                 img.addEventListener("load", scheduleTrailGeometryUpdate);
 
+                const stampTag = document.createElement("span");
+                stampTag.className = "polaroid-stamp-tag";
+                stampTag.textContent = `ARSIP 27 // POS ${cp.postNum}`;
+
                 const cap = document.createElement("span");
                 cap.className = "polaroid-caption";
                 cap.textContent = photo.caption;
 
-                tile.append(img, cap);
+                tile.append(img, stampTag, cap);
                 tile.addEventListener("click", () => {
                     const galleryIdx = LIGHTBOX_GALLERY.findIndex((item) => item.src === photo.src);
                     openImageLightbox(photo.src, cp.title, photo.caption, null, galleryIdx);
@@ -1875,16 +2030,24 @@
         stamp.className = "vignette-stamp";
         stamp.textContent = `POS ${cp.postNum} // ${cp.altitude.toUpperCase()} // ${cp.date}`;
 
+        const halo = document.createElement("div");
+        halo.className = "vignette-arch-halo";
+
         const svgWrap = document.createElement("div");
         svgWrap.className = "vignette-svg-wrap";
         svgWrap.setAttribute("aria-hidden", "true");
         svgWrap.innerHTML = VIGNETTE_SVGS[cp.vignette] || VIGNETTE_SVGS["quill-arch"];
+        halo.appendChild(svgWrap);
 
         const quote = document.createElement("blockquote");
         quote.className = "vignette-quote";
         quote.textContent = cp.pullQuote || cp.title;
 
-        plate.append(stamp, svgWrap, quote);
+        const waxFoot = document.createElement("span");
+        waxFoot.className = "vignette-wax-chip";
+        waxFoot.textContent = `SEGEL EKSPEDISI 27 // POS ${cp.postNum}`;
+
+        plate.append(stamp, halo, quote, waxFoot);
         companion.appendChild(plate);
         return companion;
     }
@@ -1899,6 +2062,14 @@
             realmSec.id = `biome-realm-${bId}`;
             realmSec.dataset.biomeId = String(bId);
             realmSec.setAttribute("aria-label", BIOME_META[bId].title);
+
+            if (REALM_SCENERY_SVGS[bId]) {
+                const scenery = document.createElement("div");
+                scenery.className = "realm-scenery-bg";
+                scenery.setAttribute("aria-hidden", "true");
+                scenery.innerHTML = REALM_SCENERY_SVGS[bId];
+                realmSec.appendChild(scenery);
+            }
 
             const realmList = document.createElement("ol");
             realmList.className = "realm-list";
@@ -1918,6 +2089,7 @@
             li.className = `checkpoint-item biome-${cp.biome} ${index % 2 === 0 ? "checkpoint--left" : "checkpoint--right"}`;
             li.id = cp.id;
             li.dataset.altitude = cp.altitude;
+            li.dataset.posIndex = String(index);
 
             const node = document.createElement("div");
             node.className = "checkpoint-node";
@@ -1927,16 +2099,40 @@
             const card = document.createElement("article");
             card.className = "checkpoint-card";
 
-            const inlineMeta = document.createElement("p");
-            inlineMeta.className = "checkpoint-meta-inline";
-            inlineMeta.textContent = `POS ${cp.postNum} // ${cp.altitude.toUpperCase()} // ${cp.date}`;
+            const tape = document.createElement("span");
+            tape.className = "card-washi-tape";
+            tape.setAttribute("aria-hidden", "true");
+            card.appendChild(tape);
+
+            const headRow = document.createElement("div");
+            headRow.className = "card-head-row";
+
+            const pillRow = document.createElement("div");
+            pillRow.className = "pos-pill-row";
+            [
+                `POS ${cp.postNum}`,
+                cp.altitude.toUpperCase(),
+                cp.date
+            ].forEach((txt) => {
+                const pill = document.createElement("span");
+                pill.className = "pos-pill";
+                pill.textContent = txt;
+                pillRow.appendChild(pill);
+            });
+
+            const miniWax = document.createElement("span");
+            miniWax.className = "card-wax-mini";
+            miniWax.setAttribute("aria-hidden", "true");
+            miniWax.textContent = "27";
+
+            headRow.append(pillRow, miniWax);
 
             const title = document.createElement("h3");
             title.className = "checkpoint-title reveal-line";
             title.style.setProperty("--line-index", "0");
             title.textContent = cp.title;
 
-            card.append(inlineMeta, title);
+            card.append(headRow, title);
 
             if (Array.isArray(cp.lines) && cp.lines.length > 0) {
                 const linesWrap = document.createElement("div");
@@ -2081,17 +2277,80 @@
     }
 
     function revealVisibleElementsNow() {
-        const thresholdY = window.innerHeight * 0.95;
-        const targets = document.querySelectorAll(".reveal-group, .checkpoint-item, .chat-mockup, .book-letter-card");
+        const thresholdY = window.innerHeight * 0.82;
+        const targets = document.querySelectorAll(
+            ".reveal-group, .biome-banner, .talk-card, .checkpoint-item, .chat-mockup, .book-letter-card"
+        );
         targets.forEach((item) => {
             if (item.classList.contains("is-visible")) {
                 return;
             }
             const rect = item.getBoundingClientRect();
-            if (rect.top < thresholdY && rect.bottom > -120) {
+            if (rect.top < thresholdY && rect.bottom > -80) {
                 item.classList.add("is-visible");
+                if (item.classList.contains("checkpoint-item")) {
+                    item.querySelectorAll(".chat-mockup").forEach((c) => c.classList.add("is-visible"));
+                }
             }
         });
+    }
+
+    function updateActiveTrailStage() {
+        const jalurRect = el.jalurSection ? el.jalurSection.getBoundingClientRect() : null;
+        const inTrail = Boolean(jalurRect && jalurRect.top < window.innerHeight * 0.72 && jalurRect.bottom > 180);
+        if (el.storyStepperDock) {
+            el.storyStepperDock.hidden = !inTrail;
+        }
+        const items = Array.from(document.querySelectorAll(".checkpoint-item"));
+        if (items.length === 0) {
+            return;
+        }
+        const centerAnchor = window.innerHeight * 0.44;
+        let bestIdx = state.activePosIndex || 0;
+        let bestDist = Infinity;
+        items.forEach((item, idx) => {
+            const rect = item.getBoundingClientRect();
+            const itemMid = rect.top + Math.min(rect.height, window.innerHeight * 0.6) * 0.5;
+            const dist = Math.abs(itemMid - centerAnchor);
+            if (dist < bestDist) {
+                bestDist = dist;
+                bestIdx = idx;
+            }
+        });
+        state.activePosIndex = bestIdx;
+        items.forEach((item, idx) => {
+            item.classList.toggle("is-active-stage", inTrail && idx === bestIdx);
+        });
+        const activeCp = TRAIL_CHECKPOINTS[bestIdx];
+        if (el.stepperPosLabel && activeCp) {
+            el.stepperPosLabel.textContent = `POS ${activeCp.postNum} / ${TRAIL_CHECKPOINTS.length} // ${activeCp.altitude.toUpperCase()}`;
+        }
+        if (el.stepPrevPosBtn) {
+            el.stepPrevPosBtn.disabled = bestIdx <= 0;
+        }
+        if (el.stepNextPosBtn) {
+            el.stepNextPosBtn.disabled = bestIdx >= TRAIL_CHECKPOINTS.length - 1;
+        }
+    }
+
+    function navigateToCheckpoint(targetIdx) {
+        const clamped = Math.max(0, Math.min(TRAIL_CHECKPOINTS.length - 1, targetIdx));
+        const cp = TRAIL_CHECKPOINTS[clamped];
+        if (!cp) {
+            return;
+        }
+        const targetEl = document.getElementById(cp.id);
+        if (!targetEl) {
+            return;
+        }
+        targetEl.classList.add("is-visible");
+        targetEl.querySelectorAll(".chat-mockup").forEach((c) => c.classList.add("is-visible"));
+        targetEl.scrollIntoView({
+            behavior: reducedMotionQuery.matches ? "auto" : "smooth",
+            block: "center"
+        });
+        state.activePosIndex = clamped;
+        updateActiveTrailStage();
     }
 
     function updateActiveChapterNav() {
@@ -2174,6 +2433,7 @@
         }
 
         revealVisibleElementsNow();
+        updateActiveTrailStage();
         updateActiveChapterNav();
         checkRealmAndSummitStamps();
     }
@@ -2191,17 +2451,21 @@
                 entries.forEach((entry) => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add("is-visible");
+                        if (entry.target.classList.contains("checkpoint-item")) {
+                            entry.target.querySelectorAll(".chat-mockup").forEach((c) => c.classList.add("is-visible"));
+                        }
                     }
                 });
             },
-            { threshold: 0.06, rootMargin: "0px 0px -6% 0px" }
+            { threshold: 0.14, rootMargin: "0px 0px -14% 0px" }
         );
 
         document
-            .querySelectorAll(".reveal-group, .checkpoint-item, .chat-mockup, .book-letter-card")
+            .querySelectorAll(".reveal-group, .biome-banner, .talk-card, .checkpoint-item, .chat-mockup, .book-letter-card")
             .forEach((node) => revealObserver.observe(node));
 
         revealVisibleElementsNow();
+        updateActiveTrailStage();
         updateActiveChapterNav();
         checkRealmAndSummitStamps();
     }
@@ -3858,6 +4122,17 @@
             }
         });
 
+        if (el.stepPrevPosBtn) {
+            el.stepPrevPosBtn.addEventListener("click", () => {
+                navigateToCheckpoint(state.activePosIndex - 1);
+            });
+        }
+        if (el.stepNextPosBtn) {
+            el.stepNextPosBtn.addEventListener("click", () => {
+                navigateToCheckpoint(state.activePosIndex + 1);
+            });
+        }
+
         document.addEventListener("keydown", (evt) => {
             if (evt.key === "Escape" && state.isCapturing && !el.lightboxDialog.open) {
                 if (state.captureAbortController) {
@@ -3875,6 +4150,7 @@
 
     loadSavedState();
     initHandoffVisibility();
+    initAmbientWorldCanvas();
     initHeroStarlight();
     renderPassportStamps();
     renderQuizStep();

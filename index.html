@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <canvas id="ambient-world-canvas" class="ambient-world-canvas" aria-hidden="true"></canvas>
     <a class="skip-link" href="#main-content">Lewati ke isi utama</a>
 
     <header class="compass-bar" id="compass-bar">
@@ -269,6 +270,15 @@
         <section id="kuis" class="chapter-section chapter-kuis" aria-labelledby="kuis-heading">
             <div class="section-shell">
                 <header class="section-header reveal-group">
+                    <div class="chapter-crest reveal-line" style="--line-index: 0" aria-hidden="true">
+                        <svg viewBox="0 0 120 26" width="108" height="24" fill="none">
+                            <line x1="6" y1="13" x2="40" y2="13" stroke="currentColor" stroke-width="1.2"/>
+                            <circle cx="48" cy="13" r="3" stroke="currentColor" stroke-width="1.2"/>
+                            <path d="M60 2L63 10L71 13L63 16L60 24L57 16L49 13L57 10L60 2Z" fill="currentColor" fill-opacity="0.22" stroke="currentColor" stroke-width="1.3"/>
+                            <circle cx="72" cy="13" r="3" stroke="currentColor" stroke-width="1.2"/>
+                            <line x1="80" y1="13" x2="114" y2="13" stroke="currentColor" stroke-width="1.2"/>
+                        </svg>
+                    </div>
                     <p class="eyebrow reveal-line" style="--line-index: 0">BAB II // PEMANASAN DI BASECAMP</p>
                     <h2 id="kuis-heading" class="section-title reveal-line" style="--line-index: 1">
                         Tes ingatan singkat sebelum masuk jalur pendakian.
@@ -323,6 +333,13 @@
         <section id="jalur" class="chapter-section chapter-jalur" aria-labelledby="jalur-heading">
             <div class="section-shell">
                 <header class="section-header reveal-group">
+                    <div class="chapter-crest reveal-line" style="--line-index: 0" aria-hidden="true">
+                        <svg viewBox="0 0 120 26" width="108" height="24" fill="none">
+                            <line x1="6" y1="13" x2="36" y2="13" stroke="currentColor" stroke-width="1.2"/>
+                            <path d="M44 19L53 6L60 15L68 4L77 19H44Z" stroke="currentColor" stroke-width="1.3" fill="currentColor" fill-opacity="0.16" stroke-linejoin="round"/>
+                            <line x1="84" y1="13" x2="114" y2="13" stroke="currentColor" stroke-width="1.2"/>
+                        </svg>
+                    </div>
                     <p class="eyebrow reveal-line" style="--line-index: 0">BAB III // JALUR EKSPEDISI 4 ZONA</p>
                     <h2 id="jalur-heading" class="section-title reveal-line" style="--line-index: 1">
                         24 Pos Perjalanan, Papan Polaroid, &amp; Kartu Obrolan Bareng.
@@ -390,6 +407,14 @@
         <section id="puncak" class="chapter-section chapter-puncak" aria-labelledby="puncak-heading">
             <div class="section-shell">
                 <header class="section-header reveal-group">
+                    <div class="chapter-crest reveal-line" style="--line-index: 0" aria-hidden="true">
+                        <svg viewBox="0 0 120 26" width="108" height="24" fill="none">
+                            <line x1="6" y1="13" x2="40" y2="13" stroke="currentColor" stroke-width="1.2"/>
+                            <circle cx="60" cy="13" r="8" stroke="currentColor" stroke-width="1.3" fill="currentColor" fill-opacity="0.16"/>
+                            <path d="M60 7L62 11L66 13L62 15L60 19L58 15L54 13L58 11L60 7Z" fill="currentColor"/>
+                            <line x1="80" y1="13" x2="114" y2="13" stroke="currentColor" stroke-width="1.2"/>
+                        </svg>
+                    </div>
                     <p class="eyebrow reveal-line" style="--line-index: 0">BAB IV // PUNCAK 27 // SURAT UNTUK RARA</p>
                     <h2 id="puncak-heading" class="section-title reveal-line" style="--line-index: 1">
                         Halaman khusus buat Rara sebelum turun ke photobooth.
@@ -490,6 +515,14 @@
         <section id="photobooth" class="chapter-section chapter-booth" aria-labelledby="booth-heading">
             <div class="section-shell">
                 <header class="section-header reveal-group">
+                    <div class="chapter-crest reveal-line" style="--line-index: 0" aria-hidden="true">
+                        <svg viewBox="0 0 120 26" width="108" height="24" fill="none">
+                            <line x1="6" y1="13" x2="36" y2="13" stroke="currentColor" stroke-width="1.2"/>
+                            <rect x="46" y="6" width="28" height="15" rx="3" stroke="currentColor" stroke-width="1.3" fill="currentColor" fill-opacity="0.14"/>
+                            <circle cx="60" cy="13.5" r="4" stroke="currentColor" stroke-width="1.2"/>
+                            <line x1="84" y1="13" x2="114" y2="13" stroke="currentColor" stroke-width="1.2"/>
+                        </svg>
+                    </div>
                     <p class="eyebrow reveal-line" style="--line-index: 0">BAB V // FOTO BERDUA DI PUNCAK</p>
                     <h2 id="booth-heading" class="section-title reveal-line" style="--line-index: 1">
                         Abadikan momen terakhir hari ini dan bawa pulang dua kartu arsip.
@@ -777,6 +810,12 @@
             </div>
         </section>
     </main>
+
+    <aside class="story-stepper-dock" id="story-stepper-dock" aria-label="Navigasi pos demi pos" hidden>
+        <button type="button" class="btn-stepper" id="stepPrevPosBtn" aria-label="Lihat pos sebelumnya">Pos Sebelumnya</button>
+        <span class="stepper-status mono-tag" id="stepperPosLabel">POS 01 / 24 // 100 MDPL</span>
+        <button type="button" class="btn-stepper btn-stepper--primary" id="stepNextPosBtn" aria-label="Lihat pos berikutnya">Pos Berikutnya</button>
+    </aside>
 
     <footer class="site-footer">
         <div class="section-shell footer-inner">
