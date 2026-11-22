@@ -232,384 +232,428 @@
             </div>
         </header>
 
-        <!-- Row 2: Full-Viewport Single-Page Deck Stage -->
+        <!-- Row 2: Full-Viewport 3D Hardcover Book Stage -->
         <main id="deck-stage" class="deck-stage">
-            <div class="deck-viewport" id="deck-viewport">
-                <!-- PAGE 00: ONBOARDING SEGEL LILIN 27 INTERAKTIF -->
-                <section class="deck-page deck-page--onboarding is-active" id="page-onboarding" data-page-index="0" aria-labelledby="onboarding-title">
-                    <div class="onboarding-shell">
-                        <div class="onboarding-veil storybook-frame">
-                            <p class="onboarding-eyebrow stage-reveal" style="--stagger: 0">
-                                ARSIP EKSPEDISI 27 // 27 AGUSTUS MENUJU 27 NOVEMBER 2026
-                            </p>
-                            <h1 id="onboarding-title" class="onboarding-title stage-reveal" style="--stagger: 1">
-                                Selamat datang di perjalanan kecil untuk Anisa Rahma Eka Widyastuti.
-                            </h1>
-                            <p class="onboarding-lead stage-reveal" style="--stagger: 2">
-                                Katanya ucapan ulang tahun 27 Agustus baru sempat utuh di tanggal 27 November. Sebelum mulai membaca arsip kita dari pinggir pantai senja hingga puncak bintang, pecahkan dulu segel ekspedisinya.
-                            </p>
-                            <dl class="onboarding-meta stage-reveal" style="--stagger: 3">
-                                <div>
-                                    <dt>Untuk</dt>
-                                    <dd>Rara (kadang dipanggil semprul)</dd>
-                                </div>
-                                <div>
-                                    <dt>Dari</dt>
-                                    <dd>Jay, rekan tim dokum FYP</dd>
-                                </div>
-                                <div>
-                                    <dt>Rute Peta</dt>
-                                    <dd>42 Halaman, 27 Pos, 7 Mini Game</dd>
-                                </div>
-                            </dl>
-                            <p class="onboarding-cue stage-reveal" style="--stagger: 4">
-                                Klik segel lilin 27 (atau geser layar ke kiri) untuk membuka perjalanan beserta suara ombak senja.
-                            </p>
-                        </div>
+            <div class="book-stage-3d" id="bookStage3d">
+                <div class="book-tome" id="bookTome">
+                    <div class="book-foreedge book-foreedge--left" aria-hidden="true"></div>
+                    <div class="book-foreedge book-foreedge--right" aria-hidden="true"></div>
 
-                        <div class="onboarding-seal-stage stage-reveal" style="--stagger: 2">
-                            <div class="seal-orbit-ring" aria-hidden="true"></div>
-                            <button type="button" class="wax-seal-trigger" id="waxSealTrigger" aria-label="Pecahkan Segel Lilin 27 dan mulai ekspedisi">
-                                <span class="wax-seal-ribbon wax-seal-ribbon--left" aria-hidden="true"></span>
-                                <span class="wax-seal-ribbon wax-seal-ribbon--right" aria-hidden="true"></span>
-                                <span class="wax-seal-core">
-                                    <span class="wax-seal-num">27</span>
-                                    <span class="wax-seal-cta">Pecahkan Segel &amp; Mulai</span>
-                                </span>
-                            </button>
-                            <p class="seal-subhint">Suara alam lembut &amp; transisi halaman aktif saat segel dibuka</p>
-                        </div>
+                    <div class="book-spine-gutter" aria-hidden="true">
+                        <div class="book-spine-crease"></div>
+                        <div class="book-ribbon-marker"></div>
                     </div>
-                </section>
 
-                <!-- PAGE 01: KUIS PEMANASAN DI BASECAMP (7 LANGKAH) -->
-                <section class="deck-page deck-page--quiz biome-1" id="page-quiz" data-page-index="1" aria-labelledby="kuis-heading" hidden>
-                    <div class="page-frame">
-                        <header class="page-head">
-                            <p class="eyebrow">BAB PEMANASAN // PESISIR BASECAMP</p>
-                            <h2 id="kuis-heading" class="page-title">Tes ingatan singkat sebelum masuk 4 alam cerita.</h2>
-                            <p class="page-subtitle">
-                                Semua jawabanmu otomatis tersimpan ke <strong>Kartu Rangkuman Kenangan</strong> di halaman penutup.
-                            </p>
-                        </header>
+                    <button type="button" class="book-corner-curl book-corner-curl--prev" id="bookCornerPrev" aria-label="Balik ke halaman sebelumnya" title="Balik ke halaman sebelumnya"></button>
+                    <button type="button" class="book-corner-curl book-corner-curl--next" id="bookCornerNext" aria-label="Balik ke halaman berikutnya" title="Balik ke halaman berikutnya"></button>
 
-                        <div class="notebook-card storybook-frame">
-                            <div class="notebook-topbar">
-                                <span class="mono-tag" id="quizStepLabel">LANGKAH 01 / 07</span>
-                                <div class="progress-meter" role="progressbar" aria-valuemin="1" aria-valuemax="7" aria-valuenow="1" id="quizProgressMeter">
-                                    <div class="progress-meter-fill" id="quizProgressFill"></div>
-                                </div>
-                                <span class="mono-tag" id="quizScoreSavedTag">Tersimpan lokal</span>
-                            </div>
-
-                            <div class="quiz-stage" id="quizStepContainer"></div>
-
-                            <div class="notebook-footer">
-                                <button type="button" class="btn-outline" id="prevQuizBtn">Langkah Sebelumnya</button>
-                                <div class="notebook-footer-right">
-                                    <button type="button" class="btn-outline" id="resetQuizBtn" hidden>Ulangi Kuis</button>
-                                    <button type="button" class="btn-primary" id="nextQuizBtn">Lanjut Pertanyaan</button>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="book-turn-shadow" id="bookTurnShadow" aria-hidden="true"></div>
+                    <div class="book-flip-leaf" id="bookFlipLeaf" aria-hidden="true">
+                        <div class="flip-leaf-face flip-leaf-face--front"></div>
+                        <div class="flip-leaf-face flip-leaf-face--back"></div>
                     </div>
-                </section>
 
-                <!-- PAGE 40: SURAT PUNCAK 27 -->
-                <section class="deck-page deck-page--letter biome-4" id="page-letter" data-page-index="40" aria-labelledby="letter-title" hidden>
-                    <div class="page-frame">
-                        <article class="book-letter-card storybook-frame">
-                            <svg class="corner-filigree corner-tl" viewBox="0 0 48 48" width="42" height="42" aria-hidden="true" fill="none">
-                                <path d="M4 44V10C4 6.7 6.7 4 10 4H44" stroke="currentColor" stroke-width="1.6"/>
-                                <path d="M12 34V16C12 13.8 13.8 12 16 12H34" stroke="currentColor" stroke-width="1"/>
-                                <circle cx="10" cy="10" r="2.2" fill="currentColor"/>
-                            </svg>
-                            <svg class="corner-filigree corner-tr" viewBox="0 0 48 48" width="42" height="42" aria-hidden="true" fill="none">
-                                <path d="M4 44V10C4 6.7 6.7 4 10 4H44" stroke="currentColor" stroke-width="1.6"/>
-                                <path d="M12 34V16C12 13.8 13.8 12 16 12H34" stroke="currentColor" stroke-width="1"/>
-                                <circle cx="10" cy="10" r="2.2" fill="currentColor"/>
-                            </svg>
-                            <svg class="corner-filigree corner-bl" viewBox="0 0 48 48" width="42" height="42" aria-hidden="true" fill="none">
-                                <path d="M4 44V10C4 6.7 6.7 4 10 4H44" stroke="currentColor" stroke-width="1.6"/>
-                                <path d="M12 34V16C12 13.8 13.8 12 16 12H34" stroke="currentColor" stroke-width="1"/>
-                                <circle cx="10" cy="10" r="2.2" fill="currentColor"/>
-                            </svg>
-                            <svg class="corner-filigree corner-br" viewBox="0 0 48 48" width="42" height="42" aria-hidden="true" fill="none">
-                                <path d="M4 44V10C4 6.7 6.7 4 10 4H44" stroke="currentColor" stroke-width="1.6"/>
-                                <path d="M12 34V16C12 13.8 13.8 12 16 12H34" stroke="currentColor" stroke-width="1"/>
-                                <circle cx="10" cy="10" r="2.2" fill="currentColor"/>
-                            </svg>
-
-                            <div class="wax-seal-badge" aria-hidden="true">
-                                <span>27</span>
-                            </div>
-
-                            <div class="bookplate-header">
-                                <p class="mono-tag">EX LIBRIS // 27 AGUSTUS -> 27 NOVEMBER 2026</p>
-                                <h2 id="letter-title" class="letter-title">Untuk Anisa Rahma Eka Widyastuti (Rara)</h2>
-                                <p class="letter-subtitle-italic">Dari balik kamera FYP hingga dua puluh tujuh pos cerita bersama.</p>
-                            </div>
-
-                            <div class="letter-body">
-                                <p class="letter-paragraph drop-cap">
-                                    Selamat ulang tahun yang sempat nyangkut di perjalanan, Rara. Memang aslinya tanggal 27 Agustus, tapi biar angka 27-nya tetap utuh, catatan perjalanan kecil ini sengaja kusampaikan pas tanggal 27 November ini.
-                                </p>
-                                <p class="letter-paragraph">
-                                    Kalau diputar lagi ke belakang, agak lucu sih awalnya. Semua berawal dari hal sesimpel aku jadi tim dokumentasi pas FYP BINUS, terus kamu tiba-tiba dadah ke arah kamera. Dari situ aku jadi sering gak sengaja notice kamu sepanjang Agustus, sampai akhirnya twibbon IS B30 kamu lewat di beranda tanggal 19 Agustus dan dibalas follback 32 menit kemudian.
-                                </p>
-                                <p class="letter-paragraph">
-                                    Waktu chat pertama tanggal 27 Agustus pun awalnya masih formal banget, bahas foto baca buku di Siwil Art, perdebatan Klaten vs Jogja, sampai aku nulis satu penjelasan panjang cuma buat ngenalin apa itu kimpul. Rasanya beda banget kalau dibandingin sama obrolan kita belakangan ini yang bisa loncat dari urusan tugas kuliah, ngode di IG Notes jam satu pagi, rahasia akun second, sampai typo gak masuk akal soal mesin cucu.
-                                </p>
-                                <p class="letter-paragraph">
-                                    Masih inget juga tanggal 3 Oktober kemarin waktu kita perdana jalan bareng ke Gramed Jalma cuma modal ngode lewat IG Notes 'jalma' dibalas 'maw maw'. Hari itu rasanya kayak titik balik: dari yang tadinya masih canggung banget, tiba-tiba lanjut makan bareng, pindah obrolan ke WhatsApp, sampai gak sadar jadwal ketemu dan ngobrol kita makin panjang ke belakangnya.
-                                </p>
-                                <p class="letter-paragraph">
-                                    Terima kasih sudah jadi teman dekat yang seru banget diajak cerita, diskusi, nugas berjam-jam di Discord walau kadang ujungnya tumbang di depan ThinkPad, saling berbagi lagu sampai Spotify Blend kita tembus seratus persen cocok, nobar film fantasi tengah malam, sekaligus pendengar yang tulus di saat aku juga butuh teman ngobrol.
-                                </p>
-                                <p class="letter-paragraph">
-                                    Semoga semester awal sampai nanti kuliahmu terus dilancarkan, ide konten bertema fairy tale, morikei, dan karya fesyen yang kamu impikan pelan-pelan terwujud semua, dan semoga kita tetap bisa berteman sedekat ini dalam waktu yang panjang. Plus satu lagi: wacana muncak Merbabu dan jadwal nonton berikutnya jangan sampai cuma mengendap jadi arsip tangkapan layar ya.
-                                </p>
-                                <p class="letter-signoff letter-paragraph">
-                                    Semoga perjalanan kita masih panjang sampai pos-pos berikutnya.<br>
-                                    <strong>Jayyid Jiddan</strong> (teman ngobrol sekaligus rekan ambis kamu)
-                                </p>
-                            </div>
-
-                            <div class="letter-summary-banner" id="letterSavedSummary" role="status" aria-live="polite">
-                                Nilai perjalanan: 95 / 100.
-                            </div>
-                            <p class="passport-summary-note" id="puncak-stamps-status">Stempel Ekspedisi terkumpul: 0 / 6.</p>
-
-                            <div class="letter-actions">
-                                <button type="button" class="btn-outline" id="letterEditQuizBtn">Edit Jawaban Kuis</button>
-                                <button type="button" class="btn-primary" id="letterGoBoothBtn">Lanjut ke Foto Berdua di Puncak</button>
-                            </div>
-                        </article>
-                    </div>
-                </section>
-
-                <!-- PAGE 41: PHOTOBOOTH PUNCAK 27 (MOUNTED PERSISTENTLY SO CAMERA & FRAMES NEVER RESET) -->
-                <section class="deck-page deck-page--booth biome-4" id="page-photobooth" data-page-index="41" aria-labelledby="booth-heading" hidden>
-                    <div class="page-frame page-frame--wide">
-                        <header class="page-head">
-                            <p class="eyebrow">BAB PENUTUP // PUNCAK 27 // PHOTOBOOTH BERDUA</p>
-                            <h2 id="booth-heading" class="page-title">Abadikan momen hari ini dan bawa pulang dua kartu arsip.</h2>
-                            <p class="page-subtitle">
-                                Nyalakan kamera untuk foto berdua, unggah dari galeri, atau klik <strong>Isi Cepat dari Foto Momen</strong> untuk mengunduh <strong>Strip Photobooth PNG</strong> dan <strong>Kartu Rangkuman Kenangan PNG</strong>.
-                            </p>
-                        </header>
-
-                        <div class="booth-grid">
-                            <section class="booth-panel camera-panel storybook-frame" aria-labelledby="camera-heading">
-                                <div class="panel-topbar">
-                                    <h3 id="camera-heading" class="panel-title">Ruang Kamera</h3>
-                                    <div class="camera-status" id="cameraStatus" data-state="idle" role="status" aria-live="polite">
-                                        <span class="status-dot" aria-hidden="true"></span>
-                                        <span id="cameraStatusText">Kamera nonaktif</span>
-                                    </div>
-                                </div>
-
-                                <div class="viewport-frame">
-                                    <video id="cameraVideo" autoplay playsinline muted class="is-mirrored"></video>
-
-                                    <div class="camera-frame-overlay" aria-hidden="true">
-                                        <div class="vf-top-row">
-                                            <svg class="vf-corner" viewBox="0 0 36 36" width="26" height="26" fill="none">
-                                                <path d="M3 24V5C3 3.9 3.9 3 5 3H24" stroke="currentColor" stroke-width="2"/>
-                                                <circle cx="8" cy="8" r="2" fill="currentColor"/>
-                                            </svg>
-                                            <span class="vf-badge">LENSA EKSPEDISI 27 // 2.700 MDPL</span>
-                                            <svg class="vf-corner vf-corner--tr" viewBox="0 0 36 36" width="26" height="26" fill="none">
-                                                <path d="M3 24V5C3 3.9 3.9 3 5 3H24" stroke="currentColor" stroke-width="2"/>
-                                                <circle cx="8" cy="8" r="2" fill="currentColor"/>
-                                            </svg>
+                    <div class="deck-viewport" id="deck-viewport">
+                        <!-- PAGE 00: ONBOARDING SAMPUL BUKU 3D & SEGEL LILIN 27 -->
+                        <section class="deck-page deck-page--onboarding is-active" id="page-onboarding" data-page-index="0" aria-labelledby="onboarding-title">
+                            <div class="onboarding-shell tome-cover-spread">
+                                <div class="onboarding-veil tome-cover-plaque storybook-frame">
+                                    <div class="cover-spine-band" aria-hidden="true"></div>
+                                    <p class="onboarding-eyebrow stage-reveal" style="--stagger: 0">
+                                        ARSIP EKSPEDISI 27 // 27 AGUSTUS MENUJU 27 NOVEMBER 2026
+                                    </p>
+                                    <h1 id="onboarding-title" class="onboarding-title stage-reveal" style="--stagger: 1">
+                                        Selamat datang di buku perjalanan kecil untuk Anisa Rahma Eka Widyastuti.
+                                    </h1>
+                                    <p class="onboarding-lead stage-reveal" style="--stagger: 2">
+                                        Katanya ucapan ulang tahun 27 Agustus baru sempat utuh di tanggal 27 November. Setiap bab di buku ini terbuka satu per satu: tebak dulu pertanyaannya, lalu balik halamannya untuk melihat rekaman chat dan bukti fotonya.
+                                    </p>
+                                    <dl class="onboarding-meta stage-reveal" style="--stagger: 3">
+                                        <div>
+                                            <dt>Untuk</dt>
+                                            <dd>Rara (kadang dipanggil semprul)</dd>
                                         </div>
-                                        <div class="vf-bottom-row">
-                                            <svg class="vf-corner vf-corner--bl" viewBox="0 0 36 36" width="26" height="26" fill="none">
-                                                <path d="M3 24V5C3 3.9 3.9 3 5 3H24" stroke="currentColor" stroke-width="2"/>
-                                                <circle cx="8" cy="8" r="2" fill="currentColor"/>
-                                            </svg>
-                                            <svg class="vf-vine-crest" viewBox="0 0 180 20" width="136" height="15" fill="none">
-                                                <path d="M8 10H68M112 10H172" stroke="currentColor" stroke-width="1.2" stroke-opacity="0.72"/>
-                                                <path d="M90 2L92.6 7.4L98 10L92.6 12.6L90 18L87.4 12.6L82 10L87.4 7.4L90 2Z" fill="currentColor"/>
-                                            </svg>
-                                            <svg class="vf-corner vf-corner--br" viewBox="0 0 36 36" width="26" height="26" fill="none">
-                                                <path d="M3 24V5C3 3.9 3.9 3 5 3H24" stroke="currentColor" stroke-width="2"/>
-                                                <circle cx="8" cy="8" r="2" fill="currentColor"/>
-                                            </svg>
+                                        <div>
+                                            <dt>Dari</dt>
+                                            <dd>Jay, rekan tim dokum FYP</dd>
+                                        </div>
+                                        <div>
+                                            <dt>Isi Buku</dt>
+                                            <dd>42 Halaman, 27 Pos, 7 Mini Game</dd>
+                                        </div>
+                                    </dl>
+                                    <p class="onboarding-cue stage-reveal" style="--stagger: 4">
+                                        Pecahkan segel lilin 27 di samping untuk membuka sampul buku beserta alunan suara alam.
+                                    </p>
+                                </div>
+
+                                <div class="onboarding-seal-stage stage-reveal" style="--stagger: 2">
+                                    <div class="seal-orbit-ring" aria-hidden="true"></div>
+                                    <button type="button" class="wax-seal-trigger" id="waxSealTrigger" aria-label="Pecahkan Segel Lilin 27 dan buka buku">
+                                        <span class="wax-seal-ribbon wax-seal-ribbon--left" aria-hidden="true"></span>
+                                        <span class="wax-seal-ribbon wax-seal-ribbon--right" aria-hidden="true"></span>
+                                        <span class="wax-seal-core">
+                                            <span class="wax-seal-num">27</span>
+                                            <span class="wax-seal-cta">Buka Sampul Buku</span>
+                                        </span>
+                                    </button>
+                                    <p class="seal-subhint">Animasi buka buku 3D &amp; suara ombak lembut aktif saat segel dibuka</p>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- PAGE 01: KUIS PEMANASAN DI BASECAMP (2-PAGE OPEN BOOK, ANTI-SPOILER 3D FLIP) -->
+                        <section class="deck-page deck-page--quiz biome-1" id="page-quiz" data-page-index="1" aria-labelledby="kuis-heading" hidden>
+                            <div class="book-spread quiz-book-spread">
+                                <div class="book-page book-page--left quiz-page-left">
+                                    <div class="book-folio-bar">
+                                        <span class="mono-tag">BAB PEMANASAN // PESISIR BASECAMP</span>
+                                        <button type="button" class="btn-folio-link" id="skipQuizBtn">Lewati ke Alam I</button>
+                                    </div>
+                                    <h2 id="kuis-heading" class="book-chapter-title">Tes ingatan singkat sebelum masuk 4 alam.</h2>
+
+                                    <div class="notebook-topbar">
+                                        <span class="mono-tag" id="quizStepLabel">LANGKAH 01 / 07</span>
+                                        <div class="progress-meter" role="progressbar" aria-valuemin="1" aria-valuemax="7" aria-valuenow="1" id="quizProgressMeter">
+                                            <div class="progress-meter-fill" id="quizProgressFill"></div>
+                                        </div>
+                                        <span class="mono-tag" id="quizScoreSavedTag">Tersimpan lokal</span>
+                                    </div>
+
+                                    <div class="quiz-question-stage" id="quizStepQuestionArea"></div>
+
+                                    <div class="notebook-footer">
+                                        <button type="button" class="btn-outline" id="prevQuizBtn">Langkah Sebelumnya</button>
+                                        <div class="notebook-footer-right">
+                                            <button type="button" class="btn-outline" id="resetQuizBtn" hidden>Ulangi Kuis</button>
+                                            <button type="button" class="btn-primary" id="nextQuizBtn">Lanjut Pertanyaan</button>
                                         </div>
                                     </div>
+                                </div>
 
-                                    <div class="shoot-banner" id="shootBanner" hidden>
-                                        <span class="banner-dot" aria-hidden="true"></span>
-                                        <span id="shootBannerText"></span>
+                                <div class="book-page book-page--right quiz-page-right">
+                                    <div class="book-folio-bar">
+                                        <span class="mono-tag">HALAMAN BUKTI ASLI</span>
+                                        <span class="mono-tag quiz-lock-tag" id="quizEvidenceStateTag">TERSEGEL</span>
+                                    </div>
+                                    <div class="quiz-evidence-stage" id="quizStepEvidenceArea"></div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- PAGE 40: SURAT PUNCAK 27 (2-PAGE ILLUMINATED SPREAD) -->
+                        <section class="deck-page deck-page--letter biome-4" id="page-letter" data-page-index="40" aria-labelledby="letter-title" hidden>
+                            <article class="book-spread letter-book-spread" aria-labelledby="letter-title">
+                                <div class="book-page book-page--left letter-page-left">
+                                    <svg class="corner-filigree corner-tl" viewBox="0 0 48 48" width="38" height="38" aria-hidden="true" fill="none">
+                                        <path d="M4 44V10C4 6.7 6.7 4 10 4H44" stroke="currentColor" stroke-width="1.6"/>
+                                        <path d="M12 34V16C12 13.8 13.8 12 16 12H34" stroke="currentColor" stroke-width="1"/>
+                                        <circle cx="10" cy="10" r="2.2" fill="currentColor"/>
+                                    </svg>
+                                    <svg class="corner-filigree corner-bl" viewBox="0 0 48 48" width="38" height="38" aria-hidden="true" fill="none">
+                                        <path d="M4 44V10C4 6.7 6.7 4 10 4H44" stroke="currentColor" stroke-width="1.6"/>
+                                        <path d="M12 34V16C12 13.8 13.8 12 16 12H34" stroke="currentColor" stroke-width="1"/>
+                                        <circle cx="10" cy="10" r="2.2" fill="currentColor"/>
+                                    </svg>
+
+                                    <div class="book-folio-bar">
+                                        <span class="mono-tag">SURAT PUNCAK 27 // LEMBAR I</span>
+                                        <span class="mono-tag">2.700 MDPL</span>
                                     </div>
 
-                                    <div class="countdown-overlay" id="countdownOverlay" aria-hidden="true" hidden>
-                                        <span id="countdownNumber"></span>
+                                    <div class="bookplate-header">
+                                        <div class="wax-seal-badge" aria-hidden="true">
+                                            <span>27</span>
+                                        </div>
+                                        <p class="mono-tag">EX LIBRIS // 27 AGUSTUS -> 27 NOVEMBER 2026</p>
+                                        <h2 id="letter-title" class="letter-title">Untuk Anisa Rahma Eka Widyastuti (Rara)</h2>
+                                        <p class="letter-subtitle-italic">Dari balik kamera FYP hingga dua puluh tujuh pos cerita bersama.</p>
                                     </div>
 
-                                    <div class="flash-overlay" id="flashOverlay" aria-hidden="true"></div>
-
-                                    <div class="camera-state-panel" id="cameraStatePanel" data-state="idle">
-                                        <h4 class="state-title" id="cameraStateTitle">Kamera siap dinyalakan</h4>
-                                        <p class="state-desc" id="cameraStateMessage">
-                                            Klik Buka Kamera untuk mulai foto berdua, pilih foto dari perangkat, atau pakai Isi Cepat dari Foto Momen.
+                                    <div class="letter-body">
+                                        <p class="letter-paragraph drop-cap">
+                                            Selamat ulang tahun yang sempat nyangkut di perjalanan, Rara. Memang aslinya tanggal 27 Agustus, tapi biar angka 27-nya tetap utuh, catatan perjalanan kecil ini sengaja kusampaikan pas tanggal 27 November ini.
                                         </p>
-                                        <div class="state-actions">
-                                            <button type="button" class="btn-primary" id="startCameraBtn">Buka Kamera</button>
-                                            <button type="button" class="btn-outline" id="uploadFallbackBtn">Upload Foto</button>
-                                        </div>
+                                        <p class="letter-paragraph">
+                                            Kalau diputar lagi ke belakang, agak lucu sih awalnya. Semua berawal dari hal sesimpel aku jadi tim dokumentasi pas FYP BINUS, terus kamu tiba-tiba dadah ke arah kamera. Dari situ aku jadi sering gak sengaja notice kamu sepanjang Agustus, sampai akhirnya twibbon IS B30 kamu lewat di beranda tanggal 19 Agustus dan dibalas follback 32 menit kemudian.
+                                        </p>
+                                        <p class="letter-paragraph">
+                                            Waktu chat pertama tanggal 27 Agustus pun awalnya masih formal banget, bahas foto baca buku di Siwil Art, perdebatan Klaten vs Jogja, sampai aku nulis satu penjelasan panjang cuma buat ngenalin apa itu kimpul. Rasanya beda banget kalau dibandingin sama obrolan kita belakangan ini yang bisa loncat dari urusan tugas kuliah, ngode di IG Notes jam satu pagi, rahasia akun second, sampai typo gak masuk akal soal mesin cucu.
+                                        </p>
                                     </div>
                                 </div>
 
-                                <input type="file" id="manualFileInput" accept="image/*" multiple hidden>
+                                <div class="book-page book-page--right letter-page-right">
+                                    <svg class="corner-filigree corner-tr" viewBox="0 0 48 48" width="38" height="38" aria-hidden="true" fill="none">
+                                        <path d="M4 44V10C4 6.7 6.7 4 10 4H44" stroke="currentColor" stroke-width="1.6"/>
+                                        <path d="M12 34V16C12 13.8 13.8 12 16 12H34" stroke="currentColor" stroke-width="1"/>
+                                        <circle cx="10" cy="10" r="2.2" fill="currentColor"/>
+                                    </svg>
+                                    <svg class="corner-filigree corner-br" viewBox="0 0 48 48" width="38" height="38" aria-hidden="true" fill="none">
+                                        <path d="M4 44V10C4 6.7 6.7 4 10 4H44" stroke="currentColor" stroke-width="1.6"/>
+                                        <path d="M12 34V16C12 13.8 13.8 12 16 12H34" stroke="currentColor" stroke-width="1"/>
+                                        <circle cx="10" cy="10" r="2.2" fill="currentColor"/>
+                                    </svg>
 
-                                <div class="shutter-row">
-                                    <button type="button" class="btn-crimson" id="shutterBtn" disabled>
-                                        <span id="shutterBtnLabel">Ambil Foto Berdua (3 Pose)</span>
-                                    </button>
-                                    <button type="button" class="btn-secondary" id="fillFromMomentsBtn">
-                                        Isi Cepat dari Foto Momen
-                                    </button>
-                                    <button type="button" class="btn-outline" id="switchCameraBtn" hidden>
-                                        Ganti Kamera
-                                    </button>
+                                    <div class="book-folio-bar">
+                                        <span class="mono-tag">SURAT PUNCAK 27 // LEMBAR II</span>
+                                        <span class="mono-tag">CATATAN AKHIR</span>
+                                    </div>
+
+                                    <div class="letter-body">
+                                        <p class="letter-paragraph">
+                                            Masih inget juga tanggal 3 Oktober kemarin waktu kita perdana jalan bareng ke Gramed Jalma cuma modal ngode lewat IG Notes 'jalma' dibalas 'maw maw'. Hari itu rasanya kayak titik balik: dari yang tadinya masih canggung banget, tiba-tiba lanjut makan bareng, pindah obrolan ke WhatsApp, sampai gak sadar jadwal ketemu dan ngobrol kita makin panjang ke belakangnya.
+                                        </p>
+                                        <p class="letter-paragraph">
+                                            Terima kasih sudah jadi teman dekat yang seru banget diajak cerita, diskusi, nugas berjam-jam di Discord walau kadang ujungnya tumbang di depan ThinkPad, saling berbagi lagu sampai Spotify Blend kita tembus seratus persen cocok, nobar film fantasi tengah malam, sekaligus pendengar yang tulus di saat aku juga butuh teman ngobrol.
+                                        </p>
+                                        <p class="letter-paragraph">
+                                            Semoga semester awal sampai nanti kuliahmu terus dilancarkan, ide konten bertema fairy tale, morikei, dan karya fesyen yang kamu impikan pelan-pelan terwujud semua, dan semoga kita tetap bisa berteman sedekat ini dalam waktu yang panjang. Plus satu lagi: wacana muncak Merbabu dan jadwal nonton berikutnya jangan sampai cuma mengendap jadi arsip tangkapan layar ya.
+                                        </p>
+                                        <p class="letter-signoff letter-paragraph">
+                                            Semoga perjalanan kita masih panjang sampai pos-pos berikutnya.<br>
+                                            <strong>Jayyid Jiddan</strong> (teman ngobrol sekaligus rekan ambis kamu)
+                                        </p>
+                                    </div>
+
+                                    <div class="letter-summary-banner" id="letterSavedSummary" role="status" aria-live="polite">
+                                        Nilai perjalanan: 95 / 100.
+                                    </div>
+                                    <p class="passport-summary-note" id="puncak-stamps-status">Stempel Ekspedisi terkumpul: 0 / 6.</p>
+
+                                    <div class="letter-actions">
+                                        <button type="button" class="btn-outline" id="letterEditQuizBtn">Edit Jawaban Kuis</button>
+                                        <button type="button" class="btn-primary" id="letterGoBoothBtn">Lanjut ke Foto Berdua di Puncak</button>
+                                    </div>
                                 </div>
+                            </article>
+                        </section>
 
-                                <p class="shutter-hint" id="shutterHint">
-                                    Nyalakan kamera untuk memotret, atau klik Isi Cepat dari Foto Momen untuk mengisi strip seketika.
-                                </p>
-
-                                <div class="booth-controls-grid">
-                                    <div class="control-block">
-                                        <span class="control-label">Jumlah Pose</span>
-                                        <div class="segment-group" role="radiogroup" aria-label="Jumlah pose">
-                                            <label class="segment-pill">
-                                                <input type="radio" name="shotCount" value="1">
-                                                <span>1 Pose</span>
-                                            </label>
-                                            <label class="segment-pill">
-                                                <input type="radio" name="shotCount" value="3" checked>
-                                                <span>3 Pose</span>
-                                            </label>
-                                            <label class="segment-pill">
-                                                <input type="radio" name="shotCount" value="4">
-                                                <span>4 Pose</span>
-                                            </label>
-                                        </div>
-                                    </div>
-
-                                    <div class="control-block">
-                                        <span class="control-label">Timer Hitung Mundur</span>
-                                        <div class="segment-group" role="radiogroup" aria-label="Durasi timer">
-                                            <label class="segment-pill">
-                                                <input type="radio" name="timerSeconds" value="3" checked>
-                                                <span>3 Detik</span>
-                                            </label>
-                                            <label class="segment-pill">
-                                                <input type="radio" name="timerSeconds" value="5">
-                                                <span>5 Detik</span>
-                                            </label>
-                                            <label class="segment-pill">
-                                                <input type="radio" name="timerSeconds" value="0">
-                                                <span>Langsung</span>
-                                            </label>
-                                        </div>
-                                    </div>
-
-                                    <div class="control-block control-block--wide">
-                                        <span class="control-label">Tema Alam Strip Foto</span>
-                                        <div class="segment-group" role="radiogroup" aria-label="Tema desain strip foto">
-                                            <label class="segment-pill">
-                                                <input type="radio" name="stripTheme" value="parchment" checked>
-                                                <span>Pesisir Emas</span>
-                                            </label>
-                                            <label class="segment-pill">
-                                                <input type="radio" name="stripTheme" value="lantern">
-                                                <span>Hutan Lentera</span>
-                                            </label>
-                                            <label class="segment-pill">
-                                                <input type="radio" name="stripTheme" value="berry">
-                                                <span>Lembah Bidadari</span>
-                                            </label>
-                                            <label class="segment-pill">
-                                                <input type="radio" name="stripTheme" value="summit">
-                                                <span>Puncak Bintang</span>
-                                            </label>
+                        <!-- PAGE 41: PHOTOBOOTH PUNCAK 27 (MOUNTED PERSISTENTLY SO CAMERA & FRAMES NEVER RESET) -->
+                        <section class="deck-page deck-page--booth biome-4" id="page-photobooth" data-page-index="41" aria-labelledby="booth-heading" hidden>
+                            <div class="book-spread booth-grid">
+                                <section class="book-page book-page--left booth-panel camera-panel" aria-labelledby="camera-heading">
+                                    <div class="book-folio-bar">
+                                        <span class="mono-tag">BAB PENUTUP // PUNCAK 27</span>
+                                        <div class="camera-status" id="cameraStatus" data-state="idle" role="status" aria-live="polite">
+                                            <span class="status-dot" aria-hidden="true"></span>
+                                            <span id="cameraStatusText">Kamera nonaktif</span>
                                         </div>
                                     </div>
 
-                                    <div class="control-block control-block--wide">
-                                        <span class="control-label">Kamera &amp; Audio</span>
-                                        <div class="toggle-pair">
-                                            <button type="button" class="btn-outline" id="mirrorToggle" aria-pressed="true">Cermin: Aktif</button>
-                                            <button type="button" class="btn-outline" id="soundToggle" aria-pressed="false">Suara: Mati</button>
+                                    <div class="panel-topbar">
+                                        <div>
+                                            <h2 id="booth-heading" class="book-chapter-title">Photobooth Berdua di Puncak</h2>
+                                            <p class="panel-sub-note" id="camera-heading">Nyalakan kamera, unggah foto, atau pakai Isi Cepat dari Foto Momen.</p>
                                         </div>
                                     </div>
-                                </div>
 
-                                <div class="caption-editor-row">
-                                    <label class="control-label" for="stripCaptionInput">Teks Bawah Strip Foto</label>
-                                    <input type="text" id="stripCaptionInput" class="text-input" maxlength="44" value="Jay & Rara // Puncak 27">
-                                </div>
-                            </section>
+                                    <div class="viewport-frame">
+                                        <video id="cameraVideo" autoplay playsinline muted class="is-mirrored"></video>
 
-                            <aside class="booth-panel output-panel storybook-frame" aria-labelledby="output-heading">
-                                <div class="panel-topbar">
-                                    <h3 id="output-heading" class="panel-title">Dua Kartu Cetak Arsip</h3>
-                                    <span class="mono-tag" id="slotCounter">0 / 3 bingkai</span>
-                                </div>
+                                        <div class="camera-frame-overlay" aria-hidden="true">
+                                            <div class="vf-top-row">
+                                                <svg class="vf-corner" viewBox="0 0 36 36" width="26" height="26" fill="none">
+                                                    <path d="M3 24V5C3 3.9 3.9 3 5 3H24" stroke="currentColor" stroke-width="2"/>
+                                                    <circle cx="8" cy="8" r="2" fill="currentColor"/>
+                                                </svg>
+                                                <span class="vf-badge">LENSA EKSPEDISI 27 // 2.700 MDPL</span>
+                                                <svg class="vf-corner vf-corner--tr" viewBox="0 0 36 36" width="26" height="26" fill="none">
+                                                    <path d="M3 24V5C3 3.9 3.9 3 5 3H24" stroke="currentColor" stroke-width="2"/>
+                                                    <circle cx="8" cy="8" r="2" fill="currentColor"/>
+                                                </svg>
+                                            </div>
+                                            <div class="vf-bottom-row">
+                                                <svg class="vf-corner vf-corner--bl" viewBox="0 0 36 36" width="26" height="26" fill="none">
+                                                    <path d="M3 24V5C3 3.9 3.9 3 5 3H24" stroke="currentColor" stroke-width="2"/>
+                                                    <circle cx="8" cy="8" r="2" fill="currentColor"/>
+                                                </svg>
+                                                <svg class="vf-vine-crest" viewBox="0 0 180 20" width="136" height="15" fill="none">
+                                                    <path d="M8 10H68M112 10H172" stroke="currentColor" stroke-width="1.2" stroke-opacity="0.72"/>
+                                                    <path d="M90 2L92.6 7.4L98 10L92.6 12.6L90 18L87.4 12.6L82 10L87.4 7.4L90 2Z" fill="currentColor"/>
+                                                </svg>
+                                                <svg class="vf-corner vf-corner--br" viewBox="0 0 36 36" width="26" height="26" fill="none">
+                                                    <path d="M3 24V5C3 3.9 3.9 3 5 3H24" stroke="currentColor" stroke-width="2"/>
+                                                    <circle cx="8" cy="8" r="2" fill="currentColor"/>
+                                                </svg>
+                                            </div>
+                                        </div>
 
-                                <div class="card-tabs" role="tablist" aria-label="Pilih kartu cetak">
-                                    <button type="button" class="card-tab-btn" id="tabStripCard" role="tab" aria-selected="true" aria-controls="stripPanelView">
-                                        1. Strip Photobooth
-                                    </button>
-                                    <button type="button" class="card-tab-btn" id="tabSummaryCard" role="tab" aria-selected="false" aria-controls="summaryPanelView">
-                                        2. Kartu Rangkuman
-                                    </button>
-                                </div>
+                                        <div class="shoot-banner" id="shootBanner" hidden>
+                                            <span class="banner-dot" aria-hidden="true"></span>
+                                            <span id="shootBannerText"></span>
+                                        </div>
 
-                                <div id="stripPanelView" role="tabpanel" aria-labelledby="tabStripCard">
-                                    <div class="slot-editor-section">
-                                        <p class="mono-tag">SUSUNAN BINGKAI (<span id="stripCode">STRIP-03</span>)</p>
-                                        <ol class="strip-slots" id="stripSlots"></ol>
+                                        <div class="countdown-overlay" id="countdownOverlay" aria-hidden="true" hidden>
+                                            <span id="countdownNumber"></span>
+                                        </div>
+
+                                        <div class="flash-overlay" id="flashOverlay" aria-hidden="true"></div>
+
+                                        <div class="camera-state-panel" id="cameraStatePanel" data-state="idle">
+                                            <h3 class="state-title" id="cameraStateTitle">Kamera siap dinyalakan</h3>
+                                            <p class="state-desc" id="cameraStateMessage">
+                                                Klik Buka Kamera untuk mulai foto berdua, pilih foto dari perangkat, atau pakai Isi Cepat dari Foto Momen.
+                                            </p>
+                                            <div class="state-actions">
+                                                <button type="button" class="btn-primary" id="startCameraBtn">Buka Kamera</button>
+                                                <button type="button" class="btn-outline" id="uploadFallbackBtn">Upload Foto</button>
+                                            </div>
+                                        </div>
                                     </div>
 
-                                    <div class="canvas-preview-box">
-                                        <canvas id="strip-canvas" class="printable-canvas" width="760" height="1180" aria-label="Pratinjau langsung Strip Photobooth Berdua"></canvas>
+                                    <input type="file" id="manualFileInput" accept="image/*" multiple hidden>
+
+                                    <div class="shutter-row">
+                                        <button type="button" class="btn-crimson" id="shutterBtn" disabled>
+                                            <span id="shutterBtnLabel">Ambil Foto Berdua (3 Pose)</span>
+                                        </button>
+                                        <button type="button" class="btn-secondary" id="fillFromMomentsBtn">
+                                            Isi Cepat dari Foto Momen
+                                        </button>
+                                        <button type="button" class="btn-outline" id="switchCameraBtn" hidden>
+                                            Ganti Kamera
+                                        </button>
                                     </div>
 
-                                    <p class="status-note" id="stripEmptyNote">
-                                        Belum ada foto. Potret lewat kamera, upload foto, atau pakai Isi Cepat dari Foto Momen.
+                                    <p class="shutter-hint" id="shutterHint">
+                                        Nyalakan kamera untuk memotret, atau klik Isi Cepat dari Foto Momen untuk mengisi strip seketika.
                                     </p>
 
-                                    <div class="card-action-row">
-                                        <button type="button" class="btn-primary" id="downloadBtn" disabled>Unduh Strip PNG</button>
-                                        <button type="button" class="btn-secondary" id="previewBtn" disabled>Pratinjau</button>
-                                        <button type="button" class="btn-outline" id="resetBtn" disabled>Ulangi</button>
-                                    </div>
-                                    <p class="feedback-line" id="actionFeedback" role="status" aria-live="polite"></p>
-                                </div>
+                                    <div class="booth-controls-grid">
+                                        <div class="control-block">
+                                            <span class="control-label">Jumlah Pose</span>
+                                            <div class="segment-group" role="radiogroup" aria-label="Jumlah pose">
+                                                <label class="segment-pill">
+                                                    <input type="radio" name="shotCount" value="1">
+                                                    <span>1 Pose</span>
+                                                </label>
+                                                <label class="segment-pill">
+                                                    <input type="radio" name="shotCount" value="3" checked>
+                                                    <span>3 Pose</span>
+                                                </label>
+                                                <label class="segment-pill">
+                                                    <input type="radio" name="shotCount" value="4">
+                                                    <span>4 Pose</span>
+                                                </label>
+                                            </div>
+                                        </div>
 
-                                <div id="summaryPanelView" role="tabpanel" aria-labelledby="tabSummaryCard" hidden>
-                                    <div class="canvas-preview-box">
-                                        <canvas id="summary-canvas" class="printable-canvas" width="800" height="1360" aria-label="Pratinjau langsung Kartu Rangkuman Kenangan"></canvas>
+                                        <div class="control-block">
+                                            <span class="control-label">Timer Hitung Mundur</span>
+                                            <div class="segment-group" role="radiogroup" aria-label="Durasi timer">
+                                                <label class="segment-pill">
+                                                    <input type="radio" name="timerSeconds" value="3" checked>
+                                                    <span>3 Detik</span>
+                                                </label>
+                                                <label class="segment-pill">
+                                                    <input type="radio" name="timerSeconds" value="5">
+                                                    <span>5 Detik</span>
+                                                </label>
+                                                <label class="segment-pill">
+                                                    <input type="radio" name="timerSeconds" value="0">
+                                                    <span>Langsung</span>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="control-block control-block--wide">
+                                            <span class="control-label">Tema Alam Strip Foto</span>
+                                            <div class="segment-group" role="radiogroup" aria-label="Tema desain strip foto">
+                                                <label class="segment-pill">
+                                                    <input type="radio" name="stripTheme" value="parchment" checked>
+                                                    <span>Pesisir Emas</span>
+                                                </label>
+                                                <label class="segment-pill">
+                                                    <input type="radio" name="stripTheme" value="lantern">
+                                                    <span>Hutan Lentera</span>
+                                                </label>
+                                                <label class="segment-pill">
+                                                    <input type="radio" name="stripTheme" value="berry">
+                                                    <span>Lembah Bidadari</span>
+                                                </label>
+                                                <label class="segment-pill">
+                                                    <input type="radio" name="stripTheme" value="summit">
+                                                    <span>Puncak Bintang</span>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="control-block control-block--wide">
+                                            <span class="control-label">Kamera &amp; Audio</span>
+                                            <div class="toggle-pair">
+                                                <button type="button" class="btn-outline" id="mirrorToggle" aria-pressed="true">Cermin: Aktif</button>
+                                                <button type="button" class="btn-outline" id="soundToggle" aria-pressed="false">Suara: Mati</button>
+                                            </div>
+                                        </div>
                                     </div>
 
-                                    <div class="summary-meta-list" id="summaryPreviewBody"></div>
-
-                                    <div class="card-action-row">
-                                        <button type="button" class="btn-primary" id="downloadSummaryBtn">Unduh Rangkuman PNG</button>
-                                        <button type="button" class="btn-secondary" id="previewSummaryBtn">Pratinjau</button>
-                                        <button type="button" class="btn-outline" id="shareWaSummaryBtn">Kirim ke WhatsApp</button>
+                                    <div class="caption-editor-row">
+                                        <label class="control-label" for="stripCaptionInput">Teks Bawah Strip Foto</label>
+                                        <input type="text" id="stripCaptionInput" class="text-input" maxlength="44" value="Jay & Rara // Puncak 27">
                                     </div>
-                                    <p class="feedback-line" id="summaryFeedback" role="status" aria-live="polite"></p>
-                                </div>
-                            </aside>
-                        </div>
+                                </section>
+
+                                <aside class="book-page book-page--right booth-panel output-panel" aria-labelledby="output-heading">
+                                    <div class="book-folio-bar">
+                                        <span class="mono-tag">KARTU CETAK ARSIP</span>
+                                        <span class="mono-tag" id="slotCounter">0 / 3 bingkai</span>
+                                    </div>
+
+                                    <div class="panel-topbar">
+                                        <h3 id="output-heading" class="panel-title">Dua Kartu Kenangan</h3>
+                                    </div>
+
+                                    <div class="card-tabs" role="tablist" aria-label="Pilih kartu cetak">
+                                        <button type="button" class="card-tab-btn" id="tabStripCard" role="tab" aria-selected="true" aria-controls="stripPanelView">
+                                            1. Strip Photobooth
+                                        </button>
+                                        <button type="button" class="card-tab-btn" id="tabSummaryCard" role="tab" aria-selected="false" aria-controls="summaryPanelView">
+                                            2. Kartu Rangkuman
+                                        </button>
+                                    </div>
+
+                                    <div id="stripPanelView" role="tabpanel" aria-labelledby="tabStripCard">
+                                        <div class="slot-editor-section">
+                                            <p class="mono-tag">SUSUNAN BINGKAI (<span id="stripCode">STRIP-03</span>)</p>
+                                            <ol class="strip-slots" id="stripSlots"></ol>
+                                        </div>
+
+                                        <div class="canvas-preview-box">
+                                            <canvas id="strip-canvas" class="printable-canvas" width="760" height="1180" aria-label="Pratinjau langsung Strip Photobooth Berdua"></canvas>
+                                        </div>
+
+                                        <p class="status-note" id="stripEmptyNote">
+                                            Belum ada foto. Potret lewat kamera, upload foto, atau pakai Isi Cepat dari Foto Momen.
+                                        </p>
+
+                                        <div class="card-action-row">
+                                            <button type="button" class="btn-primary" id="downloadBtn" disabled>Unduh Strip PNG</button>
+                                            <button type="button" class="btn-secondary" id="previewBtn" disabled>Pratinjau</button>
+                                            <button type="button" class="btn-outline" id="resetBtn" disabled>Ulangi</button>
+                                        </div>
+                                        <p class="feedback-line" id="actionFeedback" role="status" aria-live="polite"></p>
+                                    </div>
+
+                                    <div id="summaryPanelView" role="tabpanel" aria-labelledby="tabSummaryCard" hidden>
+                                        <div class="canvas-preview-box">
+                                            <canvas id="summary-canvas" class="printable-canvas" width="800" height="1360" aria-label="Pratinjau langsung Kartu Rangkuman Kenangan"></canvas>
+                                        </div>
+
+                                        <div class="summary-meta-list" id="summaryPreviewBody"></div>
+
+                                        <div class="card-action-row">
+                                            <button type="button" class="btn-primary" id="downloadSummaryBtn">Unduh Rangkuman PNG</button>
+                                            <button type="button" class="btn-secondary" id="previewSummaryBtn">Pratinjau</button>
+                                            <button type="button" class="btn-outline" id="shareWaSummaryBtn">Kirim ke WhatsApp</button>
+                                        </div>
+                                        <p class="feedback-line" id="summaryFeedback" role="status" aria-live="polite"></p>
+                                    </div>
+                                </aside>
+                            </div>
+                        </section>
                     </div>
-                </section>
+                </div>
             </div>
         </main>
 
@@ -622,7 +666,7 @@
             <div class="dock-progress-center">
                 <div class="dock-meta-row">
                     <span class="mono-tag" id="dockPageReadout">HAL 01 / 42 // PESISIR SENJA</span>
-                    <span class="dock-gesture-hint">Geser layar, klik tombol, atau panah keyboard</span>
+                    <span class="dock-gesture-hint">Klik sudut buku, panah keyboard, atau geser di HP</span>
                 </div>
                 <div class="dock-meter" aria-hidden="true">
                     <div class="dock-meter-fill" id="dockProgressFill"></div>
@@ -630,7 +674,7 @@
             </div>
 
             <button type="button" class="dock-nav-btn dock-nav-btn--next" id="nextPageBtn">
-                Mulai Ekspedisi
+                Buka Sampul Buku
             </button>
         </nav>
     </div>

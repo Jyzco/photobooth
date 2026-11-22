@@ -1609,10 +1609,17 @@
         dialogPreviewTarget: null,
         lastFocusedBeforeDialog: null,
         quickGameAnswers: {},
-        wheelAccum: 0,
+        posLeafTab: {},
+        posLeafUnlocked: {},
+        posPhotoIndex: {},
+        posChatIndex: {},
+        posChatVisibleCount: {},
+        restTalkOpened: {},
         lastWheelFlipAt: 0,
+        transitionSeq: 0,
         leaveCleanupTimer: null,
-        enterCleanupTimer: null
+        enterCleanupTimer: null,
+        flipCleanupTimer: null
     };
 
     const el = {
@@ -1620,6 +1627,12 @@
         deckApp: document.getElementById("deck-app"),
         worldStage: document.getElementById("living-world-stage"),
         ambientCanvas: document.getElementById("ambient-world-canvas"),
+        bookStage3d: document.getElementById("bookStage3d"),
+        bookTome: document.getElementById("bookTome"),
+        bookCornerPrev: document.getElementById("bookCornerPrev"),
+        bookCornerNext: document.getElementById("bookCornerNext"),
+        bookTurnShadow: document.getElementById("bookTurnShadow"),
+        bookFlipLeaf: document.getElementById("bookFlipLeaf"),
         deckViewport: document.getElementById("deck-viewport"),
         goHomeBtn: document.getElementById("goHomeBtn"),
         hudContextPill: document.getElementById("hudContextPill"),
@@ -1633,10 +1646,13 @@
         pageOnboarding: document.getElementById("page-onboarding"),
         waxSealTrigger: document.getElementById("waxSealTrigger"),
         pageQuiz: document.getElementById("page-quiz"),
+        skipQuizBtn: document.getElementById("skipQuizBtn"),
         quizStepLabel: document.getElementById("quizStepLabel"),
         quizProgressMeter: document.getElementById("quizProgressMeter"),
         quizProgressFill: document.getElementById("quizProgressFill"),
-        quizStepContainer: document.getElementById("quizStepContainer"),
+        quizEvidenceStateTag: document.getElementById("quizEvidenceStateTag"),
+        quizStepQuestionArea: document.getElementById("quizStepQuestionArea"),
+        quizStepEvidenceArea: document.getElementById("quizStepEvidenceArea"),
         prevQuizBtn: document.getElementById("prevQuizBtn"),
         resetQuizBtn: document.getElementById("resetQuizBtn"),
         nextQuizBtn: document.getElementById("nextQuizBtn"),
@@ -2117,10 +2133,135 @@
         return "Masih ada banyak ruang buat cerita baru nanti";
     }
 
+    function populateQuizEvidenceBack(backEl, step) {
+        backEl.replaceChildren();
+
+        const evBox = document.createElement("div");
+        evBox.className = "quiz-evidence";
+
+        const evBtn = document.createElement("button");
+        evBtn.type = "button";
+        evBtn.className = "quiz-evidence-btn";
+        evBtn.setAttribute("aria-label", `Perbesar bukti foto: ${step.evidenceCaption}`);
+
+        const evImg = document.createElement("img");
+        evImg.src = step.evidenceImg;
+        evImg.alt = step.evidenceCaption;
+        evBtn.appendChild(evImg);
+        evBtn.addEventListener("click", () => {
+            const idx = LIGHTBOX_GALLERY.findIndex((item) => item.src === step.evidenceImg);
+            openImageLightbox(step.evidenceImg, step.eyebrow, step.evidenceCaption, null, idx);
+        });
+
+        const evCap = document.createElement("p");
+        evCap.className = "quiz-evidence-cap";
+        evCap.textContent = step.evidenceCaption;
+        evBox.append(evBtn, evCap);
+
+        const reactionBox = document.createElement("div");
+        reactionBox.className = "quiz-reaction-box";
+        reactionBox.textContent = state.quizReactions[step.id] || "";
+
+        const nextActionBtn = document.createElement("button");
+        nextActionBtn.type = "button";
+        nextActionBtn.className = "btn-primary quiz-evidence-next-btn";
+        const isLastStep = state.quizStep >= QUIZ_STEPS.length - 1;
+        nextActionBtn.textContent = isLastStep
+            ? "Simpan & Masuki Pesisir Senja"
+            : `Buka Pertanyaan ${String(state.quizStep + 2).padStart(2, "0")}`;
+        nextActionBtn.addEventListener("click", () => {
+            SoundscapeEngine.playUiTap();
+            advanceQuizStep(1);
+        });
+
+        backEl.append(evBox, reactionBox, nextActionBtn);
+    }
+
+    function revealQuizEvidenceCard(step) {
+        const card = document.getElementById("quizEvidenceCard");
+        const backFace = document.getElementById("quizEvidenceBack");
+        if (!card || !backFace) {
+            return;
+        }
+        populateQuizEvidenceBack(backFace, step);
+        if (el.quizEvidenceStateTag) {
+            el.quizEvidenceStateTag.textContent = "TERBUKA";
+            el.quizEvidenceStateTag.classList.add("is-unlocked");
+        }
+        el.resetQuizBtn.hidden = false;
+        window.requestAnimationFrame(() => {
+            window.requestAnimationFrame(() => {
+                card.classList.add("is-flipped");
+            });
+        });
+    }
+
+    function renderRatingEvidencePreview() {
+        const preview = document.createElement("div");
+        preview.className = "rating-summary-card";
+
+        const eyebrow = document.createElement("p");
+        eyebrow.className = "eyebrow";
+        eyebrow.textContent = "PRATINJAU KARTU RANGKUMAN";
+
+        const scoreBig = document.createElement("p");
+        scoreBig.className = "rating-number";
+        scoreBig.id = "quizPreviewScore";
+        scoreBig.textContent = `${state.ratingScore} / 100`;
+
+        const desc = document.createElement("p");
+        desc.className = "rating-descriptor";
+        desc.id = "quizPreviewDesc";
+        desc.textContent = getScoreDescriptor(state.ratingScore);
+
+        const noteQuote = document.createElement("blockquote");
+        noteQuote.className = "rating-note-preview";
+        noteQuote.id = "quizPreviewNote";
+        const clean = state.raraNote.trim();
+        noteQuote.textContent = clean
+            ? `"${clean}"`
+            : '"Catatan pribadimu nanti akan tercetak rapi di Kartu Rangkuman PNG."';
+
+        const stampInfo = document.createElement("p");
+        stampInfo.className = "mono-tag";
+        stampInfo.textContent = `STEMPEL TERKUMPUL: ${state.unlockedStamps.length} / 6`;
+
+        const finishBtn = document.createElement("button");
+        finishBtn.type = "button";
+        finishBtn.className = "btn-primary";
+        finishBtn.textContent = "Simpan & Masuki Pesisir Senja";
+        finishBtn.addEventListener("click", () => {
+            SoundscapeEngine.playUiTap();
+            advanceQuizStep(1);
+        });
+
+        preview.append(eyebrow, scoreBig, desc, noteQuote, stampInfo, finishBtn);
+        return preview;
+    }
+
+    function syncQuizRatingPreviewNodes() {
+        const scoreEl = document.getElementById("quizPreviewScore");
+        const descEl = document.getElementById("quizPreviewDesc");
+        const noteEl = document.getElementById("quizPreviewNote");
+        if (scoreEl) {
+            scoreEl.textContent = `${state.ratingScore} / 100`;
+        }
+        if (descEl) {
+            descEl.textContent = getScoreDescriptor(state.ratingScore);
+        }
+        if (noteEl) {
+            const clean = state.raraNote.trim();
+            noteEl.textContent = clean
+                ? `"${clean}"`
+                : '"Catatan pribadimu nanti akan tercetak rapi di Kartu Rangkuman PNG."';
+        }
+    }
+
     function renderQuizStep() {
         const step = QUIZ_STEPS[state.quizStep];
         const total = QUIZ_STEPS.length;
         const pct = Math.round(((state.quizStep + 1) / total) * 100);
+        const isAnswered = Boolean(state.quizAnswers[step.id]);
 
         el.quizStepLabel.textContent = `LANGKAH ${String(state.quizStep + 1).padStart(2, "0")} / ${String(total).padStart(2, "0")}`;
         el.quizProgressMeter.setAttribute("aria-valuenow", String(state.quizStep + 1));
@@ -2128,12 +2269,24 @@
 
         el.prevQuizBtn.disabled = state.quizStep === 0;
         el.resetQuizBtn.hidden = Object.keys(state.quizAnswers).length === 0 && !state.raraNote;
-        el.nextQuizBtn.textContent = state.quizStep === total - 1 ? "Simpan & Masuki Pesisir Senja" : "Lanjut Pertanyaan";
+        el.nextQuizBtn.textContent =
+            state.quizStep === total - 1
+                ? "Masuki Pesisir Senja"
+                : `Pertanyaan ${String(state.quizStep + 2).padStart(2, "0")}`;
 
-        const wrapper = document.createElement("div");
-        wrapper.className = step.evidenceImg ? "quiz-layout" : "quiz-layout quiz-layout--single";
+        if (el.quizEvidenceStateTag) {
+            if (step.type === "rating") {
+                el.quizEvidenceStateTag.textContent = "RINGKASAN";
+                el.quizEvidenceStateTag.classList.add("is-unlocked");
+            } else {
+                el.quizEvidenceStateTag.textContent = isAnswered ? "TERBUKA" : "TERSEGEL";
+                el.quizEvidenceStateTag.classList.toggle("is-unlocked", isAnswered);
+            }
+        }
 
-        const mainCol = document.createElement("div");
+        const qCol = document.createElement("div");
+        qCol.className = "quiz-question-col";
+
         const ey = document.createElement("p");
         ey.className = "eyebrow";
         ey.textContent = step.eyebrow;
@@ -2141,13 +2294,13 @@
         const qEl = document.createElement("h3");
         qEl.className = "quiz-question";
         qEl.textContent = step.question;
-        mainCol.append(ey, qEl);
+        qCol.append(ey, qEl);
 
-        const reactionBox = document.createElement("div");
-        reactionBox.className = "quiz-reaction-box";
-        const savedReaction = state.quizReactions[step.id] || "";
-        reactionBox.hidden = !savedReaction;
-        reactionBox.textContent = savedReaction;
+        const statusCue = document.createElement("p");
+        statusCue.className = "quiz-unlock-cue";
+        statusCue.id = "quizUnlockCue";
+        statusCue.hidden = !isAnswered || step.type === "rating";
+        statusCue.textContent = "Bukti asli dan catatan Jay terbuka di halaman kanan.";
 
         if (step.type === "choice" || step.type === "runaway") {
             const optGroup = document.createElement("div");
@@ -2163,16 +2316,19 @@
                 }
                 btn.addEventListener("click", () => {
                     SoundscapeEngine.playUiTap();
+                    optGroup.querySelectorAll(".quiz-option-btn").forEach((b) => b.classList.remove("is-selected"));
+                    btn.classList.add("is-selected");
                     state.quizAnswers[step.id] = opt.label;
                     state.quizReactions[step.id] = opt.reaction;
                     unlockStamp("fyp");
                     saveQuizState();
                     updateLetterAndSummaryPreview();
-                    renderQuizStep();
+                    statusCue.hidden = false;
+                    revealQuizEvidenceCard(step);
                 });
                 optGroup.appendChild(btn);
             });
-            mainCol.appendChild(optGroup);
+            qCol.appendChild(optGroup);
 
             if (step.type === "runaway") {
                 const arena = document.createElement("div");
@@ -2191,11 +2347,11 @@
                     SoundscapeEngine.playUiTap();
                     state.runawayAttempts += 1;
                     dodgeBtn.textContent = step.runawayStages[Math.min(state.runawayAttempts, step.runawayStages.length - 1)];
-                    const maxShiftX = Math.max(0, arena.clientWidth - dodgeBtn.offsetWidth - 24);
-                    const rawX = state.runawayAttempts % 2 === 1 ? Math.min(maxShiftX, 180) : 16;
+                    const maxShiftX = Math.max(0, arena.clientWidth - dodgeBtn.offsetWidth - 28);
+                    const rawX = state.runawayAttempts % 2 === 1 ? Math.min(maxShiftX, 170) : 14;
                     const xOffset = Math.max(0, Math.min(maxShiftX, rawX));
                     const yOffset = state.runawayAttempts % 2 === 1 ? 8 : -6;
-                    dodgeBtn.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
+                    dodgeBtn.style.transform = `translate3d(${xOffset}px, ${yOffset}px, 0)`;
                 };
 
                 dodgeBtn.addEventListener("pointerenter", (evt) => {
@@ -2212,17 +2368,19 @@
                     state.quizAnswers[step.id] = step.runawayStages[step.runawayStages.length - 1];
                     state.quizReactions[step.id] = step.runawayFinalReaction;
                     unlockStamp("fyp");
-                    dodgeBtn.style.transform = "translate(0, 0)";
+                    dodgeBtn.style.transform = "translate3d(0, 0, 0)";
+                    dodgeBtn.classList.add("is-selected");
                     saveQuizState();
                     updateLetterAndSummaryPreview();
-                    renderQuizStep();
+                    statusCue.hidden = false;
+                    revealQuizEvidenceCard(step);
                 });
 
                 arena.appendChild(dodgeBtn);
-                mainCol.appendChild(arena);
+                qCol.appendChild(arena);
             }
 
-            mainCol.appendChild(reactionBox);
+            qCol.appendChild(statusCue);
         } else if (step.type === "rating") {
             const panel = document.createElement("div");
             panel.className = "rating-panel";
@@ -2257,6 +2415,7 @@
                 unlockStamp("fyp");
                 scoreDisplay.textContent = `${state.ratingScore} / 100`;
                 descDisplay.textContent = getScoreDescriptor(state.ratingScore);
+                syncQuizRatingPreviewNodes();
                 saveQuizState();
                 updateLetterAndSummaryPreview();
             });
@@ -2273,47 +2432,86 @@
             textarea.value = state.raraNote;
             textarea.addEventListener("input", () => {
                 state.raraNote = textarea.value;
+                syncQuizRatingPreviewNodes();
                 saveQuizState();
                 updateLetterAndSummaryPreview();
             });
 
             panel.append(readoutRow, rangeLabel, slider, noteLabel, textarea);
-            mainCol.appendChild(panel);
+            qCol.appendChild(panel);
         }
 
-        wrapper.appendChild(mainCol);
+        el.quizStepQuestionArea.replaceChildren(qCol);
 
         if (step.evidenceImg) {
-            const evBox = document.createElement("div");
-            evBox.className = "quiz-evidence";
+            const flipStage = document.createElement("div");
+            flipStage.className = "evidence-flip-stage";
 
-            const evBtn = document.createElement("button");
-            evBtn.type = "button";
-            evBtn.className = "quiz-evidence-btn";
-            evBtn.setAttribute("aria-label", `Perbesar bukti foto: ${step.evidenceCaption}`);
+            const flipCard = document.createElement("div");
+            flipCard.className = `evidence-flip-card${isAnswered ? " is-flipped" : ""}`;
+            flipCard.id = "quizEvidenceCard";
 
-            const evImg = document.createElement("img");
-            evImg.src = step.evidenceImg;
-            evImg.alt = step.evidenceCaption;
-            evBtn.appendChild(evImg);
-            evBtn.addEventListener("click", () => {
-                const idx = LIGHTBOX_GALLERY.findIndex((item) => item.src === step.evidenceImg);
-                openImageLightbox(step.evidenceImg, step.eyebrow, step.evidenceCaption, null, idx);
-            });
+            const frontFace = document.createElement("div");
+            frontFace.className = "evidence-face evidence-face--front";
 
-            const evCap = document.createElement("p");
-            evCap.className = "quiz-evidence-cap";
-            evCap.textContent = step.evidenceCaption;
-            evBox.append(evBtn, evCap);
-            wrapper.appendChild(evBox);
+            const sealIcon = document.createElement("div");
+            sealIcon.className = "evidence-seal-emblem";
+            sealIcon.setAttribute("aria-hidden", "true");
+            sealIcon.innerHTML = '<svg viewBox="0 0 36 36" width="32" height="32" fill="none"><rect x="8" y="16" width="20" height="14" rx="3" stroke="currentColor" stroke-width="1.8"/><path d="M12 16V12C12 8.7 14.7 6 18 6C21.3 6 24 8.7 24 12V16" stroke="currentColor" stroke-width="1.8"/><circle cx="18" cy="23" r="2.2" fill="currentColor"/></svg>';
+
+            const frontTitle = document.createElement("h4");
+            frontTitle.className = "evidence-lock-title";
+            frontTitle.textContent = "Segel Bukti Arsip Terkunci";
+
+            const frontHint = document.createElement("p");
+            frontHint.className = "evidence-lock-desc";
+            frontHint.textContent = "Pilih jawabanmu di halaman kiri dulu supaya kartu ini berbalik dan membuka foto bukti aslinya tanpa bocoran.";
+
+            frontFace.append(sealIcon, frontTitle, frontHint);
+
+            const backFace = document.createElement("div");
+            backFace.className = "evidence-face evidence-face--back";
+            backFace.id = "quizEvidenceBack";
+            if (isAnswered) {
+                populateQuizEvidenceBack(backFace, step);
+            }
+
+            flipCard.append(frontFace, backFace);
+            flipStage.appendChild(flipCard);
+            el.quizStepEvidenceArea.replaceChildren(flipStage);
+        } else {
+            el.quizStepEvidenceArea.replaceChildren(renderRatingEvidencePreview());
         }
 
-        el.quizStepContainer.replaceChildren(wrapper);
+        if (state.currentPageIndex === 1) {
+            syncDeckChrome(1);
+        }
     }
 
-    function createChatCardElement(chat) {
+    function createChatBubbleNode(msg, animateIn = true) {
+        const bubble = document.createElement("div");
+        bubble.className = `chat-bubble ${msg.from === "jay" ? "chat-bubble--jay" : "chat-bubble--rara"}${animateIn ? " is-stepped-in" : ""}`;
+
+        const body = document.createElement("p");
+        body.className = "chat-text";
+        body.textContent = msg.text;
+
+        const meta = document.createElement("p");
+        meta.className = "chat-meta";
+        meta.textContent = `${msg.from === "jay" ? "Jay" : "Rara"} | ${msg.time}`;
+
+        bubble.append(body, meta);
+        return bubble;
+    }
+
+    function createChatCardElement(chat, stateKey, onCompleteNext) {
+        const totalMsgs = chat.messages.length;
+        if (typeof state.posChatVisibleCount[stateKey] !== "number") {
+            state.posChatVisibleCount[stateKey] = 1;
+        }
+
         const card = document.createElement("div");
-        card.className = "chat-mockup is-visible";
+        card.className = "chat-mockup";
 
         const header = document.createElement("div");
         header.className = "chat-header";
@@ -2327,45 +2525,90 @@
         prompt.textContent = chat.prompt;
         info.append(tag, prompt);
 
-        const replayBtn = document.createElement("button");
-        replayBtn.type = "button";
-        replayBtn.className = "btn-replay-chat";
-        replayBtn.textContent = "Putar Ulang";
-        replayBtn.addEventListener("click", () => {
-            SoundscapeEngine.playUiTap();
-            card.classList.remove("is-visible");
-            void card.offsetWidth;
-            window.setTimeout(() => {
-                card.classList.add("is-visible");
-            }, 35);
-        });
-
-        header.append(info, replayBtn);
+        const countTag = document.createElement("span");
+        countTag.className = "mono-tag";
+        header.append(info, countTag);
 
         const thread = document.createElement("div");
         thread.className = "chat-thread";
-        chat.messages.forEach((msg, msgIdx) => {
-            const bubble = document.createElement("div");
-            bubble.className = `chat-bubble ${msg.from === "jay" ? "chat-bubble--jay" : "chat-bubble--rara"}`;
-            bubble.style.setProperty("--msg-idx", String(msgIdx));
 
-            const body = document.createElement("p");
-            body.className = "chat-text";
-            body.textContent = msg.text;
+        const controls = document.createElement("div");
+        controls.className = "chat-stepper-bar";
 
-            const meta = document.createElement("p");
-            meta.className = "chat-meta";
-            meta.textContent = `${msg.from === "jay" ? "Jay" : "Rara"} | ${msg.time}`;
+        const nextMsgBtn = document.createElement("button");
+        nextMsgBtn.type = "button";
+        nextMsgBtn.className = "btn-primary btn-chat-next";
 
-            bubble.append(body, meta);
-            thread.appendChild(bubble);
+        const showAllBtn = document.createElement("button");
+        showAllBtn.type = "button";
+        showAllBtn.className = "btn-outline btn-chat-all";
+
+        function syncThreadInitial() {
+            const visible = Math.max(1, Math.min(totalMsgs, state.posChatVisibleCount[stateKey]));
+            state.posChatVisibleCount[stateKey] = visible;
+            thread.replaceChildren();
+            for (let i = 0; i < visible; i += 1) {
+                thread.appendChild(createChatBubbleNode(chat.messages[i], i === visible - 1));
+            }
+            syncChatControls();
+        }
+
+        function syncChatControls() {
+            const visible = state.posChatVisibleCount[stateKey];
+            const done = visible >= totalMsgs;
+            countTag.textContent = `${visible} / ${totalMsgs}`;
+            if (!done) {
+                nextMsgBtn.textContent = `Baca Pesan (${visible}/${totalMsgs})`;
+                showAllBtn.textContent = "Tampilkan Semua";
+            } else if (typeof onCompleteNext === "function") {
+                nextMsgBtn.textContent = "Lanjut Bukti Foto";
+                showAllBtn.textContent = "Ulangi Chat";
+            } else {
+                nextMsgBtn.textContent = "Semua Pesan Terbuka";
+                nextMsgBtn.disabled = true;
+                showAllBtn.textContent = "Ulangi Chat";
+            }
+            if (!done || typeof onCompleteNext === "function") {
+                nextMsgBtn.disabled = false;
+            }
+        }
+
+        nextMsgBtn.addEventListener("click", () => {
+            SoundscapeEngine.playUiTap();
+            const cur = state.posChatVisibleCount[stateKey];
+            if (cur < totalMsgs) {
+                const nextIdx = cur;
+                state.posChatVisibleCount[stateKey] = cur + 1;
+                thread.appendChild(createChatBubbleNode(chat.messages[nextIdx], true));
+                thread.scrollTop = thread.scrollHeight;
+                syncChatControls();
+            } else if (typeof onCompleteNext === "function") {
+                onCompleteNext();
+            }
         });
 
-        card.append(header, thread);
+        showAllBtn.addEventListener("click", () => {
+            SoundscapeEngine.playUiTap();
+            if (state.posChatVisibleCount[stateKey] >= totalMsgs) {
+                state.posChatVisibleCount[stateKey] = 1;
+                syncThreadInitial();
+            } else {
+                for (let i = state.posChatVisibleCount[stateKey]; i < totalMsgs; i += 1) {
+                    thread.appendChild(createChatBubbleNode(chat.messages[i], true));
+                }
+                state.posChatVisibleCount[stateKey] = totalMsgs;
+                thread.scrollTop = thread.scrollHeight;
+                syncChatControls();
+            }
+        });
+
+        controls.append(nextMsgBtn, showAllBtn);
+        card.append(header, thread, controls);
+        syncThreadInitial();
         return card;
     }
 
-    function createPosQuickGame(cp) {
+    function createPosQuickGame(cp, onAnsweredOrSkipped, nextTargetLabel) {
         const qg = cp.quickGame;
         if (!qg || !Array.isArray(qg.options) || qg.options.length === 0) {
             return null;
@@ -2375,7 +2618,7 @@
 
         const kicker = document.createElement("p");
         kicker.className = "selingan-kicker";
-        kicker.textContent = `MINI SELINGAN // POS ${cp.postNum}`;
+        kicker.textContent = `LANGKAH 1 // TEBAKAN POS ${cp.postNum}`;
 
         const prompt = document.createElement("p");
         prompt.className = "selingan-prompt";
@@ -2386,92 +2629,201 @@
 
         const resultBox = document.createElement("p");
         resultBox.className = "selingan-result";
-        resultBox.hidden = true;
+
+        const nextLeafBtn = document.createElement("button");
+        nextLeafBtn.type = "button";
+        nextLeafBtn.className = "btn-primary btn-leaf-advance";
+        nextLeafBtn.textContent = nextTargetLabel || "Buka Lembar Bukti";
+
+        const skipBtn = document.createElement("button");
+        skipBtn.type = "button";
+        skipBtn.className = "btn-folio-link";
+        skipBtn.textContent = "Langsung lihat bukti tanpa menebak";
+
+        const existingAnswer = state.quickGameAnswers[cp.id];
+        const existingOpt = qg.options.find((o) => o.label === existingAnswer);
+        resultBox.hidden = !existingOpt;
+        if (existingOpt) {
+            resultBox.textContent = existingOpt.reply;
+        }
+        nextLeafBtn.hidden = !existingOpt;
+        skipBtn.hidden = Boolean(existingOpt);
 
         qg.options.forEach((opt) => {
             const optBtn = document.createElement("button");
             optBtn.type = "button";
-            optBtn.className = "btn-selingan";
+            optBtn.className = `btn-selingan${existingAnswer === opt.label ? " is-picked" : ""}`;
             optBtn.textContent = opt.label;
             optBtn.addEventListener("click", () => {
                 SoundscapeEngine.playUiTap();
                 choicesRow.querySelectorAll(".btn-selingan").forEach((b) => b.classList.remove("is-picked"));
                 optBtn.classList.add("is-picked");
                 state.quickGameAnswers[cp.id] = opt.label;
+                state.posLeafUnlocked[cp.id] = true;
                 resultBox.textContent = opt.reply;
                 resultBox.hidden = false;
+                nextLeafBtn.hidden = false;
+                skipBtn.hidden = true;
+                if (typeof onAnsweredOrSkipped === "function") {
+                    onAnsweredOrSkipped(false);
+                }
             });
             choicesRow.appendChild(optBtn);
         });
 
-        box.append(kicker, prompt, choicesRow, resultBox);
+        nextLeafBtn.addEventListener("click", () => {
+            SoundscapeEngine.playUiTap();
+            if (typeof onAnsweredOrSkipped === "function") {
+                onAnsweredOrSkipped(true);
+            }
+        });
+
+        skipBtn.addEventListener("click", () => {
+            SoundscapeEngine.playUiTap();
+            state.posLeafUnlocked[cp.id] = true;
+            if (typeof onAnsweredOrSkipped === "function") {
+                onAnsweredOrSkipped(true);
+            }
+        });
+
+        box.append(kicker, prompt, choicesRow, resultBox, nextLeafBtn, skipBtn);
         return box;
     }
 
-    function buildVisualCompanion(cp) {
-        const visualCol = document.createElement("div");
-        visualCol.className = "pos-visual-col stage-reveal";
-        visualCol.style.setProperty("--stagger", "2");
-
-        const hasPhotos = Array.isArray(cp.photos) && cp.photos.length > 0;
-        if (hasPhotos) {
-            const board = document.createElement("div");
-            board.className = "polaroid-board";
-
-            const boardHeader = document.createElement("div");
-            boardHeader.className = "polaroid-board-header";
-            const label = document.createElement("span");
-            label.className = "mono-tag";
-            label.textContent = `PAPAN SCRAPBOOK POS ${cp.postNum}`;
-            const mdplTag = document.createElement("span");
-            mdplTag.className = "mono-tag";
-            mdplTag.textContent = `${cp.altitude.toUpperCase()} | ${cp.date}`;
-            boardHeader.append(label, mdplTag);
-            board.appendChild(boardHeader);
-
-            const grid = document.createElement("div");
-            grid.className = `polaroid-grid polaroid-grid--${cp.photos.length}`;
-            cp.photos.forEach((photo) => {
-                const tile = document.createElement("button");
-                tile.type = "button";
-                tile.className = `polaroid-item${photo.contain ? " polaroid-item--contain" : ""}`;
-                tile.setAttribute("aria-label", `Perbesar foto: ${photo.caption}`);
-
-                const img = document.createElement("img");
-                img.width = 400;
-                img.height = 300;
-                img.src = photo.src;
-                img.alt = photo.alt;
-
-                const stampTag = document.createElement("span");
-                stampTag.className = "polaroid-stamp-tag";
-                stampTag.textContent = `ARSIP 27 // POS ${cp.postNum}`;
-
-                const cap = document.createElement("span");
-                cap.className = "polaroid-caption";
-                cap.textContent = photo.caption;
-
-                tile.append(img, stampTag, cap);
-                tile.addEventListener("click", () => {
-                    const galleryIdx = LIGHTBOX_GALLERY.findIndex((item) => item.src === photo.src);
-                    openImageLightbox(photo.src, cp.title, photo.caption, null, galleryIdx);
-                });
-
-                grid.appendChild(tile);
-            });
-            board.appendChild(grid);
-
-            if (cp.pullQuote) {
-                const quote = document.createElement("p");
-                quote.className = "polaroid-pullquote";
-                quote.textContent = cp.pullQuote;
-                board.appendChild(quote);
-            }
-
-            visualCol.appendChild(board);
-            return visualCol;
+    function createSinglePhotoViewer(cp) {
+        const photos = cp.photos || [];
+        const total = photos.length;
+        if (typeof state.posPhotoIndex[cp.id] !== "number") {
+            state.posPhotoIndex[cp.id] = 0;
         }
 
+        const board = document.createElement("div");
+        board.className = "polaroid-board polaroid-single-board";
+
+        const boardHeader = document.createElement("div");
+        boardHeader.className = "polaroid-board-header";
+        const label = document.createElement("span");
+        label.className = "mono-tag";
+        label.textContent = `ARSIP FOTO POS ${cp.postNum}`;
+        const counter = document.createElement("span");
+        counter.className = "mono-tag";
+        boardHeader.append(label, counter);
+
+        const cardStage = document.createElement("div");
+        cardStage.className = "polaroid-single-stage";
+
+        const cardBtn = document.createElement("button");
+        cardBtn.type = "button";
+        cardBtn.className = "polaroid-item polaroid-single-card";
+
+        const img = document.createElement("img");
+        img.width = 480;
+        img.height = 360;
+
+        const stampTag = document.createElement("span");
+        stampTag.className = "polaroid-stamp-tag";
+
+        const cap = document.createElement("span");
+        cap.className = "polaroid-caption";
+
+        cardBtn.append(img, stampTag, cap);
+        cardBtn.addEventListener("click", () => {
+            const idx = state.posPhotoIndex[cp.id] || 0;
+            const photo = photos[idx];
+            if (!photo) {
+                return;
+            }
+            const galleryIdx = LIGHTBOX_GALLERY.findIndex((item) => item.src === photo.src);
+            openImageLightbox(photo.src, cp.title, photo.caption, null, galleryIdx);
+        });
+        cardStage.appendChild(cardBtn);
+
+        const stepperBar = document.createElement("div");
+        stepperBar.className = "photo-stepper-bar";
+        stepperBar.hidden = total < 2;
+
+        const prevPhotoBtn = document.createElement("button");
+        prevPhotoBtn.type = "button";
+        prevPhotoBtn.className = "btn-outline btn-photo-step";
+        prevPhotoBtn.textContent = "Foto Sebelumnya";
+
+        const dotsWrap = document.createElement("div");
+        dotsWrap.className = "photo-dots-row";
+
+        const nextPhotoBtn = document.createElement("button");
+        nextPhotoBtn.type = "button";
+        nextPhotoBtn.className = "btn-outline btn-photo-step";
+        nextPhotoBtn.textContent = "Foto Berikutnya";
+
+        function renderActivePhoto(animateFlip = false) {
+            const cur = Math.max(0, Math.min(total - 1, state.posPhotoIndex[cp.id] || 0));
+            state.posPhotoIndex[cp.id] = cur;
+            const photo = photos[cur];
+            counter.textContent = `FOTO ${String(cur + 1).padStart(2, "0")} / ${String(total).padStart(2, "0")}`;
+
+            cardBtn.className = `polaroid-item polaroid-single-card${photo.contain ? " polaroid-item--contain" : ""}`;
+            cardBtn.setAttribute("aria-label", `Perbesar foto: ${photo.caption}`);
+            img.src = photo.src;
+            img.alt = photo.alt;
+            stampTag.textContent = `ARSIP 27 // POS ${cp.postNum} // ${cp.date}`;
+            cap.textContent = photo.caption;
+
+            prevPhotoBtn.disabled = cur === 0;
+            nextPhotoBtn.disabled = cur === total - 1;
+
+            dotsWrap.querySelectorAll(".photo-dot-btn").forEach((dot, dIdx) => {
+                dot.classList.toggle("is-active", dIdx === cur);
+                dot.setAttribute("aria-current", dIdx === cur ? "true" : "false");
+            });
+
+            if (animateFlip && !reducedMotionQuery.matches) {
+                cardBtn.classList.remove("is-photo-flipping");
+                void cardBtn.offsetWidth;
+                cardBtn.classList.add("is-photo-flipping");
+            }
+        }
+
+        photos.forEach((_, idx) => {
+            const dot = document.createElement("button");
+            dot.type = "button";
+            dot.className = "photo-dot-btn";
+            dot.textContent = String(idx + 1);
+            dot.setAttribute("aria-label", `Lihat foto ${idx + 1} dari ${total}`);
+            dot.addEventListener("click", () => {
+                if (state.posPhotoIndex[cp.id] !== idx) {
+                    SoundscapeEngine.playUiTap();
+                    state.posPhotoIndex[cp.id] = idx;
+                    renderActivePhoto(true);
+                }
+            });
+            dotsWrap.appendChild(dot);
+        });
+
+        prevPhotoBtn.addEventListener("click", () => {
+            const cur = state.posPhotoIndex[cp.id] || 0;
+            if (cur > 0) {
+                SoundscapeEngine.playUiTap();
+                state.posPhotoIndex[cp.id] = cur - 1;
+                renderActivePhoto(true);
+            }
+        });
+
+        nextPhotoBtn.addEventListener("click", () => {
+            const cur = state.posPhotoIndex[cp.id] || 0;
+            if (cur < total - 1) {
+                SoundscapeEngine.playUiTap();
+                state.posPhotoIndex[cp.id] = cur + 1;
+                renderActivePhoto(true);
+            }
+        });
+
+        stepperBar.append(prevPhotoBtn, dotsWrap, nextPhotoBtn);
+        board.append(boardHeader, cardStage, stepperBar);
+        renderActivePhoto(false);
+        return board;
+    }
+
+    function createVignettePlate(cp) {
         const plate = document.createElement("div");
         plate.className = "story-vignette";
 
@@ -2493,8 +2845,161 @@
         waxFoot.textContent = `SEGEL EKSPEDISI 27 // POS ${cp.postNum}`;
 
         plate.append(stamp, halo, quote, waxFoot);
-        visualCol.appendChild(plate);
-        return visualCol;
+        return plate;
+    }
+
+    function buildPosRightLeafDeck(cp, statusBadgeEl) {
+        const hasQuiz = Boolean(cp.quickGame && Array.isArray(cp.quickGame.options) && cp.quickGame.options.length);
+        const hasChats = Array.isArray(cp.chats) && cp.chats.length > 0;
+        const hasPhotos = Array.isArray(cp.photos) && cp.photos.length > 0;
+
+        const leaves = [];
+        let stepNum = 1;
+        if (hasQuiz) {
+            leaves.push({ id: "quiz", label: `${stepNum}. Tebakan` });
+            stepNum += 1;
+        }
+        if (hasChats) {
+            leaves.push({ id: "chat", label: `${stepNum}. Chat` });
+            stepNum += 1;
+        }
+        if (hasPhotos) {
+            leaves.push({ id: "photo", label: `${stepNum}. Foto (${cp.photos.length})` });
+        } else {
+            leaves.push({ id: "vignette", label: `${stepNum}. Ilustrasi` });
+        }
+
+        if (!hasQuiz) {
+            state.posLeafUnlocked[cp.id] = true;
+        } else if (state.quickGameAnswers[cp.id]) {
+            state.posLeafUnlocked[cp.id] = true;
+        }
+
+        const defaultLeaf = leaves[0].id;
+        if (!state.posLeafTab[cp.id] || !leaves.some((l) => l.id === state.posLeafTab[cp.id])) {
+            state.posLeafTab[cp.id] = defaultLeaf;
+        }
+
+        const container = document.createElement("div");
+        container.className = "leaf-switcher";
+
+        const tabsRow = document.createElement("div");
+        tabsRow.className = "leaf-tabs";
+        tabsRow.setAttribute("role", "tablist");
+        tabsRow.setAttribute("aria-label", `Lembar interaktif Pos ${cp.postNum}`);
+
+        const bodyStage = document.createElement("div");
+        bodyStage.className = "leaf-panel-stage";
+
+        function updateLeafTabsUi() {
+            const unlocked = Boolean(state.posLeafUnlocked[cp.id]);
+            const curTab = state.posLeafTab[cp.id];
+            if (statusBadgeEl) {
+                statusBadgeEl.textContent = unlocked ? "BUKTI TERBUKA" : "TEBAK DULU";
+                statusBadgeEl.classList.toggle("is-unlocked", unlocked);
+            }
+            tabsRow.querySelectorAll(".leaf-tab-btn").forEach((btn) => {
+                const leafId = btn.dataset.leafId;
+                const isLocked = leafId !== "quiz" && !unlocked;
+                btn.disabled = isLocked;
+                btn.setAttribute("aria-selected", String(leafId === curTab));
+                btn.classList.toggle("is-active", leafId === curTab);
+                btn.classList.toggle("is-locked", isLocked);
+            });
+        }
+
+        function renderActiveLeaf(animateTurn = false) {
+            const curTab = state.posLeafTab[cp.id];
+            const panel = document.createElement("div");
+            panel.className = `leaf-panel${animateTurn && !reducedMotionQuery.matches ? " is-leaf-entering" : ""}`;
+
+            if (curTab === "quiz") {
+                const nextProofLeaf = leaves.find((l) => l.id !== "quiz");
+                const nextLabel = nextProofLeaf
+                    ? nextProofLeaf.id === "chat"
+                        ? "Buka Rekaman Chat"
+                        : nextProofLeaf.id === "photo"
+                          ? "Buka Arsip Foto"
+                          : "Buka Ilustrasi Bab"
+                    : "Selesai";
+
+                const qBox = createPosQuickGame(
+                    cp,
+                    (shouldAdvance) => {
+                        updateLeafTabsUi();
+                        if (shouldAdvance && nextProofLeaf) {
+                            state.posLeafTab[cp.id] = nextProofLeaf.id;
+                            updateLeafTabsUi();
+                            renderActiveLeaf(true);
+                        }
+                    },
+                    nextLabel
+                );
+                if (qBox) {
+                    panel.appendChild(qBox);
+                }
+            } else if (curTab === "chat" && hasChats) {
+                const chats = cp.chats;
+                if (typeof state.posChatIndex[cp.id] !== "number") {
+                    state.posChatIndex[cp.id] = 0;
+                }
+                if (chats.length > 1) {
+                    const threadTabs = document.createElement("div");
+                    threadTabs.className = "chat-thread-tabs";
+                    chats.forEach((c, cIdx) => {
+                        const tb = document.createElement("button");
+                        tb.type = "button";
+                        tb.className = `btn-thread-tab${state.posChatIndex[cp.id] === cIdx ? " is-active" : ""}`;
+                        tb.textContent = `Obrolan ${cIdx + 1}: ${c.date}`;
+                        tb.addEventListener("click", () => {
+                            SoundscapeEngine.playUiTap();
+                            state.posChatIndex[cp.id] = cIdx;
+                            renderActiveLeaf(true);
+                        });
+                        threadTabs.appendChild(tb);
+                    });
+                    panel.appendChild(threadTabs);
+                }
+
+                const activeChatIdx = Math.max(0, Math.min(chats.length - 1, state.posChatIndex[cp.id]));
+                const nextTarget = hasPhotos ? "photo" : "vignette";
+                const chatCard = createChatCardElement(chats[activeChatIdx], `${cp.id}:chat:${activeChatIdx}`, () => {
+                    state.posLeafTab[cp.id] = nextTarget;
+                    updateLeafTabsUi();
+                    renderActiveLeaf(true);
+                });
+                panel.appendChild(chatCard);
+            } else if (curTab === "photo" && hasPhotos) {
+                panel.appendChild(createSinglePhotoViewer(cp));
+            } else {
+                panel.appendChild(createVignettePlate(cp));
+            }
+
+            bodyStage.replaceChildren(panel);
+            updateLeafTabsUi();
+        }
+
+        leaves.forEach((leaf) => {
+            const tabBtn = document.createElement("button");
+            tabBtn.type = "button";
+            tabBtn.role = "tab";
+            tabBtn.className = "leaf-tab-btn";
+            tabBtn.dataset.leafId = leaf.id;
+            tabBtn.textContent = leaf.label;
+            tabBtn.addEventListener("click", () => {
+                if (tabBtn.disabled || state.posLeafTab[cp.id] === leaf.id) {
+                    return;
+                }
+                SoundscapeEngine.playUiTap();
+                state.posLeafTab[cp.id] = leaf.id;
+                renderActiveLeaf(true);
+            });
+            tabsRow.appendChild(tabBtn);
+        });
+
+        container.append(tabsRow, bodyStage);
+        renderActiveLeaf(false);
+        return container;
     }
 
     function normalizeGameRounds(game) {
@@ -2788,7 +3293,7 @@
     }
 
     /**
-     * Dynamically constructs Realm Intro, Pos Spread, and Rest-Stop Sanctuary full-screen pages on demand.
+     * Dynamically constructs Realm Intro, Pos 2-Page Spread, and Rest-Stop Sanctuary 2-Page Spread elements.
      */
     function createDynamicPageElement(page) {
         const sec = document.createElement("section");
@@ -2799,14 +3304,58 @@
 
         if (page.type === "realm-intro") {
             const meta = BIOME_META[page.biome];
-            const shell = document.createElement("div");
-            shell.className = "realm-intro-shell storybook-frame";
+            const spread = document.createElement("div");
+            spread.className = "book-spread realm-book-spread";
+
+            const leftPage = document.createElement("div");
+            leftPage.className = "book-page book-page--left realm-plate-page";
+
+            const leftFolio = document.createElement("div");
+            leftFolio.className = "book-folio-bar";
+            const leftTag = document.createElement("span");
+            leftTag.className = "mono-tag";
+            leftTag.textContent = `BAB ${page.biome} // PEMBUKA ALAM`;
+            const altTag = document.createElement("span");
+            altTag.className = "mono-tag";
+            altTag.textContent = page.altitude.toUpperCase();
+            leftFolio.append(leftTag, altTag);
+
+            const crestBox = document.createElement("div");
+            crestBox.className = "realm-crest-plate stage-reveal";
+            crestBox.style.setProperty("--stagger", "1");
 
             const emblem = document.createElement("div");
-            emblem.className = "realm-intro-emblem stage-reveal";
-            emblem.style.setProperty("--stagger", "0");
+            emblem.className = "realm-intro-emblem";
             emblem.setAttribute("aria-hidden", "true");
             emblem.innerHTML = meta.svg;
+
+            const pills = document.createElement("div");
+            pills.className = "realm-intro-pills";
+            meta.pills.forEach((pText) => {
+                const pill = document.createElement("span");
+                pill.className = "realm-intro-pill";
+                pill.textContent = pText;
+                pills.appendChild(pill);
+            });
+
+            crestBox.append(emblem, pills);
+            leftPage.append(leftFolio, crestBox);
+
+            const rightPage = document.createElement("div");
+            rightPage.className = "book-page book-page--right realm-story-page";
+
+            const rightFolio = document.createElement("div");
+            rightFolio.className = "book-folio-bar";
+            const chTag = document.createElement("span");
+            chTag.className = "mono-tag";
+            chTag.textContent = meta.shortName.toUpperCase();
+            const pgTag = document.createElement("span");
+            pgTag.className = "mono-tag";
+            pgTag.textContent = `HALAMAN ${String(page.index + 1).padStart(2, "0")}`;
+            rightFolio.append(chTag, pgTag);
+
+            const storyInner = document.createElement("div");
+            storyInner.className = "realm-story-inner";
 
             const kicker = document.createElement("p");
             kicker.className = "realm-intro-kicker stage-reveal";
@@ -2823,59 +3372,52 @@
             sub.style.setProperty("--stagger", "3");
             sub.textContent = meta.subtitle;
 
-            const pills = document.createElement("div");
-            pills.className = "realm-intro-pills stage-reveal";
-            pills.style.setProperty("--stagger", "4");
-            meta.pills.forEach((pText) => {
-                const pill = document.createElement("span");
-                pill.className = "realm-intro-pill";
-                pill.textContent = pText;
-                pills.appendChild(pill);
-            });
-
             const ctaBtn = document.createElement("button");
             ctaBtn.type = "button";
             ctaBtn.className = "btn-realm-enter stage-reveal";
-            ctaBtn.style.setProperty("--stagger", "5");
-            ctaBtn.textContent = `Jelajahi ${meta.shortName}`;
+            ctaBtn.style.setProperty("--stagger", "4");
+            ctaBtn.textContent = `Buka Bab ${meta.shortName}`;
             ctaBtn.addEventListener("click", () => goToPage(page.index + 1, { direction: "next" }));
 
-            shell.append(emblem, kicker, h2, sub, pills, ctaBtn);
-            sec.appendChild(shell);
+            storyInner.append(kicker, h2, sub, ctaBtn);
+            rightPage.append(rightFolio, storyInner);
+
+            spread.append(leftPage, rightPage);
+            sec.appendChild(spread);
             return sec;
         }
 
         if (page.type === "pos") {
             const cp = page.checkpoint;
             const spread = document.createElement("div");
-            spread.className = `pos-spread pos-spread--${page.spreadVariant}`;
+            spread.className = "book-spread pos-book-spread";
 
-            const storyCard = document.createElement("article");
-            storyCard.className = "checkpoint-card storybook-frame stage-reveal";
-            storyCard.style.setProperty("--stagger", "1");
+            const leftPage = document.createElement("article");
+            leftPage.className = "book-page book-page--left pos-story-page stage-reveal";
+            leftPage.style.setProperty("--stagger", "1");
 
-            const headRow = document.createElement("div");
-            headRow.className = "card-head-row";
+            const leftFolio = document.createElement("div");
+            leftFolio.className = "book-folio-bar";
+            const posMeta = document.createElement("span");
+            posMeta.className = "mono-tag";
+            posMeta.textContent = `POS ${cp.postNum} / 27 // ${cp.altitude.toUpperCase()}`;
 
-            const pillRow = document.createElement("div");
-            pillRow.className = "pos-pill-row";
-            [`POS ${cp.postNum} / 27`, cp.altitude.toUpperCase(), cp.date].forEach((txt) => {
-                const pill = document.createElement("span");
-                pill.className = "pos-pill";
-                pill.textContent = txt;
-                pillRow.appendChild(pill);
-            });
-
+            const dateAndSeal = document.createElement("div");
+            dateAndSeal.className = "folio-date-group";
+            const dateTag = document.createElement("span");
+            dateTag.className = "mono-tag";
+            dateTag.textContent = cp.date;
             const miniWax = document.createElement("span");
             miniWax.className = "card-wax-mini";
             miniWax.setAttribute("aria-hidden", "true");
             miniWax.textContent = "27";
-            headRow.append(pillRow, miniWax);
+            dateAndSeal.append(dateTag, miniWax);
+            leftFolio.append(posMeta, dateAndSeal);
 
             const title = document.createElement("h2");
             title.className = "checkpoint-title";
             title.textContent = cp.title;
-            storyCard.append(headRow, title);
+            leftPage.append(leftFolio, title);
 
             if (Array.isArray(cp.lines) && cp.lines.length > 0) {
                 const linesWrap = document.createElement("div");
@@ -2885,37 +3427,21 @@
                     p.textContent = txt;
                     linesWrap.appendChild(p);
                 });
-                storyCard.appendChild(linesWrap);
+                leftPage.appendChild(linesWrap);
             }
 
-            if (Array.isArray(cp.chats) && cp.chats.length > 0) {
-                cp.chats.forEach((chat) => {
-                    storyCard.appendChild(createChatCardElement(chat));
-                });
-            } else if (cp.vignette) {
-                const strip = document.createElement("div");
-                strip.className = "card-vignette-strip";
-                const art = document.createElement("div");
-                art.className = "card-vignette-art";
-                art.setAttribute("aria-hidden", "true");
-                art.innerHTML = VIGNETTE_SVGS[cp.vignette] || VIGNETTE_SVGS["quill-arch"];
-                const svgEl = art.querySelector("svg");
-                if (svgEl) {
-                    svgEl.setAttribute("width", "76");
-                    svgEl.setAttribute("height", "50");
-                }
-                const miniQ = document.createElement("p");
-                miniQ.className = "card-vignette-quote";
-                miniQ.textContent = cp.pullQuote || "";
-                strip.append(art, miniQ);
-                storyCard.appendChild(strip);
+            if (cp.pullQuote) {
+                const quoteCard = document.createElement("blockquote");
+                quoteCard.className = "book-epigraph-quote";
+                quoteCard.textContent = cp.pullQuote;
+                leftPage.appendChild(quoteCard);
             }
 
             if (cp.footnote) {
                 const foot = document.createElement("p");
                 foot.className = "checkpoint-footnote";
                 foot.textContent = cp.footnote;
-                storyCard.appendChild(foot);
+                leftPage.appendChild(foot);
             }
 
             if (cp.secretNote) {
@@ -2942,78 +3468,108 @@
                 });
 
                 secretWrap.append(toggleBtn, noteBody);
-                storyCard.appendChild(secretWrap);
+                leftPage.appendChild(secretWrap);
             }
 
-            const visualCol = buildVisualCompanion(cp);
-            const quickGameBox = createPosQuickGame(cp);
-            if (quickGameBox) {
-                visualCol.appendChild(quickGameBox);
-            }
+            const rightPage = document.createElement("div");
+            rightPage.className = "book-page book-page--right pos-interactive-page stage-reveal";
+            rightPage.style.setProperty("--stagger", "2");
 
-            spread.append(storyCard, visualCol);
+            const rightFolio = document.createElement("div");
+            rightFolio.className = "book-folio-bar";
+            const rightLabel = document.createElement("span");
+            rightLabel.className = "mono-tag";
+            rightLabel.textContent = `LEMBAR INTERAKTIF // POS ${cp.postNum}`;
+            const statusBadge = document.createElement("span");
+            statusBadge.className = "mono-tag quiz-lock-tag";
+            rightFolio.append(rightLabel, statusBadge);
+
+            rightPage.append(rightFolio, buildPosRightLeafDeck(cp, statusBadge));
+            spread.append(leftPage, rightPage);
             sec.appendChild(spread);
             return sec;
         }
 
         if (page.type === "rest-stop") {
             const talk = page.talk;
-            const grid = document.createElement("div");
-            grid.className = "rest-sanctuary-grid";
+            const spread = document.createElement("div");
+            spread.className = "book-spread rest-book-spread";
 
-            const talkCard = document.createElement("article");
-            talkCard.className = "rest-talk-card storybook-frame stage-reveal";
-            talkCard.style.setProperty("--stagger", "1");
+            const talkPage = document.createElement("article");
+            talkPage.className = "book-page book-page--left rest-talk-page stage-reveal";
+            talkPage.style.setProperty("--stagger", "1");
 
+            const talkFolio = document.createElement("div");
+            talkFolio.className = "book-folio-bar";
             const badge = document.createElement("span");
-            badge.className = "talk-badge";
+            badge.className = "mono-tag";
             badge.textContent = talk.badge;
+            const talkTag = document.createElement("span");
+            talkTag.className = "mono-tag";
+            talkTag.textContent = "OBROLAN BERDUA";
+            talkFolio.append(badge, talkTag);
 
             const h2 = document.createElement("h2");
             h2.className = "rest-title";
             h2.textContent = "Pos Istirahat: Obrolan Berdua";
 
+            const flipStage = document.createElement("div");
+            flipStage.className = "talk-flip-stage";
+
+            const isOpened = Boolean(state.restTalkOpened[page.restNum]);
+            const talkFlipCard = document.createElement("div");
+            talkFlipCard.className = `talk-flip-card${isOpened ? " is-flipped" : ""}`;
+
+            const frontFace = document.createElement("div");
+            frontFace.className = "talk-flip-face talk-flip-face--front";
             const teaser = document.createElement("p");
             teaser.className = "talk-teaser";
             teaser.textContent = talk.teaser;
+            const openCardBtn = document.createElement("button");
+            openCardBtn.type = "button";
+            openCardBtn.className = "btn-primary";
+            openCardBtn.textContent = "Balik Kartu Obrolan";
+            frontFace.append(teaser, openCardBtn);
 
-            const revealBtn = document.createElement("button");
-            revealBtn.type = "button";
-            revealBtn.className = "btn-talk-reveal";
-            revealBtn.setAttribute("aria-expanded", "false");
-            revealBtn.textContent = "Buka Topik Obrolan";
-
-            const panel = document.createElement("div");
-            panel.className = "talk-prompt-panel";
-            panel.hidden = true;
-
+            const backFace = document.createElement("div");
+            backFace.className = "talk-flip-face talk-flip-face--back";
             const q = document.createElement("p");
             q.className = "talk-prompt-question";
             q.textContent = talk.question;
             const hint = document.createElement("p");
             hint.className = "talk-prompt-hint";
             hint.textContent = talk.hint;
-            panel.append(q, hint);
+            const closeCardBtn = document.createElement("button");
+            closeCardBtn.type = "button";
+            closeCardBtn.className = "btn-outline";
+            closeCardBtn.textContent = "Tutup Kartu";
+            backFace.append(q, hint, closeCardBtn);
 
-            revealBtn.addEventListener("click", () => {
+            openCardBtn.addEventListener("click", () => {
                 SoundscapeEngine.playUiTap();
-                const opening = panel.hidden;
-                panel.hidden = !opening;
-                revealBtn.setAttribute("aria-expanded", String(opening));
-                revealBtn.textContent = opening ? "Tutup Topik Obrolan" : "Buka Topik Obrolan";
+                state.restTalkOpened[page.restNum] = true;
+                talkFlipCard.classList.add("is-flipped");
             });
 
-            talkCard.append(badge, h2, teaser, revealBtn, panel);
+            closeCardBtn.addEventListener("click", () => {
+                SoundscapeEngine.playUiTap();
+                state.restTalkOpened[page.restNum] = false;
+                talkFlipCard.classList.remove("is-flipped");
+            });
+
+            talkFlipCard.append(frontFace, backFace);
+            flipStage.appendChild(talkFlipCard);
+            talkPage.append(talkFolio, h2, flipStage);
 
             const game = talk.miniGame;
-            const gameCard = document.createElement("section");
-            gameCard.className = "rest-game-card storybook-frame stage-reveal";
-            gameCard.style.setProperty("--stagger", "2");
+            const gamePage = document.createElement("section");
+            gamePage.className = "book-page book-page--right rest-game-page stage-reveal";
+            gamePage.style.setProperty("--stagger", "2");
 
             const gHead = document.createElement("div");
-            gHead.className = "minigame-head";
+            gHead.className = "book-folio-bar";
             const gBadge = document.createElement("span");
-            gBadge.className = "minigame-badge";
+            gBadge.className = "mono-tag";
             gBadge.textContent = game.badge;
             const scoreEl = document.createElement("span");
             scoreEl.className = "minigame-score";
@@ -3042,9 +3598,9 @@
                 buildWheelMiniGame(game, gStage, scoreEl);
             }
 
-            gameCard.append(gHead, gTitle, gDesc, gStage);
-            grid.append(talkCard, gameCard);
-            sec.appendChild(grid);
+            gamePage.append(gHead, gTitle, gDesc, gStage);
+            spread.append(talkPage, gamePage);
+            sec.appendChild(spread);
             return sec;
         }
 
@@ -3116,10 +3672,16 @@
 
     function getNextButtonLabel(idx) {
         if (idx === 0) {
-            return "Mulai Ekspedisi";
+            return "Buka Sampul Buku";
+        }
+        if (idx === 1) {
+            if (state.quizStep < QUIZ_STEPS.length - 1) {
+                return `Pertanyaan ${String(state.quizStep + 2).padStart(2, "0")}`;
+            }
+            return "Masuki Pesisir Senja";
         }
         if (idx >= DECK_PAGES.length - 1) {
-            return "Kembali ke Awal";
+            return "Kembali ke Sampul";
         }
         const next = DECK_PAGES[idx + 1];
         if (next.type === "realm-intro") {
@@ -3131,26 +3693,51 @@
         if (next.type === "photobooth") {
             return "Ke Photobooth";
         }
-        return "Lanjut";
+        return "Halaman Berikutnya";
     }
 
     function syncDeckChrome(idx) {
         const page = DECK_PAGES[idx];
         const total = DECK_PAGES.length;
         const meta = BIOME_META[page.biome];
+        const progress = idx / Math.max(1, total - 1);
 
         el.deckApp.classList.toggle("is-onboarding", idx === 0);
         el.deckApp.classList.remove("biome-1", "biome-2", "biome-3", "biome-4");
         el.deckApp.classList.add(`biome-${page.biome}`);
         el.worldStage.setAttribute("data-biome", String(page.biome));
-        el.worldStage.style.setProperty("--world-shift", (idx / Math.max(1, total - 1)).toFixed(4));
+        el.worldStage.style.setProperty("--world-shift", progress.toFixed(4));
 
-        el.hudContextPill.textContent = `${meta.shortName.toUpperCase()} | HAL ${String(idx + 1).padStart(2, "0")} / ${total}`;
-        el.dockPageReadout.textContent = `HAL ${String(idx + 1).padStart(2, "0")} / ${total} // ${page.shortLabel.toUpperCase()}`;
+        if (el.bookTome) {
+            el.bookTome.style.setProperty("--book-progress", progress.toFixed(4));
+            el.bookTome.classList.toggle("is-closed-tome", idx === 0);
+        }
+
+        if (idx === 1) {
+            const qNum = String(state.quizStep + 1).padStart(2, "0");
+            const qTot = String(QUIZ_STEPS.length).padStart(2, "0");
+            el.hudContextPill.textContent = `BASECAMP | HAL 02 / ${total} | KUIS ${qNum}/${qTot}`;
+            el.dockPageReadout.textContent = `HAL 02 / ${total} // KUIS LANGKAH ${qNum} / ${qTot}`;
+        } else {
+            el.hudContextPill.textContent = `${meta.shortName.toUpperCase()} | HAL ${String(idx + 1).padStart(2, "0")} / ${total}`;
+            el.dockPageReadout.textContent = `HAL ${String(idx + 1).padStart(2, "0")} / ${total} // ${page.shortLabel.toUpperCase()}`;
+        }
+
         el.dockProgressFill.style.width = `${(((idx + 1) / total) * 100).toFixed(2)}%`;
 
         el.prevPageBtn.disabled = idx === 0;
+        el.prevPageBtn.textContent =
+            idx === 1 && state.quizStep > 0
+                ? `Pertanyaan ${String(state.quizStep).padStart(2, "0")}`
+                : "Sebelumnya";
         el.nextPageBtn.textContent = getNextButtonLabel(idx);
+
+        if (el.bookCornerPrev) {
+            el.bookCornerPrev.hidden = idx === 0;
+        }
+        if (el.bookCornerNext) {
+            el.bookCornerNext.hidden = idx === 0 || idx >= total - 1;
+        }
 
         el.realmTrackBtns.forEach((btn) => {
             btn.classList.toggle("is-current", Number(btn.dataset.biomeJump) === page.biome && idx >= 2);
@@ -3175,8 +3762,80 @@
         }
     }
 
+    function playBookPageFlipAnimation(dir, isCoverOpening = false) {
+        if (!el.bookFlipLeaf || !el.bookTurnShadow || reducedMotionQuery.matches) {
+            return;
+        }
+        if (state.flipCleanupTimer) {
+            window.clearTimeout(state.flipCleanupTimer);
+            state.flipCleanupTimer = null;
+        }
+        const seq = state.transitionSeq;
+
+        el.bookFlipLeaf.classList.remove("is-flipping-next", "is-flipping-prev", "is-cover-opening");
+        el.bookTurnShadow.classList.remove("is-active-next", "is-active-prev");
+        void el.bookFlipLeaf.offsetWidth;
+
+        if (isCoverOpening) {
+            el.bookFlipLeaf.classList.add("is-cover-opening");
+        } else {
+            el.bookFlipLeaf.classList.add(dir === "prev" ? "is-flipping-prev" : "is-flipping-next");
+        }
+        el.bookTurnShadow.classList.add(dir === "prev" ? "is-active-prev" : "is-active-next");
+
+        const duration = isCoverOpening ? 640 : 540;
+        state.flipCleanupTimer = window.setTimeout(() => {
+            if (seq !== state.transitionSeq) {
+                return;
+            }
+            el.bookFlipLeaf.classList.remove("is-flipping-next", "is-flipping-prev", "is-cover-opening");
+            el.bookTurnShadow.classList.remove("is-active-next", "is-active-prev");
+            state.flipCleanupTimer = null;
+        }, duration);
+    }
+
     /**
-     * Fluidly transitions between any two pages using interruptible Depth Morph choreography.
+     * Advances or rewinds quiz steps uniformly from both in-page quiz controls and the bottom dock.
+     */
+    function advanceQuizStep(delta) {
+        if (delta > 0) {
+            if (state.quizStep < QUIZ_STEPS.length - 1) {
+                state.quizStep += 1;
+                state.transitionSeq += 1;
+                playBookPageFlipAnimation("next", false);
+                SoundscapeEngine.playPageTurn("next", state.quizStep);
+                renderQuizStep();
+                const quizPage = pageNodeCache.get(1);
+                if (quizPage) {
+                    quizPage.scrollTop = 0;
+                }
+            } else {
+                state.quizAnswers["step-rating-note"] = `${state.ratingScore}/100`;
+                unlockStamp("fyp");
+                saveQuizState();
+                updateLetterAndSummaryPreview();
+                goToPage(2, { direction: "next" });
+            }
+            return;
+        }
+
+        if (state.quizStep > 0) {
+            state.quizStep -= 1;
+            state.transitionSeq += 1;
+            playBookPageFlipAnimation("prev", false);
+            SoundscapeEngine.playPageTurn("prev", state.quizStep);
+            renderQuizStep();
+            const quizPage = pageNodeCache.get(1);
+            if (quizPage) {
+                quizPage.scrollTop = 0;
+            }
+        } else {
+            goToPage(0, { direction: "prev" });
+        }
+    }
+
+    /**
+     * Fluidly transitions between any two pages using 3D hardcover leaf-turn choreography.
      */
     function goToPage(targetIdx, opts = {}) {
         const clamped = Math.max(0, Math.min(DECK_PAGES.length - 1, Number(targetIdx) || 0));
@@ -3187,6 +3846,9 @@
             return;
         }
 
+        state.transitionSeq += 1;
+        const seq = state.transitionSeq;
+
         if (state.leaveCleanupTimer) {
             window.clearTimeout(state.leaveCleanupTimer);
             state.leaveCleanupTimer = null;
@@ -3196,7 +3858,6 @@
             state.enterCleanupTimer = null;
         }
 
-        // Hide any lingering pages cleanly before starting the new transition.
         pageNodeCache.forEach((node, nodeIdx) => {
             if (nodeIdx !== prevIdx && nodeIdx !== clamped) {
                 node.hidden = true;
@@ -3212,16 +3873,20 @@
         state.currentPageIndex = clamped;
         syncDeckChrome(clamped);
 
+        if (!opts.skipFlipAnim) {
+            playBookPageFlipAnimation(dir, Boolean(opts.coverOpening));
+        }
+
         if (outEl && outEl !== inEl) {
             outEl.classList.remove("is-active", "is-entering-next", "is-entering-prev", "is-dragging", "is-snap-back");
             outEl.style.transform = "";
             outEl.classList.add(dir === "next" ? "is-leaving-next" : "is-leaving-prev");
             state.leaveCleanupTimer = window.setTimeout(() => {
-                if (state.currentPageIndex !== prevIdx) {
+                if (seq === state.transitionSeq && state.currentPageIndex !== prevIdx) {
                     outEl.hidden = true;
                     outEl.classList.remove("is-leaving-next", "is-leaving-prev");
                 }
-            }, 350);
+            }, 340);
         }
 
         inEl.hidden = false;
@@ -3231,15 +3896,11 @@
         void inEl.offsetWidth;
         inEl.classList.add("is-active", dir === "next" ? "is-entering-next" : "is-entering-prev");
 
-        inEl.querySelectorAll(".chat-mockup").forEach((chatEl) => {
-            chatEl.classList.remove("is-visible");
-            void chatEl.offsetWidth;
-            chatEl.classList.add("is-visible");
-        });
-
         state.enterCleanupTimer = window.setTimeout(() => {
-            inEl.classList.remove("is-entering-next", "is-entering-prev");
-        }, 480);
+            if (seq === state.transitionSeq) {
+                inEl.classList.remove("is-entering-next", "is-entering-prev");
+            }
+        }, 520);
 
         if (!opts.silent) {
             SoundscapeEngine.playPageTurn(dir, clamped);
@@ -3259,9 +3920,9 @@
             el.waxSealTrigger.classList.add("is-breaking");
             window.setTimeout(() => {
                 state.isBreakingSeal = false;
-                goToPage(1, { direction: "next", silent: true });
+                goToPage(1, { direction: "next", silent: true, coverOpening: true });
                 el.waxSealTrigger.classList.remove("is-breaking");
-            }, 360);
+            }, 320);
         } else {
             state.isBreakingSeal = false;
             goToPage(1, { direction: "next", silent: true });
@@ -3269,11 +3930,11 @@
     }
 
     function setupDeckNavigation() {
-        // 1. Horizontal Pointer / Touch Swipe with velocity momentum & boundary damping
+        // 1. Touch/Pen Horizontal Swipe with pointer capture and velocity momentum
         let dragState = null;
 
         el.deckViewport.addEventListener("pointerdown", (evt) => {
-            if (evt.button !== 0 && evt.pointerType === "mouse") {
+            if (evt.pointerType === "mouse") {
                 return;
             }
             if (evt.target.closest("button, a, input, textarea, select, label, canvas, video, [data-no-drag]")) {
@@ -3285,7 +3946,8 @@
                 startY: evt.clientY,
                 startTime: Date.now(),
                 dx: 0,
-                locked: null
+                locked: null,
+                captured: false
             };
         });
 
@@ -3301,8 +3963,14 @@
                     dragState = null;
                     return;
                 }
-                if (Math.abs(rawDx) > 12 && Math.abs(rawDx) > Math.abs(rawDy) * 1.15) {
+                if (Math.abs(rawDx) > 14 && Math.abs(rawDx) > Math.abs(rawDy) * 1.25) {
                     dragState.locked = "horizontal";
+                    try {
+                        el.deckViewport.setPointerCapture(evt.pointerId);
+                        dragState.captured = true;
+                    } catch (_) {
+                        // Ignore capture restriction.
+                    }
                 } else {
                     return;
                 }
@@ -3311,7 +3979,7 @@
             const idx = state.currentPageIndex;
             const atLeftBound = idx === 0 && rawDx > 0;
             const atRightBound = idx === DECK_PAGES.length - 1 && rawDx < 0;
-            const dampedDx = atLeftBound || atRightBound ? rawDx * 0.22 : rawDx * 0.55;
+            const dampedDx = atLeftBound || atRightBound ? rawDx * 0.2 : rawDx * 0.48;
             dragState.dx = rawDx;
 
             const activeNode = getOrCreatePageNode(idx);
@@ -3326,6 +3994,16 @@
             }
             const cur = dragState;
             dragState = null;
+            if (cur.captured && evt.pointerId !== undefined) {
+                try {
+                    if (el.deckViewport.hasPointerCapture(evt.pointerId)) {
+                        el.deckViewport.releasePointerCapture(evt.pointerId);
+                    }
+                } catch (_) {
+                    // Ignore release failure.
+                }
+            }
+
             const activeNode = getOrCreatePageNode(state.currentPageIndex);
             activeNode.classList.remove("is-dragging");
 
@@ -3336,73 +4014,71 @@
 
             const elapsed = Math.max(16, Date.now() - cur.startTime);
             const velocity = Math.abs(cur.dx) / elapsed;
-            const committed = Math.abs(cur.dx) >= 72 || velocity > 0.28;
+            const committed = Math.abs(cur.dx) >= 72 || velocity > 0.3;
 
             if (committed && cur.dx < 0 && state.currentPageIndex < DECK_PAGES.length - 1) {
+                activeNode.style.transform = "";
                 if (state.currentPageIndex === 0) {
                     triggerOnboardingReveal();
+                } else if (state.currentPageIndex === 1) {
+                    advanceQuizStep(1);
                 } else {
                     goToPage(state.currentPageIndex + 1, { direction: "next" });
                 }
             } else if (committed && cur.dx > 0 && state.currentPageIndex > 0) {
-                goToPage(state.currentPageIndex - 1, { direction: "prev" });
+                activeNode.style.transform = "";
+                if (state.currentPageIndex === 1) {
+                    advanceQuizStep(-1);
+                } else {
+                    goToPage(state.currentPageIndex - 1, { direction: "prev" });
+                }
             } else {
                 activeNode.classList.add("is-snap-back");
                 activeNode.style.transform = "translate3d(0, 0, 0)";
                 window.setTimeout(() => {
                     activeNode.classList.remove("is-snap-back");
                     activeNode.style.transform = "";
-                }, 280);
+                }, 260);
             }
         }
 
         el.deckViewport.addEventListener("pointerup", finishDrag);
         el.deckViewport.addEventListener("pointercancel", finishDrag);
+        el.deckViewport.addEventListener("lostpointercapture", finishDrag);
 
-        // 2. Smart Wheel / Trackpad Navigation (respects inner page scrolling before flipping)
+        // 2. Intentional Horizontal Trackpad Swipe Only (never hijack vertical scroll)
         el.deckViewport.addEventListener(
             "wheel",
             (evt) => {
                 if (el.atlasDialog.open || el.handoffDialog.open || el.lightboxDialog.open) {
                     return;
                 }
-                if (evt.target.closest(".chat-thread, .atlas-groups, textarea")) {
+                if (evt.target.closest(".chat-thread, .atlas-groups, textarea, input")) {
                     return;
                 }
-
-                const activeNode = getOrCreatePageNode(state.currentPageIndex);
-                const useHorizontal = Math.abs(evt.deltaX) > Math.abs(evt.deltaY) * 1.15;
-                const primaryDelta = useHorizontal ? evt.deltaX : evt.deltaY;
-
-                if (!useHorizontal && activeNode) {
-                    const hasOverflow = activeNode.scrollHeight > activeNode.clientHeight + 6;
-                    if (hasOverflow) {
-                        const atBottom = activeNode.scrollTop + activeNode.clientHeight >= activeNode.scrollHeight - 4;
-                        const atTop = activeNode.scrollTop <= 4;
-                        if ((primaryDelta > 0 && !atBottom) || (primaryDelta < 0 && !atTop)) {
-                            state.wheelAccum = 0;
-                            return;
-                        }
-                    }
+                const isIntentionalHorizontal = Math.abs(evt.deltaX) > Math.abs(evt.deltaY) * 1.8 && Math.abs(evt.deltaX) > 36;
+                if (!isIntentionalHorizontal) {
+                    return;
                 }
-
                 const now = Date.now();
-                if (now - state.lastWheelFlipAt < 540) {
+                if (now - state.lastWheelFlipAt < 750) {
                     return;
                 }
+                state.lastWheelFlipAt = now;
 
-                state.wheelAccum += primaryDelta;
-                if (Math.abs(state.wheelAccum) >= 65) {
-                    const goForward = state.wheelAccum > 0;
-                    state.wheelAccum = 0;
-                    state.lastWheelFlipAt = now;
-                    if (goForward && state.currentPageIndex < DECK_PAGES.length - 1) {
-                        if (state.currentPageIndex === 0) {
-                            triggerOnboardingReveal();
-                        } else {
-                            goToPage(state.currentPageIndex + 1, { direction: "next" });
-                        }
-                    } else if (!goForward && state.currentPageIndex > 0) {
+                const goForward = evt.deltaX > 0;
+                if (goForward && state.currentPageIndex < DECK_PAGES.length - 1) {
+                    if (state.currentPageIndex === 0) {
+                        triggerOnboardingReveal();
+                    } else if (state.currentPageIndex === 1) {
+                        advanceQuizStep(1);
+                    } else {
+                        goToPage(state.currentPageIndex + 1, { direction: "next" });
+                    }
+                } else if (!goForward && state.currentPageIndex > 0) {
+                    if (state.currentPageIndex === 1) {
+                        advanceQuizStep(-1);
+                    } else {
                         goToPage(state.currentPageIndex - 1, { direction: "prev" });
                     }
                 }
@@ -4796,25 +5472,111 @@
         el.summaryFeedback.textContent = "Draft rangkuman dibuka di WhatsApp.";
     }
 
+    function handlePrevNavControl() {
+        if (state.currentPageIndex === 1) {
+            advanceQuizStep(-1);
+        } else if (state.currentPageIndex > 0) {
+            goToPage(state.currentPageIndex - 1, { direction: "prev" });
+        }
+    }
+
+    function handleNextNavControl() {
+        if (state.currentPageIndex === 0) {
+            triggerOnboardingReveal();
+        } else if (state.currentPageIndex === 1) {
+            advanceQuizStep(1);
+        } else if (state.currentPageIndex >= DECK_PAGES.length - 1) {
+            goToPage(0, { direction: "prev" });
+        } else {
+            goToPage(state.currentPageIndex + 1, { direction: "next" });
+        }
+    }
+
+    /**
+     * Applies subtle spring-damped 3D parallax tilt to the hardcover book on fine-pointer desktops.
+     */
+    function initBook3dTilt() {
+        const finePointerQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
+        if (!el.bookStage3d || !el.bookTome || !finePointerQuery.matches || reducedMotionQuery.matches) {
+            return;
+        }
+
+        let targetRx = 0;
+        let targetRy = 0;
+        let curRx = 0;
+        let curRy = 0;
+        let rafId = null;
+
+        function tick() {
+            curRx += (targetRx - curRx) * 0.14;
+            curRy += (targetRy - curRy) * 0.14;
+            el.bookTome.style.setProperty("--book-tilt-x", `${curRx.toFixed(3)}deg`);
+            el.bookTome.style.setProperty("--book-tilt-y", `${curRy.toFixed(3)}deg`);
+
+            if (Math.abs(targetRx - curRx) > 0.008 || Math.abs(targetRy - curRy) > 0.008) {
+                rafId = window.requestAnimationFrame(tick);
+            } else {
+                curRx = targetRx;
+                curRy = targetRy;
+                el.bookTome.style.setProperty("--book-tilt-x", `${curRx.toFixed(3)}deg`);
+                el.bookTome.style.setProperty("--book-tilt-y", `${curRy.toFixed(3)}deg`);
+                rafId = null;
+            }
+        }
+
+        function schedule() {
+            if (!rafId) {
+                rafId = window.requestAnimationFrame(tick);
+            }
+        }
+
+        el.bookStage3d.addEventListener("pointermove", (evt) => {
+            if (evt.pointerType !== "mouse" || el.atlasDialog.open || el.handoffDialog.open || el.lightboxDialog.open) {
+                return;
+            }
+            if (state.currentPageIndex === DECK_PAGES.length - 1) {
+                targetRx = 0;
+                targetRy = 0;
+                schedule();
+                return;
+            }
+            const rect = el.bookStage3d.getBoundingClientRect();
+            if (!rect.width || !rect.height) {
+                return;
+            }
+            const nx = ((evt.clientX - rect.left) / rect.width - 0.5) * 2;
+            const ny = ((evt.clientY - rect.top) / rect.height - 0.5) * 2;
+            targetRy = nx * 1.45;
+            targetRx = -ny * 1.1;
+            schedule();
+        });
+
+        el.bookStage3d.addEventListener("pointerleave", () => {
+            targetRx = 0;
+            targetRy = 0;
+            schedule();
+        });
+    }
+
     function bindEvents() {
         el.goHomeBtn.addEventListener("click", () => goToPage(0, { direction: "prev" }));
         el.waxSealTrigger.addEventListener("click", triggerOnboardingReveal);
 
-        el.prevPageBtn.addEventListener("click", () => {
-            if (state.currentPageIndex > 0) {
-                goToPage(state.currentPageIndex - 1, { direction: "prev" });
-            }
-        });
+        el.prevPageBtn.addEventListener("click", handlePrevNavControl);
+        el.nextPageBtn.addEventListener("click", handleNextNavControl);
 
-        el.nextPageBtn.addEventListener("click", () => {
-            if (state.currentPageIndex === 0) {
-                triggerOnboardingReveal();
-            } else if (state.currentPageIndex >= DECK_PAGES.length - 1) {
-                goToPage(0, { direction: "prev" });
-            } else {
-                goToPage(state.currentPageIndex + 1, { direction: "next" });
-            }
-        });
+        if (el.bookCornerPrev) {
+            el.bookCornerPrev.addEventListener("click", handlePrevNavControl);
+        }
+        if (el.bookCornerNext) {
+            el.bookCornerNext.addEventListener("click", handleNextNavControl);
+        }
+        if (el.skipQuizBtn) {
+            el.skipQuizBtn.addEventListener("click", () => {
+                SoundscapeEngine.playUiTap();
+                goToPage(2, { direction: "next" });
+            });
+        }
 
         el.realmTrackBtns.forEach((btn) => {
             btn.addEventListener("click", () => {
@@ -4863,25 +5625,8 @@
         el.waSelfBtn.addEventListener("click", openWhatsAppSelfLink);
         el.copyUrlBtn.addEventListener("click", copyPageLink);
 
-        el.prevQuizBtn.addEventListener("click", () => {
-            if (state.quizStep > 0) {
-                state.quizStep -= 1;
-                renderQuizStep();
-            }
-        });
-
-        el.nextQuizBtn.addEventListener("click", () => {
-            if (state.quizStep < QUIZ_STEPS.length - 1) {
-                state.quizStep += 1;
-                renderQuizStep();
-            } else {
-                state.quizAnswers["step-rating-note"] = `${state.ratingScore}/100`;
-                unlockStamp("fyp");
-                saveQuizState();
-                updateLetterAndSummaryPreview();
-                goToPage(2, { direction: "next" });
-            }
-        });
+        el.prevQuizBtn.addEventListener("click", () => advanceQuizStep(-1));
+        el.nextQuizBtn.addEventListener("click", () => advanceQuizStep(1));
 
         el.resetQuizBtn.addEventListener("click", () => {
             state.quizStep = 0;
@@ -5030,15 +5775,13 @@
             }
             if (evt.key === "ArrowRight" || evt.key === "PageDown") {
                 evt.preventDefault();
-                if (state.currentPageIndex === 0) {
-                    triggerOnboardingReveal();
-                } else if (state.currentPageIndex < DECK_PAGES.length - 1) {
-                    goToPage(state.currentPageIndex + 1, { direction: "next" });
+                if (state.currentPageIndex < DECK_PAGES.length - 1) {
+                    handleNextNavControl();
                 }
             } else if (evt.key === "ArrowLeft" || evt.key === "PageUp") {
                 evt.preventDefault();
                 if (state.currentPageIndex > 0) {
-                    goToPage(state.currentPageIndex - 1, { direction: "prev" });
+                    handlePrevNavControl();
                 }
             }
         });
@@ -5052,7 +5795,7 @@
         }
         const match = DECK_PAGES.find((p) => p.id === hash);
         if (match && match.index > 0) {
-            goToPage(match.index, { direction: "next", silent: true });
+            goToPage(match.index, { direction: "next", silent: true, skipFlipAnim: true });
         } else {
             syncDeckChrome(0);
         }
@@ -5082,6 +5825,7 @@
     renderCatalogStrip();
     bindEvents();
     setupDeckNavigation();
+    initBook3dTilt();
     applyInitialHashRoute();
     setCameraViewState(
         "idle",
