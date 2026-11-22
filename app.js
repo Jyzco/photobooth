@@ -1,9 +1,8 @@
 (() => {
     "use strict";
 
-    const STORAGE_THEME_KEY = "ekspedisi27_theme_v5";
-    const STORAGE_QUIZ_KEY = "ekspedisi27_state_v5";
-    const SESSION_HANDOFF_KEY = "ekspedisi27_handoff_dismissed";
+    const STORAGE_THEME_KEY = "ekspedisi27_theme_v6";
+    const STORAGE_QUIZ_KEY = "ekspedisi27_state_v6";
     const FRAME_WIDTH = 960;
     const FRAME_HEIGHT = 720;
     const INTER_SHOT_PAUSE_MS = 650;
@@ -170,115 +169,56 @@
     ];
 
     const VIGNETTE_SVGS = {
-        "camera-stars": '<svg viewBox="0 0 180 116" width="160" height="104" fill="none"><rect x="28" y="34" width="124" height="64" rx="12" fill="currentColor" fill-opacity="0.1" stroke="currentColor" stroke-width="1.8"/><path d="M58 34L66 20H114L122 34" stroke="currentColor" stroke-width="1.8"/><circle cx="90" cy="66" r="21" fill="#F3D695" fill-opacity="0.24" stroke="currentColor" stroke-width="1.8"/><circle cx="90" cy="66" r="11" stroke="#835811" stroke-width="1.6"/><circle cx="136" cy="48" r="3.5" fill="#D8A84E"/><path d="M22 18L24.5 24L30 26.5L24.5 29L22 35L19.5 29L14 26.5L19.5 24Z" fill="#D8A84E"/><path d="M154 14L156 19L161 21L156 23L154 28L152 23L147 21L152 19Z" fill="#8F2631"/></svg>',
-        "quill-arch": '<svg viewBox="0 0 180 116" width="160" height="104" fill="none"><path d="M40 100V52C40 26 62 12 90 12C118 12 140 26 140 52V100" stroke="currentColor" stroke-width="1.6" stroke-dasharray="4 4"/><rect x="52" y="54" width="60" height="38" rx="5" fill="#F3D695" fill-opacity="0.2" stroke="currentColor" stroke-width="1.6"/><path d="M52 58L82 78L112 58" stroke="currentColor" stroke-width="1.5"/><path d="M126 30C114 48 106 66 104 82C118 76 132 58 144 36C139 32 132 30 126 30Z" fill="currentColor" fill-opacity="0.16" stroke="#835811" stroke-width="1.7"/><circle cx="82" cy="78" r="4" fill="#8F2631"/></svg>',
-        "mountain-sunrise": '<svg viewBox="0 0 180 116" width="160" height="104" fill="none"><circle cx="90" cy="48" r="22" fill="#F8C87A" fill-opacity="0.45" stroke="#D8A84E" stroke-width="1.4"/><path d="M16 96L54 44L84 74L114 34L164 96H16Z" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M114 34L124 52L112 58L104 49L98 56L114 34Z" fill="#FFFDF8" fill-opacity="0.65"/><path d="M56 16V8M90 10V4M124 16V8" stroke="#D8A84E" stroke-width="1.6" stroke-linecap="round"/></svg>',
-        "lantern-oak": '<svg viewBox="0 0 180 116" width="160" height="104" fill="none"><path d="M18 22C64 18 106 24 156 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M62 20C54 10 42 12 38 22C48 26 56 26 62 20Z" fill="currentColor" fill-opacity="0.22"/><line x1="94" y1="20" x2="94" y2="42" stroke="#835811" stroke-width="1.6"/><circle cx="94" cy="68" r="28" fill="#F8C87A" fill-opacity="0.32"/><path d="M80 42H108L114 64L104 88H84L74 64L80 42Z" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.8"/><circle cx="94" cy="65" r="7" fill="#D8A84E"/><circle cx="42" cy="72" r="2.5" fill="#D8A84E"/><circle cx="144" cy="54" r="3" fill="#D8A84E"/></svg>',
-        "teacup-stars": '<svg viewBox="0 0 180 116" width="160" height="104" fill="none"><path d="M52 54H118V76C118 90 106 98 85 98C64 98 52 90 52 76V54Z" fill="currentColor" fill-opacity="0.14" stroke="currentColor" stroke-width="1.8"/><path d="M118 60H128C135 60 138 66 138 71C138 77 134 82 127 82H118" stroke="currentColor" stroke-width="1.8"/><ellipse cx="85" cy="99" rx="44" ry="6" fill="#D8A84E" fill-opacity="0.24" stroke="currentColor" stroke-width="1.2"/><path d="M74 42C70 34 78 28 74 20M94 42C90 34 98 28 94 20" stroke="#835811" stroke-width="1.6" stroke-linecap="round"/><path d="M36 30L38 35L43 37L38 39L36 44L34 39L29 37L34 35Z" fill="#D8A84E"/></svg>',
-        "moon-angel": '<svg viewBox="0 0 180 116" width="160" height="104" fill="none"><circle cx="90" cy="58" r="42" stroke="currentColor" stroke-opacity="0.24" stroke-width="1.4" stroke-dasharray="4 5"/><path d="M98 24C80 28 69 44 72 62C74 78 88 89 104 91C84 97 63 85 58 64C53 43 66 23 87 20C91 20 95 21 98 24Z" fill="#D8A84E" fill-opacity="0.34" stroke="currentColor" stroke-width="1.7"/><path d="M118 46L121 54L129 57L121 60L118 68L115 60L107 57L115 54Z" fill="#8F2631"/><circle cx="136" cy="40" r="3" fill="#D8A84E"/></svg>',
-        "headset-waves": '<svg viewBox="0 0 180 116" width="160" height="104" fill="none"><path d="M54 74V56C54 36 70 22 90 22C110 22 126 36 126 56V74" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><rect x="44" y="64" width="16" height="30" rx="8" fill="currentColor" fill-opacity="0.18" stroke="currentColor" stroke-width="1.8"/><rect x="120" y="64" width="16" height="30" rx="8" fill="currentColor" fill-opacity="0.18" stroke="currentColor" stroke-width="1.8"/><path d="M70 76C76 68 82 84 90 74C98 64 104 82 110 74" stroke="#835811" stroke-width="1.8" stroke-linecap="round"/><circle cx="90" cy="46" r="4" fill="#D8A84E"/></svg>',
-        "summit-crown": '<svg viewBox="0 0 180 116" width="160" height="104" fill="none"><path d="M22 96L58 46L82 72L90 34L104 72L126 48L158 96H22Z" fill="currentColor" fill-opacity="0.14" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M90 12L94 21L103 25L94 29L90 38L86 29L77 25L86 21Z" fill="#D8A84E"/><circle cx="52" cy="26" r="2.5" fill="#8F2631"/><circle cx="128" cy="26" r="2.5" fill="#8F2631"/></svg>'
-    };
-
-    const REALM_SCENERY_SVGS = {
-        1: `<div class="realm-scenery-top" aria-hidden="true">
-                <svg viewBox="0 0 1200 190" preserveAspectRatio="none" width="100%" height="165" fill="none">
-                    <path d="M0 32C110 88 220 56 320 20C205 2 105 12 0 32Z" fill="currentColor" fill-opacity="0.14"/>
-                    <path d="M1200 32C1090 88 980 56 880 20C995 2 1095 12 1200 32Z" fill="currentColor" fill-opacity="0.14"/>
-                    <circle cx="96" cy="56" r="4" fill="#D8A84E" fill-opacity="0.68"/>
-                    <circle cx="1104" cy="56" r="4" fill="#D8A84E" fill-opacity="0.68"/>
-                    <path d="M56 16C92 48 134 50 178 26" stroke="currentColor" stroke-opacity="0.34" stroke-width="1.6"/>
-                    <path d="M1144 16C1108 48 1066 50 1022 26" stroke="currentColor" stroke-opacity="0.34" stroke-width="1.6"/>
-                    <path d="M180 42L183 51L192 54L183 57L180 66L177 57L168 54L177 51Z" fill="#D8A84E" fill-opacity="0.58"/>
-                    <path d="M1020 42L1023 51L1032 54L1023 57L1020 66L1017 57L1008 54L1017 51Z" fill="#D8A84E" fill-opacity="0.58"/>
-                </svg>
-            </div>
-            <div class="realm-scenery-bottom" aria-hidden="true">
-                <svg viewBox="0 0 1200 150" preserveAspectRatio="none" width="100%" height="130" fill="none">
-                    <path d="M0 150V96L64 46L128 106L210 34L296 116L388 64L480 130H0ZM720 150L820 68L910 120L998 42L1086 102L1152 54L1200 94V150H720Z" fill="currentColor" fill-opacity="0.12"/>
-                    <circle cx="152" cy="82" r="3" fill="#D8A84E" fill-opacity="0.66"/>
-                    <circle cx="1048" cy="76" r="3" fill="#D8A84E" fill-opacity="0.66"/>
-                </svg>
-            </div>`,
-        2: `<div class="realm-scenery-top" aria-hidden="true">
-                <svg viewBox="0 0 1200 190" preserveAspectRatio="none" width="100%" height="165" fill="none">
-                    <path d="M0 12C88 46 168 38 256 14" stroke="currentColor" stroke-opacity="0.36" stroke-width="1.8"/>
-                    <line x1="128" y1="31" x2="128" y2="68" stroke="#D8A84E" stroke-opacity="0.72" stroke-width="1.6"/>
-                    <circle cx="128" cy="84" r="24" fill="#F8C87A" fill-opacity="0.28"/>
-                    <path d="M120 68H136L140 82L134 95H122L116 82L120 68Z" fill="currentColor" fill-opacity="0.14" stroke="currentColor" stroke-opacity="0.48" stroke-width="1.4"/>
-                    <circle cx="128" cy="82" r="4.5" fill="#F8C87A" fill-opacity="0.88"/>
-                    <path d="M1200 12C1112 46 1032 38 944 14" stroke="currentColor" stroke-opacity="0.36" stroke-width="1.8"/>
-                    <line x1="1072" y1="31" x2="1072" y2="68" stroke="#D8A84E" stroke-opacity="0.72" stroke-width="1.6"/>
-                    <circle cx="1072" cy="84" r="24" fill="#F8C87A" fill-opacity="0.28"/>
-                    <path d="M1064 68H1080L1084 82L1078 95H1066L1060 82L1064 68Z" fill="currentColor" fill-opacity="0.14" stroke="currentColor" stroke-opacity="0.48" stroke-width="1.4"/>
-                    <circle cx="1072" cy="82" r="4.5" fill="#F8C87A" fill-opacity="0.88"/>
-                </svg>
-            </div>
-            <div class="realm-scenery-bottom" aria-hidden="true">
-                <svg viewBox="0 0 1200 150" preserveAspectRatio="none" width="100%" height="130" fill="none">
-                    <path d="M0 150C160 88 300 112 460 150H0ZM740 150C900 112 1040 88 1200 150H740Z" fill="currentColor" fill-opacity="0.12"/>
-                    <circle cx="180" cy="74" r="3.5" fill="#F8C87A" fill-opacity="0.68"/>
-                    <circle cx="240" cy="98" r="2.8" fill="#F8C87A" fill-opacity="0.62"/>
-                    <circle cx="960" cy="94" r="2.8" fill="#F8C87A" fill-opacity="0.62"/>
-                    <circle cx="1020" cy="70" r="3.5" fill="#F8C87A" fill-opacity="0.68"/>
-                </svg>
-            </div>`,
-        3: `<div class="realm-scenery-top" aria-hidden="true">
-                <svg viewBox="0 0 1200 190" preserveAspectRatio="none" width="100%" height="165" fill="none">
-                    <path d="M92 34L95 43L104 46L95 49L92 58L89 49L80 46L89 43Z" fill="#D8A84E" fill-opacity="0.68"/>
-                    <path d="M1108 34L1111 43L1120 46L1111 49L1108 58L1105 49L1096 46L1105 43Z" fill="#D8A84E" fill-opacity="0.68"/>
-                    <path d="M168 62C154 66 146 80 149 94C152 106 162 114 174 115C158 119 143 109 140 94C137 78 147 62 162 60C164 60 166 61 168 62Z" fill="currentColor" fill-opacity="0.24"/>
-                    <path d="M1044 62C1030 66 1022 80 1025 94C1028 106 1038 114 1050 115C1034 119 1019 109 1016 94C1013 78 1023 62 1038 60C1040 60 1042 61 1044 62Z" fill="currentColor" fill-opacity="0.24"/>
-                    <polyline points="196,42 252,70 308,38" stroke="currentColor" stroke-opacity="0.3" stroke-width="1.4" stroke-dasharray="4 5"/>
-                    <polyline points="1004,42 948,70 892,38" stroke="currentColor" stroke-opacity="0.3" stroke-width="1.4" stroke-dasharray="4 5"/>
-                </svg>
-            </div>
-            <div class="realm-scenery-bottom" aria-hidden="true">
-                <svg viewBox="0 0 1200 150" preserveAspectRatio="none" width="100%" height="130" fill="none">
-                    <path d="M0 150V86C95 54 185 88 270 118C340 86 410 102 475 150H0ZM725 150C790 102 860 86 930 118C1015 88 1105 54 1200 86V150H725Z" fill="currentColor" fill-opacity="0.12"/>
-                </svg>
-            </div>`,
-        4: `<div class="realm-scenery-top" aria-hidden="true">
-                <svg viewBox="0 0 1200 190" preserveAspectRatio="none" width="100%" height="165" fill="none">
-                    <circle cx="116" cy="76" r="46" stroke="currentColor" stroke-opacity="0.28" stroke-width="1.4" stroke-dasharray="5 5"/>
-                    <circle cx="1084" cy="76" r="46" stroke="currentColor" stroke-opacity="0.28" stroke-width="1.4" stroke-dasharray="5 5"/>
-                    <path d="M116 48L120 68L140 76L120 84L116 104L112 84L92 76L112 68Z" fill="#D8A84E" fill-opacity="0.52"/>
-                    <path d="M1084 48L1088 68L1108 76L1088 84L1084 104L1080 84L1060 76L1080 68Z" fill="#D8A84E" fill-opacity="0.52"/>
-                    <line x1="210" y1="28" x2="278" y2="56" stroke="#D8A84E" stroke-opacity="0.48" stroke-width="1.6" stroke-linecap="round"/>
-                    <line x1="990" y1="28" x2="922" y2="56" stroke="#D8A84E" stroke-opacity="0.48" stroke-width="1.6" stroke-linecap="round"/>
-                </svg>
-            </div>
-            <div class="realm-scenery-bottom" aria-hidden="true">
-                <svg viewBox="0 0 1200 150" preserveAspectRatio="none" width="100%" height="130" fill="none">
-                    <path d="M0 150L110 42L218 106L326 26L448 150H0ZM752 150L874 26L982 106L1090 42L1200 150H752Z" fill="currentColor" fill-opacity="0.12"/>
-                </svg>
-            </div>`
+        "camera-stars": '<svg viewBox="0 0 180 116" width="144" height="94" fill="none"><rect x="28" y="34" width="124" height="64" rx="12" fill="currentColor" fill-opacity="0.1" stroke="currentColor" stroke-width="1.8"/><path d="M58 34L66 20H114L122 34" stroke="currentColor" stroke-width="1.8"/><circle cx="90" cy="66" r="21" fill="#F3D695" fill-opacity="0.24" stroke="currentColor" stroke-width="1.8"/><circle cx="90" cy="66" r="11" stroke="currentColor" stroke-width="1.6"/><circle cx="136" cy="48" r="3.5" fill="#D8A84E"/><path d="M22 18L24.5 24L30 26.5L24.5 29L22 35L19.5 29L14 26.5L19.5 24Z" fill="#D8A84E"/></svg>',
+        "quill-arch": '<svg viewBox="0 0 180 116" width="144" height="94" fill="none"><path d="M40 100V52C40 26 62 12 90 12C118 12 140 26 140 52V100" stroke="currentColor" stroke-width="1.6" stroke-dasharray="4 4"/><rect x="52" y="54" width="60" height="38" rx="5" fill="#F3D695" fill-opacity="0.2" stroke="currentColor" stroke-width="1.6"/><path d="M52 58L82 78L112 58" stroke="currentColor" stroke-width="1.5"/><path d="M126 30C114 48 106 66 104 82C118 76 132 58 144 36C139 32 132 30 126 30Z" fill="currentColor" fill-opacity="0.16" stroke="currentColor" stroke-width="1.7"/><circle cx="82" cy="78" r="4" fill="#8F2631"/></svg>',
+        "mountain-sunrise": '<svg viewBox="0 0 180 116" width="144" height="94" fill="none"><circle cx="90" cy="48" r="22" fill="#F8C87A" fill-opacity="0.42" stroke="#D8A84E" stroke-width="1.4"/><path d="M16 96L54 44L84 74L114 34L164 96H16Z" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M114 34L124 52L112 58L104 49L98 56L114 34Z" fill="#FFFDF8" fill-opacity="0.65"/></svg>',
+        "lantern-oak": '<svg viewBox="0 0 180 116" width="144" height="94" fill="none"><path d="M18 22C64 18 106 24 156 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="94" y1="20" x2="94" y2="42" stroke="currentColor" stroke-width="1.6"/><circle cx="94" cy="68" r="28" fill="#F8C87A" fill-opacity="0.3"/><path d="M80 42H108L114 64L104 88H84L74 64L80 42Z" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.8"/><circle cx="94" cy="65" r="7" fill="#D8A84E"/></svg>',
+        "teacup-stars": '<svg viewBox="0 0 180 116" width="144" height="94" fill="none"><path d="M52 54H118V76C118 90 106 98 85 98C64 98 52 90 52 76V54Z" fill="currentColor" fill-opacity="0.14" stroke="currentColor" stroke-width="1.8"/><path d="M118 60H128C135 60 138 66 138 71C138 77 134 82 127 82H118" stroke="currentColor" stroke-width="1.8"/><ellipse cx="85" cy="99" rx="44" ry="6" fill="#D8A84E" fill-opacity="0.24" stroke="currentColor" stroke-width="1.2"/></svg>',
+        "moon-angel": '<svg viewBox="0 0 180 116" width="144" height="94" fill="none"><circle cx="90" cy="58" r="42" stroke="currentColor" stroke-opacity="0.24" stroke-width="1.4" stroke-dasharray="4 5"/><path d="M98 24C80 28 69 44 72 62C74 78 88 89 104 91C84 97 63 85 58 64C53 43 66 23 87 20C91 20 95 21 98 24Z" fill="#D8A84E" fill-opacity="0.34" stroke="currentColor" stroke-width="1.7"/></svg>',
+        "headset-waves": '<svg viewBox="0 0 180 116" width="144" height="94" fill="none"><path d="M54 74V56C54 36 70 22 90 22C110 22 126 36 126 56V74" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><rect x="44" y="64" width="16" height="30" rx="8" fill="currentColor" fill-opacity="0.18" stroke="currentColor" stroke-width="1.8"/><rect x="120" y="64" width="16" height="30" rx="8" fill="currentColor" fill-opacity="0.18" stroke="currentColor" stroke-width="1.8"/><path d="M70 76C76 68 82 84 90 74C98 64 104 82 110 74" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
+        "summit-crown": '<svg viewBox="0 0 180 116" width="144" height="94" fill="none"><path d="M22 96L58 46L82 72L90 34L104 72L126 48L158 96H22Z" fill="currentColor" fill-opacity="0.14" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M90 12L94 21L103 25L94 29L90 38L86 29L77 25L86 21Z" fill="#D8A84E"/></svg>'
     };
 
     const BIOME_META = {
         1: {
-            kicker: "ZONA I // 100 - 650 MDPL // AGUSTUS - PERTENGAHAN SEPTEMBER",
-            title: "Lembah Awal & Bisikan Senja",
-            subtitle: "Dari kamera FYP BINUS, DM ulang tahun perdana, hingga janji awal menuju puncak gunung.",
-            svg: '<svg viewBox="0 0 96 36" width="84" height="32" fill="none"><path d="M8 28C22 14 34 10 48 22C62 10 74 14 88 28" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M48 4L51 12L59 15L51 18L48 26L45 18L37 15L45 12L48 4Z" stroke="currentColor" stroke-width="1.4" fill="currentColor" fill-opacity="0.16"/></svg>'
+            shortName: "Pesisir Senja",
+            groupLabel: "ALAM I // PESISIR SENJA (POS 01 - 06)",
+            kicker: "ALAM I // 100 - 650 MDPL // AGUSTUS - PERTENGAHAN SEPTEMBER",
+            title: "Pesisir Senja & Awal Mula",
+            subtitle: "Dari kamera FYP BINUS, DM ulang tahun perdana di senja Agustus, hingga janji awal menuju puncak gunung.",
+            stampId: "pesisir",
+            pills: ["Ombak Senja", "6 Pos Cerita", "2 Pos Istirahat"],
+            svg: '<svg viewBox="0 0 120 44" width="108" height="40" fill="none"><circle cx="60" cy="22" r="11" fill="#F3D695" fill-opacity="0.28" stroke="currentColor" stroke-width="1.5"/><path d="M12 31C28 24 44 24 60 31C76 38 92 38 108 31" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M20 38C36 33 50 33 64 38C78 42 92 42 104 38" stroke="currentColor" stroke-width="1.2" stroke-opacity="0.65" stroke-linecap="round"/></svg>'
         },
         2: {
-            kicker: "ZONA II // 780 - 1.340 MDPL // AKHIR SEPTEMBER - PERTENGAHAN OKTOBER",
+            shortName: "Hutan Lentera",
+            groupLabel: "ALAM II // HUTAN LENTERA (POS 07 - 13)",
+            kicker: "ALAM II // 780 - 1.380 MDPL // AKHIR SEPTEMBER - PERTENGAHAN OKTOBER",
             title: "Hutan Lentera & Jalan Malam",
             subtitle: "Ketika stranger mulai jadi teman cerita, penuh kejutan prank, misteri pabrik permen, dan khodam tengah malam.",
-            svg: '<svg viewBox="0 0 96 36" width="84" height="32" fill="none"><line x1="12" y1="18" x2="36" y2="18" stroke="currentColor" stroke-width="1.2"/><line x1="60" y1="18" x2="84" y2="18" stroke="currentColor" stroke-width="1.2"/><path d="M42 10H54L57 20L52 29H44L39 20L42 10Z" stroke="currentColor" stroke-width="1.5" fill="currentColor" fill-opacity="0.14"/><circle cx="48" cy="20" r="3" fill="currentColor"/></svg>'
+            stampId: "lentera",
+            pills: ["Lentera Rimba", "7 Pos Cerita", "2 Pos Istirahat"],
+            svg: '<svg viewBox="0 0 120 44" width="108" height="40" fill="none"><line x1="16" y1="22" x2="44" y2="22" stroke="currentColor" stroke-width="1.3"/><line x1="76" y1="22" x2="104" y2="22" stroke="currentColor" stroke-width="1.3"/><path d="M52 10H68L72 22L66 34H54L48 22L52 10Z" stroke="currentColor" stroke-width="1.6" fill="currentColor" fill-opacity="0.16"/><circle cx="60" cy="22" r="4" fill="#F3D695"/></svg>'
         },
         3: {
-            kicker: "ZONA III // 1.520 - 2.150 MDPL // 17 OKTOBER - 01 NOVEMBER",
-            title: "Gerbang Bidadari & Langit Morikei",
+            shortName: "Lembah Bidadari",
+            groupLabel: "ALAM III // LEMBAH BIDADARI (POS 14 - 20)",
+            kicker: "ALAM III // 1.520 - 2.150 MDPL // 17 OKTOBER - 01 NOVEMBER",
+            title: "Lembah Bidadari & Langit Morikei",
             subtitle: "Pintu rahasia akun second terbuka, telepon lewat tengah malam, Spotify 100%, sampai impian dunia Ghibli dan morikei.",
-            svg: '<svg viewBox="0 0 96 36" width="84" height="32" fill="none"><path d="M16 18H34M62 18H80" stroke="currentColor" stroke-width="1.2"/><path d="M52 7C46 9 43 15 44 21C45 26 50 29 55 29C48 31 41 27 40 20C39 13 44 7 50 6C51 6 51.5 6.4 52 7Z" fill="currentColor" fill-opacity="0.75"/><circle cx="58" cy="13" r="2" fill="currentColor"/></svg>'
+            stampId: "bidadari",
+            pills: ["Bulan Sabit Berry", "7 Pos Cerita", "2 Pos Istirahat"],
+            svg: '<svg viewBox="0 0 120 44" width="108" height="40" fill="none"><path d="M18 22H42M78 22H102" stroke="currentColor" stroke-width="1.3"/><path d="M66 9C58 11 54 19 56 26C58 32 64 36 70 36C61 39 53 33 51 24C49 16 56 8 64 7C65 7 65.5 8 66 9Z" fill="currentColor" fill-opacity="0.88"/><circle cx="72" cy="16" r="2.2" fill="#F3D695"/></svg>'
         },
         4: {
-            kicker: "ZONA IV // 2.260 - 2.700 MDPL // NOVEMBER HINGGA PUNCAK 27",
-            title: "Puncak Bintang & Mahkota Awan",
+            shortName: "Puncak Bintang",
+            groupLabel: "ALAM IV // PUNCAK GUNUNG BERBINTANG (POS 21 - 27)",
+            kicker: "ALAM IV // 2.240 - 2.700 MDPL // NOVEMBER HINGGA PUNCAK 27",
+            title: "Puncak Gunung Berbintang",
             subtitle: "Foto perpustakaan, nobar fantasi di balik layar laptop, totalitas recreate meme, sampai typo paling legendaris sebelum puncak.",
-            svg: '<svg viewBox="0 0 96 36" width="84" height="32" fill="none"><path d="M14 29L30 13L42 23L50 9L64 24L74 14L84 29H14Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><circle cx="50" cy="5" r="2.2" fill="currentColor"/></svg>'
+            stampId: "bintang",
+            pills: ["Puncak 2.700 mdpl", "7 Pos Cerita", "1 Pos Istirahat"],
+            svg: '<svg viewBox="0 0 120 44" width="108" height="40" fill="none"><path d="M18 35L38 15L52 27L62 11L78 28L90 16L102 35H18Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" fill="currentColor" fill-opacity="0.16"/><circle cx="62" cy="6" r="2.6" fill="#F3D695"/></svg>'
         }
     };
 
@@ -386,10 +326,10 @@
                 ]
             },
             talkAfter: {
-                badge: "BERHENTI SEJENAK #01 // LEMBAH AWAL",
+                badge: "BERHENTI SEJENAK #01 // PESISIR AWAL",
                 teaser: "Bahas topik pembuka dulu di sini, lalu mainkan mini game tebak chat bareng!",
                 question: "Jujur deh, pas pertama kali dapet DM 'Happy Bday!' tanggal 27 Agustus, impresi pertamamu soal aku waktu itu gimana? Sempat mikir aneh atau kaget gak?",
-                hint: "Coba ceritain versi jujurnya ke Jay sebelum main mini game di bawah!",
+                hint: "Coba ceritain versi jujurnya ke Jay sebelum main mini game di sebelah!",
                 miniGame: {
                     type: "tebak-chat",
                     badge: "MINI GAME #01 // TEBAK PENGIRIM",
@@ -525,10 +465,10 @@
                 ]
             },
             talkAfter: {
-                badge: "BERHENTI SEJENAK #02 // GERBANG LEMBAH",
+                badge: "BERHENTI SEJENAK #02 // GERBANG PESISIR",
                 teaser: "Obrolan singkat soal gunung impian berdua plus duel suit pendaki!",
                 question: "Kalau wacana muncak Andong atau Merbabu beneran kejadian, hal paling seru atau paling bikin khawatir buatmu pas naik gunung bareng apa nih?",
-                hint: "Bahas sebentar, lalu tentuin siapa yang bawa logistik paling banyak lewat suit di bawah!",
+                hint: "Bahas sebentar, lalu tentuin siapa yang bawa logistik paling banyak lewat suit!",
                 miniGame: {
                     type: "suit-pendaki",
                     badge: "MINI GAME #02 // SUIT PENDAKI",
@@ -716,7 +656,7 @@
                 badge: "BERHENTI SEJENAK #03 // HUTAN LENTERA",
                 teaser: "Flashback ke 3 Oktober kemarin plus main nyalain 5 lentera hutan!",
                 question: "Waktu pertama kali jalan bareng ke Gramed Jalma tanggal 3 Oktober, awalnya canggung banget gak sih? Momen apa yang bikin suasana hari itu tiba-tiba cair?",
-                hint: "Bahas versi POV Rara vs POV Jay, terus nyalain ke-5 lenteranya di bawah!",
+                hint: "Bahas versi POV Rara vs POV Jay, terus nyalain ke-5 lenteranya!",
                 miniGame: {
                     type: "lentera-hutan",
                     badge: "MINI GAME #03 // LENTERA KENANGAN",
@@ -835,7 +775,7 @@
                 badge: "BERHENTI SEJENAK #04 // UJUNG HUTAN",
                 teaser: "Uji ingatan jam-jam random kita sebelum buka pintu rahasia akun second!",
                 question: "Dari obrolan sore sampai hampir tengah malam di bulan September-Oktober, kebiasaan acak apa yang paling kerasa bedanya dibanding awal kita kenal?",
-                hint: "Bahas sebentar, lalu tes ketepatan jam begadang kalian lewat game di bawah!",
+                hint: "Bahas sebentar, lalu tes ketepatan jam begadang kalian lewat game!",
                 miniGame: {
                     type: "tebak-jam",
                     badge: "MINI GAME #04 // TEBAK JAM ARSIP",
@@ -967,10 +907,10 @@
                 ]
             },
             talkAfter: {
-                badge: "BERHENTI SEJENAK #05 // GERBANG BIDADARI",
+                badge: "BERHENTI SEJENAK #05 // LEMBAH BIDADARI",
                 teaser: "Flashback ke telpon 1.22.46 plus Tes Telepati 3-2-1 Sebut Bareng!",
                 question: "Di call tengah malam 1 jam 22 menit itu, masih inget gak kita bahas apa aja sampai gak sadar udah lewat jam satu? Sebenarnya siapa yang paling susah tidur duluan di antara kita?",
-                hint: "Tatap jam 3-2-1 lalu jawab 3 pertanyaan telepati di bawah ini bersamaan!",
+                hint: "Tatap jam 3-2-1 lalu jawab 3 pertanyaan telepati secara bersamaan!",
                 miniGame: {
                     type: "kompak-123",
                     badge: "MINI GAME #05 // TES TELEPATI 3-2-1",
@@ -1153,7 +1093,7 @@
                 badge: "BERHENTI SEJENAK #06 // LANGIT MORIKEI",
                 teaser: "Ngomongin akun konten fairy tale impianmu plus game Susun Kata Typo!",
                 question: "Kalau akun konten bertema fairy tale & morikei impianmu udah mulai jalan nanti, lokasi atau konsep outfit pertama apa yang paling pengin kamu wujudin?",
-                hint: "Habis bahas lokasi pemotretan pertama, coba susun 3 frasa legenda kita di bawah!",
+                hint: "Habis bahas lokasi pemotretan pertama, coba susun 3 frasa legenda kita!",
                 miniGame: {
                     type: "susun-typo",
                     badge: "MINI GAME #06 // SUSUN KATA LORE",
@@ -1467,27 +1407,27 @@
             bg: "#F6F0E3",
             card: "#FFFDF8",
             mat: "#FAF5E8",
-            border: "#835811",
+            border: "#784D0C",
             foil: "#D8A84E",
-            accent: "#1A4F3E",
-            accentSoft: "#DFECE6",
+            accent: "#0F4D5A",
+            accentSoft: "#E1F0F2",
             wax: "#8F2631",
-            text: "#1C1821",
-            muted: "#504754",
+            text: "#1A1720",
+            muted: "#4A4252",
             stamp: "#8F2631"
         },
         lantern: {
             bg: "#FAF0E2",
             card: "#FFF9F0",
             mat: "#FBF3E4",
-            border: "#8A3B1E",
+            border: "#763416",
             foil: "#D89B3C",
-            accent: "#835811",
+            accent: "#784D0C",
             accentSoft: "#F5E7D2",
             wax: "#8F2631",
-            text: "#1C1821",
-            muted: "#504754",
-            stamp: "#8A3B1E"
+            text: "#1A1720",
+            muted: "#4A4252",
+            stamp: "#763416"
         },
         berry: {
             bg: "#1D1426",
@@ -1500,7 +1440,7 @@
             wax: "#BA3846",
             text: "#FAF6EE",
             muted: "#D9CBE4",
-            stamp: "#EBC06B"
+            stamp: "#EDC46E"
         },
         summit: {
             bg: "#0D1322",
@@ -1508,12 +1448,12 @@
             mat: "#1E2842",
             border: "#7E97C2",
             foil: "#F3D695",
-            accent: "#EBC06B",
+            accent: "#EDC46E",
             accentSoft: "#22304D",
             wax: "#BA3846",
-            text: "#F2ECE0",
+            text: "#F4EFE4",
             muted: "#C4CEE0",
-            stamp: "#96C2F7"
+            stamp: "#9BC4F8"
         }
     };
 
@@ -1532,8 +1472,115 @@
         }
     });
 
+    /**
+     * Compiles all 42 ordered full-screen pages cleanly from real milestones & checkpoints.
+     */
+    function buildDeckPages() {
+        const pages = [];
+        pages.push({
+            id: "onboarding",
+            type: "onboarding",
+            biome: 1,
+            altitude: "0 mdpl",
+            groupLabel: "PEMBUKAAN",
+            title: "Sambutan Ekspedisi 27",
+            shortLabel: "Sambutan Segel 27"
+        });
+        pages.push({
+            id: "kuis",
+            type: "quiz",
+            biome: 1,
+            altitude: "50 mdpl",
+            groupLabel: "PEMBUKAAN",
+            title: "Kuis Pemanasan Basecamp",
+            shortLabel: "Kuis 7 Langkah"
+        });
+
+        let restCount = 0;
+        let photoSpreadToggle = 0;
+
+        [1, 2, 3, 4].forEach((bId) => {
+            const meta = BIOME_META[bId];
+            pages.push({
+                id: `alam-${bId}`,
+                type: "realm-intro",
+                biome: bId,
+                altitude: bId === 1 ? "100 mdpl" : bId === 2 ? "780 mdpl" : bId === 3 ? "1.520 mdpl" : "2.240 mdpl",
+                groupLabel: meta.groupLabel,
+                title: meta.title,
+                shortLabel: `Intro ${meta.shortName}`
+            });
+
+            TRAIL_CHECKPOINTS.filter((cp) => cp.biome === bId).forEach((cp) => {
+                const hasPhotos = Array.isArray(cp.photos) && cp.photos.length > 0;
+                const hasChats = Array.isArray(cp.chats) && cp.chats.length > 0;
+                let spreadVariant = "tarot-plate";
+                if (hasPhotos && !hasChats) {
+                    spreadVariant = "photo-focus";
+                } else if (hasPhotos && hasChats) {
+                    spreadVariant = photoSpreadToggle % 2 === 0 ? "split-chat" : "photo-focus";
+                    photoSpreadToggle += 1;
+                }
+
+                pages.push({
+                    id: cp.id,
+                    type: "pos",
+                    biome: cp.biome,
+                    altitude: cp.altitude,
+                    groupLabel: meta.groupLabel,
+                    checkpoint: cp,
+                    spreadVariant,
+                    title: cp.title,
+                    shortLabel: `Pos ${cp.postNum}: ${cp.title}`
+                });
+
+                if (cp.talkAfter) {
+                    restCount += 1;
+                    pages.push({
+                        id: `istirahat-${restCount}`,
+                        type: "rest-stop",
+                        biome: cp.biome,
+                        altitude: cp.altitude,
+                        groupLabel: meta.groupLabel,
+                        restNum: restCount,
+                        talk: cp.talkAfter,
+                        title: cp.talkAfter.badge,
+                        shortLabel: `Istirahat #${String(restCount).padStart(2, "0")}: ${cp.talkAfter.miniGame.title}`
+                    });
+                }
+            });
+        });
+
+        pages.push({
+            id: "puncak",
+            type: "letter",
+            biome: 4,
+            altitude: "2.700 mdpl",
+            groupLabel: "PENUTUP PUNCAK 27",
+            title: "Surat Puncak 27",
+            shortLabel: "Surat Puncak 27"
+        });
+        pages.push({
+            id: "photobooth",
+            type: "photobooth",
+            biome: 4,
+            altitude: "2.700 mdpl",
+            groupLabel: "PENUTUP PUNCAK 27",
+            title: "Foto Berdua di Puncak",
+            shortLabel: "Photobooth & Kartu PNG"
+        });
+
+        return pages.map((p, idx) => ({ ...p, index: idx }));
+    }
+
+    const DECK_PAGES = buildDeckPages();
+    const pageNodeCache = new Map();
+
     const state = {
         theme: "light",
+        currentPageIndex: 0,
+        onboardingOpened: false,
+        isBreakingSeal: false,
         quizStep: 0,
         quizAnswers: {},
         quizReactions: {},
@@ -1546,7 +1593,7 @@
         stripTheme: "parchment",
         stripCaption: "Jay & Rara // Puncak 27",
         isMirrored: true,
-        soundEnabled: true,
+        soundEnabled: false,
         photos: [null, null, null],
         compositeDataUrl: "",
         summaryDataUrl: "",
@@ -1558,39 +1605,34 @@
         captureAbortController: null,
         pendingSlotIndex: null,
         activeCardTab: "strip",
-        audioContext: null,
         dialogGalleryIndex: -1,
         dialogPreviewTarget: null,
         lastFocusedBeforeDialog: null,
-        trailTotalLength: 0,
-        scrollRafPending: false,
-        resizeTimer: null,
-        activePosIndex: 0,
-        currentBiome: 1,
-        quickGameAnswers: {}
+        quickGameAnswers: {},
+        wheelAccum: 0,
+        lastWheelFlipAt: 0,
+        leaveCleanupTimer: null,
+        enterCleanupTimer: null
     };
 
     const el = {
         root: document.documentElement,
-        worldAmbienceStage: document.getElementById("world-ambience-stage"),
-        ambientWorldCanvas: document.getElementById("ambient-world-canvas"),
-        basecamp: document.getElementById("basecamp"),
-        jalurSection: document.getElementById("jalur"),
-        starlightCanvas: document.getElementById("starlight-canvas"),
-        navPills: document.querySelectorAll(".nav-pill"),
-        sections: ["basecamp", "kuis", "jalur", "puncak", "photobooth"]
-            .map((id) => document.getElementById(id))
-            .filter(Boolean),
-        elevationReadout: document.getElementById("elevation-readout"),
-        scrollProgressBar: document.getElementById("scroll-progress-bar"),
-        openHandoffBtn: document.getElementById("openHandoffBtn"),
-        handoffBanner: document.getElementById("handoff-banner"),
-        waSelfBtn: document.getElementById("waSelfBtn"),
-        copyUrlBtn: document.getElementById("copyUrlBtn"),
-        dismissHandoffBtn: document.getElementById("dismissHandoffBtn"),
-        handoffFeedback: document.getElementById("handoffFeedback"),
+        deckApp: document.getElementById("deck-app"),
+        worldStage: document.getElementById("living-world-stage"),
+        ambientCanvas: document.getElementById("ambient-world-canvas"),
+        deckViewport: document.getElementById("deck-viewport"),
+        goHomeBtn: document.getElementById("goHomeBtn"),
+        hudContextPill: document.getElementById("hudContextPill"),
+        realmTrackBtns: document.querySelectorAll(".realm-track-btn"),
+        openAtlasBtn: document.getElementById("openAtlasBtn"),
+        audioToggleBtn: document.getElementById("audioToggleBtn"),
+        audioToggleLabel: document.getElementById("audioToggleLabel"),
         themeToggle: document.getElementById("themeToggle"),
         themeToggleLabel: document.getElementById("themeToggleLabel"),
+        openHandoffBtn: document.getElementById("openHandoffBtn"),
+        pageOnboarding: document.getElementById("page-onboarding"),
+        waxSealTrigger: document.getElementById("waxSealTrigger"),
+        pageQuiz: document.getElementById("page-quiz"),
         quizStepLabel: document.getElementById("quizStepLabel"),
         quizProgressMeter: document.getElementById("quizProgressMeter"),
         quizProgressFill: document.getElementById("quizProgressFill"),
@@ -1598,16 +1640,26 @@
         prevQuizBtn: document.getElementById("prevQuizBtn"),
         resetQuizBtn: document.getElementById("resetQuizBtn"),
         nextQuizBtn: document.getElementById("nextQuizBtn"),
-        passportCountLabel: document.getElementById("passportCountLabel"),
-        stampChips: document.querySelectorAll("#passport-stamps .stamp-chip"),
-        puncakStampsStatus: document.getElementById("puncak-stamps-status"),
-        trailCanvas: document.getElementById("trail-canvas"),
-        trailSvg: document.getElementById("trail-svg"),
-        trailBiomeGrad: document.getElementById("trail-biome-grad"),
-        trailPathGuide: document.getElementById("trail-path-guide"),
-        trailPathActive: document.getElementById("trail-path-active"),
-        checkpointList: document.getElementById("checkpoint-list"),
+        pageLetter: document.getElementById("page-letter"),
         letterSavedSummary: document.getElementById("letterSavedSummary"),
+        puncakStampsStatus: document.getElementById("puncak-stamps-status"),
+        letterEditQuizBtn: document.getElementById("letterEditQuizBtn"),
+        letterGoBoothBtn: document.getElementById("letterGoBoothBtn"),
+        pagePhotobooth: document.getElementById("page-photobooth"),
+        prevPageBtn: document.getElementById("prevPageBtn"),
+        nextPageBtn: document.getElementById("nextPageBtn"),
+        dockPageReadout: document.getElementById("dockPageReadout"),
+        dockProgressFill: document.getElementById("dockProgressFill"),
+        atlasDialog: document.getElementById("atlas-dialog"),
+        atlasCountTag: document.getElementById("atlasCountTag"),
+        stampChips: document.querySelectorAll("#passport-stamps .stamp-chip"),
+        atlasPageList: document.getElementById("atlasPageList"),
+        atlasCloseBtn: document.getElementById("atlasCloseBtn"),
+        handoffDialog: document.getElementById("handoff-dialog"),
+        handoffCloseBtn: document.getElementById("handoffCloseBtn"),
+        waSelfBtn: document.getElementById("waSelfBtn"),
+        copyUrlBtn: document.getElementById("copyUrlBtn"),
+        handoffFeedback: document.getElementById("handoffFeedback"),
         cameraStatus: document.getElementById("cameraStatus"),
         cameraStatusText: document.getElementById("cameraStatusText"),
         cameraVideo: document.getElementById("cameraVideo"),
@@ -1662,27 +1714,237 @@
         dialogNextBtn: document.getElementById("dialogNextBtn"),
         dialogDownloadBtn: document.getElementById("dialogDownloadBtn"),
         dialogCloseTop: document.getElementById("dialogCloseTop"),
-        dialogCloseBottom: document.getElementById("dialogCloseBottom"),
-        storyStepperDock: document.getElementById("story-stepper-dock"),
-        stepPrevPosBtn: document.getElementById("stepPrevPosBtn"),
-        stepperPosLabel: document.getElementById("stepperPosLabel"),
-        stepNextPosBtn: document.getElementById("stepNextPosBtn")
+        dialogCloseBottom: document.getElementById("dialogCloseBottom")
     };
+
+    // Pre-register static persistent deck pages so form values, quiz state, and active camera stream survive flips.
+    pageNodeCache.set(0, el.pageOnboarding);
+    pageNodeCache.set(1, el.pageQuiz);
+    pageNodeCache.set(DECK_PAGES.length - 2, el.pageLetter);
+    pageNodeCache.set(DECK_PAGES.length - 1, el.pagePhotobooth);
 
     const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-    const AMBIENT_BIOME_TONES = {
-        1: { light: ["26, 79, 62", "180, 126, 36"], dark: ["126, 212, 189", "243, 214, 149"] },
-        2: { light: ["138, 59, 30", "198, 122, 24"], dark: ["248, 200, 122", "235, 192, 107"] },
-        3: { light: ["91, 44, 82", "180, 126, 36"], dark: ["240, 155, 176", "243, 214, 149"] },
-        4: { light: ["31, 59, 102", "180, 126, 36"], dark: ["150, 194, 247", "250, 246, 238"] }
-    };
+    /**
+     * Procedural Web Audio soundscape generator for subtle biome ambience (ocean tide, forest breeze, alpine wind)
+     * plus tactile UI, page-turn, stamp, and camera feedback with zero external audio files.
+     */
+    const SoundscapeEngine = (() => {
+        let ctx = null;
+        let masterGain = null;
+        let noiseFilter = null;
+        let lfoOsc = null;
+        let lfoGain = null;
+        let padOsc = null;
+        let started = false;
+        let activeBiome = 1;
+
+        const BIOME_AUDIO = {
+            1: { freq: 380, q: 0.7, lfoHz: 0.14, lfoDepth: 160, padHz: 196.0 },
+            2: { freq: 560, q: 1.0, lfoHz: 0.21, lfoDepth: 110, padHz: 220.0 },
+            3: { freq: 720, q: 0.85, lfoHz: 0.18, lfoDepth: 95, padHz: 246.94 },
+            4: { freq: 860, q: 1.1, lfoHz: 0.24, lfoDepth: 130, padHz: 293.66 }
+        };
+
+        const PENTATONIC = [392.0, 440.0, 493.88, 587.33, 659.25, 783.99];
+
+        function initGraph() {
+            const AudioCtx = window.AudioContext || window.webkitAudioContext;
+            if (!AudioCtx) {
+                return null;
+            }
+            if (!ctx) {
+                ctx = new AudioCtx();
+            }
+            if (ctx.state === "suspended") {
+                ctx.resume().catch(() => {});
+            }
+            if (started) {
+                return ctx;
+            }
+
+            started = true;
+            masterGain = ctx.createGain();
+            masterGain.gain.setValueAtTime(0.0001, ctx.currentTime);
+            masterGain.connect(ctx.destination);
+
+            // Generate smooth 4-second pink-filtered ambient noise loop
+            const len = Math.floor(ctx.sampleRate * 4);
+            const buf = ctx.createBuffer(1, len, ctx.sampleRate);
+            const ch = buf.getChannelData(0);
+            let b0 = 0, b1 = 0, b2 = 0;
+            for (let i = 0; i < len; i += 1) {
+                const white = Math.random() * 2 - 1;
+                b0 = 0.997 * b0 + white * 0.029;
+                b1 = 0.985 * b1 + white * 0.032;
+                b2 = 0.950 * b2 + white * 0.048;
+                ch[i] = (b0 + b1 + b2 + white * 0.02) * 0.35;
+            }
+
+            const noiseSrc = ctx.createBufferSource();
+            noiseSrc.buffer = buf;
+            noiseSrc.loop = true;
+
+            noiseFilter = ctx.createBiquadFilter();
+            noiseFilter.type = "lowpass";
+            noiseFilter.frequency.setValueAtTime(380, ctx.currentTime);
+            noiseFilter.Q.setValueAtTime(0.7, ctx.currentTime);
+
+            const noiseGain = ctx.createGain();
+            noiseGain.gain.setValueAtTime(0.08, ctx.currentTime);
+
+            lfoOsc = ctx.createOscillator();
+            lfoOsc.type = "sine";
+            lfoOsc.frequency.setValueAtTime(0.14, ctx.currentTime);
+            lfoGain = ctx.createGain();
+            lfoGain.gain.setValueAtTime(160, ctx.currentTime);
+            lfoOsc.connect(lfoGain);
+            lfoGain.connect(noiseFilter.frequency);
+
+            padOsc = ctx.createOscillator();
+            padOsc.type = "sine";
+            padOsc.frequency.setValueAtTime(196, ctx.currentTime);
+            const padGain = ctx.createGain();
+            padGain.gain.setValueAtTime(0.014, ctx.currentTime);
+
+            noiseSrc.connect(noiseFilter);
+            noiseFilter.connect(noiseGain);
+            noiseGain.connect(masterGain);
+
+            padOsc.connect(padGain);
+            padGain.connect(masterGain);
+
+            noiseSrc.start();
+            lfoOsc.start();
+            padOsc.start();
+            applyBiomeParams(activeBiome);
+            return ctx;
+        }
+
+        function applyBiomeParams(biomeId) {
+            activeBiome = biomeId;
+            if (!ctx || !started) {
+                return;
+            }
+            const cfg = BIOME_AUDIO[biomeId] || BIOME_AUDIO[1];
+            const t = ctx.currentTime;
+            noiseFilter.frequency.setTargetAtTime(cfg.freq, t, 0.7);
+            noiseFilter.Q.setTargetAtTime(cfg.q, t, 0.7);
+            lfoOsc.frequency.setTargetAtTime(cfg.lfoHz, t, 0.7);
+            lfoGain.gain.setTargetAtTime(cfg.lfoDepth, t, 0.7);
+            padOsc.frequency.setTargetAtTime(cfg.padHz, t, 0.8);
+        }
+
+        function setEnabled(enabled) {
+            state.soundEnabled = Boolean(enabled);
+            if (state.soundEnabled) {
+                const c = initGraph();
+                if (c && masterGain) {
+                    masterGain.gain.setTargetAtTime(0.5, c.currentTime, 0.25);
+                }
+            } else if (ctx && masterGain) {
+                masterGain.gain.setTargetAtTime(0.0001, ctx.currentTime, 0.15);
+            }
+            syncAudioButtons();
+        }
+
+        function playTone(freq, duration = 0.24, volume = 0.06, type = "sine") {
+            if (!state.soundEnabled) {
+                return;
+            }
+            const c = initGraph();
+            if (!c) {
+                return;
+            }
+            const now = c.currentTime;
+            const osc = c.createOscillator();
+            const g = c.createGain();
+            osc.type = type;
+            osc.frequency.setValueAtTime(freq, now);
+            g.gain.setValueAtTime(0.001, now);
+            g.gain.exponentialRampToValueAtTime(volume, now + 0.015);
+            g.gain.exponentialRampToValueAtTime(0.0005, now + duration);
+            osc.connect(g);
+            g.connect(c.destination);
+            osc.start(now);
+            osc.stop(now + duration + 0.02);
+        }
+
+        return {
+            setEnabled,
+            setBiome: applyBiomeParams,
+            playSealOpen() {
+                if (!state.soundEnabled) {
+                    return;
+                }
+                [261.63, 329.63, 392.0, 493.88].forEach((freq, idx) => {
+                    window.setTimeout(() => playTone(freq, 0.55, 0.045, "sine"), idx * 75);
+                });
+            },
+            playPageTurn(dir, idx) {
+                const note = PENTATONIC[(idx + (dir === "prev" ? 2 : 0)) % PENTATONIC.length];
+                playTone(note, 0.22, 0.032, "triangle");
+            },
+            playUiTap() {
+                playTone(587.33, 0.08, 0.035, "sine");
+            },
+            playStampUnlock() {
+                playTone(523.25, 0.22, 0.05, "sine");
+                window.setTimeout(() => playTone(783.99, 0.34, 0.055, "sine"), 90);
+            },
+            playTick() {
+                playTone(660, 0.055, 0.075, "triangle");
+            },
+            playShutter() {
+                if (!state.soundEnabled) {
+                    return;
+                }
+                const c = initGraph();
+                if (!c) {
+                    return;
+                }
+                const now = c.currentTime;
+                const size = Math.floor(c.sampleRate * 0.075);
+                const buf = c.createBuffer(1, size, c.sampleRate);
+                const ch = buf.getChannelData(0);
+                for (let i = 0; i < size; i += 1) {
+                    ch[i] = (Math.random() * 2 - 1) * Math.exp(-i / (size * 0.28));
+                }
+                const src = c.createBufferSource();
+                src.buffer = buf;
+                const filter = c.createBiquadFilter();
+                filter.type = "bandpass";
+                filter.frequency.setValueAtTime(1400, now);
+                const g = c.createGain();
+                g.gain.setValueAtTime(0.24, now);
+                g.gain.exponentialRampToValueAtTime(0.001, now + 0.075);
+                src.connect(filter);
+                filter.connect(g);
+                g.connect(c.destination);
+                src.start(now);
+            }
+        };
+    })();
+
+    function syncAudioButtons() {
+        const on = state.soundEnabled;
+        if (el.audioToggleBtn) {
+            el.audioToggleBtn.setAttribute("aria-pressed", String(on));
+        }
+        if (el.audioToggleLabel) {
+            el.audioToggleLabel.textContent = on ? "Suara: Aktif" : "Suara: Mati";
+        }
+        if (el.soundToggle) {
+            el.soundToggle.setAttribute("aria-pressed", String(on));
+            el.soundToggle.textContent = on ? "Suara: Aktif" : "Suara: Mati";
+        }
+    }
 
     /**
-     * Renders biome-adaptive fireflies, drifting leaves/petals, and starlight across the page backdrop.
+     * Renders biome-adaptive sparkles, lantern fireflies, valley petals, and alpine stars.
      */
-    function initAmbientWorldCanvas() {
-        const canvas = el.ambientWorldCanvas;
+    function initAmbientParticles() {
+        const canvas = el.ambientCanvas;
         if (!canvas || reducedMotionQuery.matches) {
             return;
         }
@@ -1691,167 +1953,59 @@
             return;
         }
 
+        const TONES = {
+            1: ["247, 213, 150", "178, 232, 232"],
+            2: ["248, 200, 122", "222, 162, 74"],
+            3: ["240, 155, 176", "243, 214, 149"],
+            4: ["250, 246, 238", "155, 196, 248"]
+        };
+
         let width = 0;
         let height = 0;
-        const motes = Array.from({ length: 48 }, (_, idx) => ({
-            x: (idx * 79) % 1000,
-            y: (idx * 131) % 1000,
-            vx: ((idx % 5) - 2) * 0.14,
-            vy: -0.18 - (idx % 4) * 0.08,
-            radius: 1.5 + (idx % 3) * 0.9,
-            phase: idx * 0.55,
+        const motes = Array.from({ length: 42 }, (_, idx) => ({
+            x: (idx * 79) % 1200,
+            y: (idx * 131) % 800,
+            vx: ((idx % 5) - 2) * 0.16,
+            vy: -0.2 - (idx % 4) * 0.08,
+            radius: 1.4 + (idx % 3) * 0.9,
+            phase: idx * 0.52,
             isStar: idx % 4 === 0,
             toneIdx: idx % 2
         }));
 
-        function resizeAmbient() {
+        function resize() {
             width = Math.max(320, window.innerWidth);
-            height = Math.max(400, window.innerHeight);
+            height = Math.max(320, window.innerHeight);
             canvas.width = width;
             canvas.height = height;
         }
 
-        function drawAmbientFrame() {
-            const isDark = state.theme === "dark";
-            const biomeTones = AMBIENT_BIOME_TONES[state.currentBiome] || AMBIENT_BIOME_TONES[1];
-            const palettePair = isDark ? biomeTones.dark : biomeTones.light;
-
+        function drawFrame() {
+            const curPage = DECK_PAGES[state.currentPageIndex] || DECK_PAGES[0];
+            const pair = TONES[curPage.biome] || TONES[1];
             ctx.clearRect(0, 0, width, height);
             motes.forEach((m) => {
                 m.x = (m.x + m.vx + width) % width;
                 m.y = (m.y + m.vy + height) % height;
                 m.phase += 0.025;
-                const pulse = 0.45 + 0.55 * Math.sin(m.phase);
-                const alpha = (isDark ? 0.48 : 0.4) * pulse;
-                const color = palettePair[m.toneIdx] || palettePair[0];
+                const alpha = (0.35 + 0.5 * Math.sin(m.phase)) * 0.65;
+                const color = pair[m.toneIdx];
 
                 if (m.isStar) {
-                    drawFourPointStar(ctx, m.x, m.y, m.radius * 2.5, `rgba(${color}, 1)`, alpha);
+                    drawFourPointStar(ctx, m.x, m.y, m.radius * 2.4, `rgba(${color}, 1)`, alpha);
                 } else {
-                    ctx.beginPath();
-                    ctx.arc(m.x, m.y, m.radius * 2.3, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(${color}, ${(alpha * 0.34).toFixed(3)})`;
-                    ctx.fill();
-
                     ctx.beginPath();
                     ctx.arc(m.x, m.y, m.radius, 0, Math.PI * 2);
                     ctx.fillStyle = `rgba(${color}, ${alpha.toFixed(3)})`;
                     ctx.fill();
                 }
             });
-            window.requestAnimationFrame(drawAmbientFrame);
+            window.requestAnimationFrame(drawFrame);
         }
 
-        resizeAmbient();
-        window.addEventListener("resize", resizeAmbient);
-        window.requestAnimationFrame(drawAmbientFrame);
-    }
-
-    /**
-     * Renders multi-tone glowing firefly starlight inside hero and pauses when offscreen.
-     */
-    function initHeroStarlight() {
-        const canvas = el.starlightCanvas;
-        if (!canvas || reducedMotionQuery.matches) {
-            return;
-        }
-        const ctx = canvas.getContext("2d");
-        if (!ctx) {
-            return;
-        }
-
-        let width = 0;
-        let height = 0;
-        let isVisible = true;
-        let rafId = null;
-        let pointerX = -9999;
-        let pointerY = -9999;
-
-        const tones = ["248, 200, 122", "250, 246, 238", "240, 155, 176"];
-        const particles = Array.from({ length: 56 }, (_, idx) => ({
-            xRatio: ((idx * 37 + 11) % 100) / 100,
-            yRatio: ((idx * 53 + 7) % 100) / 100,
-            vx: ((idx % 5) - 2) * 0.08,
-            vy: -0.15 - (idx % 4) * 0.06,
-            radius: 1.2 + (idx % 3) * 0.7,
-            alpha: 0.35 + (idx % 5) * 0.11,
-            rgb: tones[idx % tones.length]
-        }));
-
-        function resizeCanvas() {
-            const rect = el.basecamp.getBoundingClientRect();
-            width = Math.max(300, Math.floor(rect.width));
-            height = Math.max(320, Math.floor(rect.height));
-            canvas.width = width;
-            canvas.height = height;
-        }
-
-        function tick() {
-            if (!isVisible) {
-                rafId = null;
-                return;
-            }
-            ctx.clearRect(0, 0, width, height);
-            particles.forEach((p) => {
-                let px = p.xRatio * width + p.vx;
-                let py = p.yRatio * height + p.vy;
-
-                const dx = px - pointerX;
-                const dy = py - pointerY;
-                const dist = Math.hypot(dx, dy);
-                if (dist > 0 && dist < 120) {
-                    px += (dx / dist) * 1.05;
-                    py += (dy / dist) * 1.05;
-                }
-
-                if (py < -10) py = height + 8;
-                if (px < -10) px = width + 8;
-                if (px > width + 10) px = -8;
-
-                p.xRatio = px / width;
-                p.yRatio = py / height;
-
-                ctx.beginPath();
-                ctx.arc(px, py, p.radius * 2.4, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(${p.rgb}, ${(p.alpha * 0.24).toFixed(2)})`;
-                ctx.fill();
-
-                ctx.beginPath();
-                ctx.arc(px, py, p.radius, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(${p.rgb}, ${p.alpha.toFixed(2)})`;
-                ctx.fill();
-            });
-            rafId = window.requestAnimationFrame(tick);
-        }
-
-        el.basecamp.addEventListener(
-            "pointermove",
-            (evt) => {
-                const rect = el.basecamp.getBoundingClientRect();
-                pointerX = evt.clientX - rect.left;
-                pointerY = evt.clientY - rect.top;
-            },
-            { passive: true }
-        );
-        el.basecamp.addEventListener("pointerleave", () => {
-            pointerX = -9999;
-            pointerY = -9999;
-        });
-
-        const visObserver = new IntersectionObserver(
-            (entries) => {
-                isVisible = Boolean(entries[0] && entries[0].isIntersecting);
-                if (isVisible && !rafId) {
-                    rafId = window.requestAnimationFrame(tick);
-                }
-            },
-            { threshold: 0.02 }
-        );
-
-        resizeCanvas();
-        window.addEventListener("resize", resizeCanvas);
-        visObserver.observe(el.basecamp);
-        rafId = window.requestAnimationFrame(tick);
+        resize();
+        window.addEventListener("resize", resize);
+        window.requestAnimationFrame(drawFrame);
     }
 
     function applyTheme(theme, persist = true) {
@@ -1864,7 +2018,7 @@
             try {
                 localStorage.setItem(STORAGE_THEME_KEY, state.theme);
             } catch (_) {
-                // Storage may be restricted.
+                // Storage unavailable.
             }
         }
     }
@@ -1924,7 +2078,9 @@
 
     function renderPassportStamps() {
         const count = state.unlockedStamps.length;
-        el.passportCountLabel.textContent = `KOLEKSI STEMPEL (${count} / 6):`;
+        if (el.atlasCountTag) {
+            el.atlasCountTag.textContent = `KOLEKSI STEMPEL (${count} / 6)`;
+        }
         el.stampChips.forEach((chip) => {
             const unlocked = state.unlockedStamps.includes(chip.dataset.stamp);
             chip.classList.toggle("is-unlocked", unlocked);
@@ -1932,9 +2088,10 @@
         if (el.puncakStampsStatus) {
             el.puncakStampsStatus.textContent =
                 count === 6
-                    ? "Semua 6 Stempel Ekspedisi lengkap terkumpul (FYP, Lembah, Lentera, Bidadari, Bintang, Puncak 27)!"
+                    ? "Semua 6 Stempel Ekspedisi lengkap terkumpul (FYP, Pesisir, Lentera, Bidadari, Bintang, Puncak 27)!"
                     : `Stempel Ekspedisi terkumpul: ${count} / 6.`;
         }
+        renderSummaryCardPng();
     }
 
     function unlockStamp(stampId) {
@@ -1944,18 +2101,7 @@
         state.unlockedStamps.push(stampId);
         saveQuizState();
         renderPassportStamps();
-    }
-
-    function initHandoffVisibility() {
-        let dismissed = false;
-        try {
-            dismissed = sessionStorage.getItem(SESSION_HANDOFF_KEY) === "1";
-        } catch (_) {
-            dismissed = false;
-        }
-        const shouldShow = window.innerWidth < 860 && !dismissed;
-        el.handoffBanner.hidden = !shouldShow;
-        el.openHandoffBtn.setAttribute("aria-expanded", String(shouldShow));
+        SoundscapeEngine.playStampUnlock();
     }
 
     function getScoreDescriptor(score) {
@@ -1982,7 +2128,7 @@
 
         el.prevQuizBtn.disabled = state.quizStep === 0;
         el.resetQuizBtn.hidden = Object.keys(state.quizAnswers).length === 0 && !state.raraNote;
-        el.nextQuizBtn.textContent = state.quizStep === total - 1 ? "Simpan Jawaban & Mulai Naik" : "Lanjut";
+        el.nextQuizBtn.textContent = state.quizStep === total - 1 ? "Simpan & Masuki Pesisir Senja" : "Lanjut Pertanyaan";
 
         const wrapper = document.createElement("div");
         wrapper.className = step.evidenceImg ? "quiz-layout" : "quiz-layout quiz-layout--single";
@@ -2016,6 +2162,7 @@
                     btn.classList.add("is-selected");
                 }
                 btn.addEventListener("click", () => {
+                    SoundscapeEngine.playUiTap();
                     state.quizAnswers[step.id] = opt.label;
                     state.quizReactions[step.id] = opt.reaction;
                     unlockStamp("fyp");
@@ -2041,12 +2188,13 @@
                     if (state.runawayAttempts >= 4) {
                         return;
                     }
+                    SoundscapeEngine.playUiTap();
                     state.runawayAttempts += 1;
                     dodgeBtn.textContent = step.runawayStages[Math.min(state.runawayAttempts, step.runawayStages.length - 1)];
                     const maxShiftX = Math.max(0, arena.clientWidth - dodgeBtn.offsetWidth - 24);
                     const rawX = state.runawayAttempts % 2 === 1 ? Math.min(maxShiftX, 180) : 16;
                     const xOffset = Math.max(0, Math.min(maxShiftX, rawX));
-                    const yOffset = state.runawayAttempts % 2 === 1 ? 10 : -8;
+                    const yOffset = state.runawayAttempts % 2 === 1 ? 8 : -6;
                     dodgeBtn.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
                 };
 
@@ -2060,6 +2208,7 @@
                         moveDodgeBtn();
                         return;
                     }
+                    SoundscapeEngine.playUiTap();
                     state.quizAnswers[step.id] = step.runawayStages[step.runawayStages.length - 1];
                     state.quizReactions[step.id] = step.runawayFinalReaction;
                     unlockStamp("fyp");
@@ -2162,45 +2311,60 @@
         el.quizStepContainer.replaceChildren(wrapper);
     }
 
-    function createBiomeBanner(biomeId) {
-        const meta = BIOME_META[biomeId];
-        if (!meta) {
-            return null;
-        }
-        const li = document.createElement("li");
-        li.className = `biome-banner-item biome-${biomeId}`;
+    function createChatCardElement(chat) {
+        const card = document.createElement("div");
+        card.className = "chat-mockup is-visible";
 
-        const banner = document.createElement("div");
-        banner.className = "biome-banner reveal-group";
+        const header = document.createElement("div");
+        header.className = "chat-header";
 
-        const art = document.createElement("div");
-        art.className = "biome-banner-art";
-        art.setAttribute("aria-hidden", "true");
-        art.innerHTML = meta.svg;
+        const info = document.createElement("div");
+        const tag = document.createElement("span");
+        tag.className = "chat-platform-tag";
+        tag.textContent = `${chat.platform} // ${chat.date}`;
+        const prompt = document.createElement("p");
+        prompt.className = "chat-prompt";
+        prompt.textContent = chat.prompt;
+        info.append(tag, prompt);
 
-        const kicker = document.createElement("p");
-        kicker.className = "biome-kicker reveal-line";
-        kicker.style.setProperty("--line-index", "0");
-        kicker.textContent = meta.kicker;
+        const replayBtn = document.createElement("button");
+        replayBtn.type = "button";
+        replayBtn.className = "btn-replay-chat";
+        replayBtn.textContent = "Putar Ulang";
+        replayBtn.addEventListener("click", () => {
+            SoundscapeEngine.playUiTap();
+            card.classList.remove("is-visible");
+            void card.offsetWidth;
+            window.setTimeout(() => {
+                card.classList.add("is-visible");
+            }, 35);
+        });
 
-        const title = document.createElement("h3");
-        title.className = "biome-title reveal-line";
-        title.style.setProperty("--line-index", "1");
-        title.textContent = meta.title;
+        header.append(info, replayBtn);
 
-        const sub = document.createElement("p");
-        sub.className = "biome-subtitle reveal-line";
-        sub.style.setProperty("--line-index", "2");
-        sub.textContent = meta.subtitle;
+        const thread = document.createElement("div");
+        thread.className = "chat-thread";
+        chat.messages.forEach((msg, msgIdx) => {
+            const bubble = document.createElement("div");
+            bubble.className = `chat-bubble ${msg.from === "jay" ? "chat-bubble--jay" : "chat-bubble--rara"}`;
+            bubble.style.setProperty("--msg-idx", String(msgIdx));
 
-        banner.append(art, kicker, title, sub);
-        li.appendChild(banner);
-        return li;
+            const body = document.createElement("p");
+            body.className = "chat-text";
+            body.textContent = msg.text;
+
+            const meta = document.createElement("p");
+            meta.className = "chat-meta";
+            meta.textContent = `${msg.from === "jay" ? "Jay" : "Rara"} | ${msg.time}`;
+
+            bubble.append(body, meta);
+            thread.appendChild(bubble);
+        });
+
+        card.append(header, thread);
+        return card;
     }
 
-    /**
-     * Builds the compact 1-tap selingan mini-game attached to each checkpoint card.
-     */
     function createPosQuickGame(cp) {
         const qg = cp.quickGame;
         if (!qg || !Array.isArray(qg.options) || qg.options.length === 0) {
@@ -2230,18 +2394,107 @@
             optBtn.className = "btn-selingan";
             optBtn.textContent = opt.label;
             optBtn.addEventListener("click", () => {
+                SoundscapeEngine.playUiTap();
                 choicesRow.querySelectorAll(".btn-selingan").forEach((b) => b.classList.remove("is-picked"));
                 optBtn.classList.add("is-picked");
                 state.quickGameAnswers[cp.id] = opt.label;
                 resultBox.textContent = opt.reply;
                 resultBox.hidden = false;
-                scheduleTrailGeometryUpdate();
             });
             choicesRow.appendChild(optBtn);
         });
 
         box.append(kicker, prompt, choicesRow, resultBox);
         return box;
+    }
+
+    function buildVisualCompanion(cp) {
+        const visualCol = document.createElement("div");
+        visualCol.className = "pos-visual-col stage-reveal";
+        visualCol.style.setProperty("--stagger", "2");
+
+        const hasPhotos = Array.isArray(cp.photos) && cp.photos.length > 0;
+        if (hasPhotos) {
+            const board = document.createElement("div");
+            board.className = "polaroid-board";
+
+            const boardHeader = document.createElement("div");
+            boardHeader.className = "polaroid-board-header";
+            const label = document.createElement("span");
+            label.className = "mono-tag";
+            label.textContent = `PAPAN SCRAPBOOK POS ${cp.postNum}`;
+            const mdplTag = document.createElement("span");
+            mdplTag.className = "mono-tag";
+            mdplTag.textContent = `${cp.altitude.toUpperCase()} | ${cp.date}`;
+            boardHeader.append(label, mdplTag);
+            board.appendChild(boardHeader);
+
+            const grid = document.createElement("div");
+            grid.className = `polaroid-grid polaroid-grid--${cp.photos.length}`;
+            cp.photos.forEach((photo) => {
+                const tile = document.createElement("button");
+                tile.type = "button";
+                tile.className = `polaroid-item${photo.contain ? " polaroid-item--contain" : ""}`;
+                tile.setAttribute("aria-label", `Perbesar foto: ${photo.caption}`);
+
+                const img = document.createElement("img");
+                img.width = 400;
+                img.height = 300;
+                img.src = photo.src;
+                img.alt = photo.alt;
+
+                const stampTag = document.createElement("span");
+                stampTag.className = "polaroid-stamp-tag";
+                stampTag.textContent = `ARSIP 27 // POS ${cp.postNum}`;
+
+                const cap = document.createElement("span");
+                cap.className = "polaroid-caption";
+                cap.textContent = photo.caption;
+
+                tile.append(img, stampTag, cap);
+                tile.addEventListener("click", () => {
+                    const galleryIdx = LIGHTBOX_GALLERY.findIndex((item) => item.src === photo.src);
+                    openImageLightbox(photo.src, cp.title, photo.caption, null, galleryIdx);
+                });
+
+                grid.appendChild(tile);
+            });
+            board.appendChild(grid);
+
+            if (cp.pullQuote) {
+                const quote = document.createElement("p");
+                quote.className = "polaroid-pullquote";
+                quote.textContent = cp.pullQuote;
+                board.appendChild(quote);
+            }
+
+            visualCol.appendChild(board);
+            return visualCol;
+        }
+
+        const plate = document.createElement("div");
+        plate.className = "story-vignette";
+
+        const stamp = document.createElement("p");
+        stamp.className = "vignette-stamp";
+        stamp.textContent = `POS ${cp.postNum} // ${cp.altitude.toUpperCase()} // ${cp.date}`;
+
+        const halo = document.createElement("div");
+        halo.className = "vignette-arch-halo";
+        halo.setAttribute("aria-hidden", "true");
+        halo.innerHTML = VIGNETTE_SVGS[cp.vignette] || VIGNETTE_SVGS["quill-arch"];
+
+        const quote = document.createElement("blockquote");
+        quote.className = "vignette-quote";
+        quote.textContent = cp.pullQuote || cp.title;
+
+        const waxFoot = document.createElement("span");
+        waxFoot.className = "vignette-wax-chip";
+        waxFoot.textContent = `SEGEL EKSPEDISI 27 // POS ${cp.postNum}`;
+
+        plate.append(stamp, halo, quote, waxFoot);
+        visualCol.appendChild(plate);
+        return visualCol;
     }
 
     function normalizeGameRounds(game) {
@@ -2290,10 +2543,10 @@
                 retryBtn.className = "minigame-btn";
                 retryBtn.textContent = "Main Lagi";
                 retryBtn.addEventListener("click", () => {
+                    SoundscapeEngine.playUiTap();
                     roundIdx = 0;
                     score = 0;
                     renderRound();
-                    scheduleTrailGeometryUpdate();
                 });
 
                 stage.append(done, retryBtn);
@@ -2330,6 +2583,7 @@
                     if (answered) {
                         return;
                     }
+                    SoundscapeEngine.playUiTap();
                     answered = true;
                     const isRight = choice === cur.correctAnswer;
                     if (isRight) {
@@ -2345,15 +2599,14 @@
                     fb.hidden = false;
                     nextBtn.hidden = false;
                     scoreEl.textContent = `Ronde ${roundIdx + 1} / ${rounds.length} | Skor: ${score}`;
-                    scheduleTrailGeometryUpdate();
                 });
                 actions.appendChild(cBtn);
             });
 
             nextBtn.addEventListener("click", () => {
+                SoundscapeEngine.playUiTap();
                 roundIdx += 1;
                 renderRound();
-                scheduleTrailGeometryUpdate();
             });
 
             stage.append(qCard, actions, fb, nextBtn);
@@ -2377,7 +2630,6 @@
         const fb = document.createElement("p");
         fb.className = "minigame-feedback";
         fb.textContent = "Pilih jagoanmu dulu buat mulai ronde suit!";
-
         scoreEl.textContent = "Menang: 0 / 0";
 
         moves.forEach((move) => {
@@ -2386,6 +2638,7 @@
             btn.className = "minigame-btn";
             btn.textContent = move;
             btn.addEventListener("click", () => {
+                SoundscapeEngine.playUiTap();
                 const opp = moves[Math.floor(Math.random() * moves.length)];
                 plays += 1;
                 actions.querySelectorAll(".minigame-btn").forEach((b) => b.classList.remove("is-active"));
@@ -2400,7 +2653,6 @@
                     fb.textContent = `Kalah tipis! ${opp} mengalahkan ${move}. Rara siap-siap traktir es di pos depan ya!`;
                 }
                 scoreEl.textContent = `Menang: ${wins} / ${plays}`;
-                scheduleTrailGeometryUpdate();
             });
             actions.appendChild(btn);
         });
@@ -2416,7 +2668,6 @@
         const fb = document.createElement("p");
         fb.className = "minigame-feedback";
         fb.textContent = "Klik ke-5 lentera untuk membuka kata kunci Hutan Lentera.";
-
         scoreEl.textContent = `Menyala: 0 / ${game.lanterns.length}`;
 
         game.lanterns.forEach((word, idx) => {
@@ -2425,6 +2676,7 @@
             lBtn.className = "lantern-node-btn";
             lBtn.textContent = `Lentera ${String(idx + 1).padStart(2, "0")}`;
             lBtn.addEventListener("click", () => {
+                SoundscapeEngine.playUiTap();
                 if (!litSet.has(idx)) {
                     litSet.add(idx);
                     lBtn.classList.add("is-lit");
@@ -2435,7 +2687,6 @@
                     litSet.size === game.lanterns.length
                         ? "Semua 5 Lentera Hutan menyala terang! Babak selanjutnya siap dimulai."
                         : `Lentera #${idx + 1} menyala (${word}). Nyalakan ${game.lanterns.length - litSet.size} lagi!`;
-                scheduleTrailGeometryUpdate();
             });
             grid.appendChild(lBtn);
         });
@@ -2462,10 +2713,10 @@
                 retryBtn.className = "minigame-btn";
                 retryBtn.textContent = "Ulangi Tes";
                 retryBtn.addEventListener("click", () => {
+                    SoundscapeEngine.playUiTap();
                     idx = 0;
                     matchCount = 0;
                     renderPrompt();
-                    scheduleTrailGeometryUpdate();
                 });
                 stage.append(fb, retryBtn);
                 return;
@@ -2484,10 +2735,10 @@
             sameBtn.className = "minigame-btn is-active";
             sameBtn.textContent = "Kompak Sama! (+1)";
             sameBtn.addEventListener("click", () => {
+                SoundscapeEngine.playUiTap();
                 matchCount += 1;
                 idx += 1;
                 renderPrompt();
-                scheduleTrailGeometryUpdate();
             });
 
             const diffBtn = document.createElement("button");
@@ -2495,9 +2746,9 @@
             diffBtn.className = "minigame-btn";
             diffBtn.textContent = "Beda Jawaban";
             diffBtn.addEventListener("click", () => {
+                SoundscapeEngine.playUiTap();
                 idx += 1;
                 renderPrompt();
-                scheduleTrailGeometryUpdate();
             });
 
             actions.append(sameBtn, diffBtn);
@@ -2522,6 +2773,7 @@
         fb.textContent = "Klik tombol di atas buat dapet tantangan spontan sebelum ke Photobooth!";
 
         spinBtn.addEventListener("click", () => {
+            SoundscapeEngine.playUiTap();
             let pick = Math.floor(Math.random() * game.dares.length);
             if (game.dares.length > 1 && pick === lastIdx) {
                 pick = (pick + 1) % game.dares.length;
@@ -2530,332 +2782,84 @@
             spins += 1;
             scoreEl.textContent = `Putaran: ${spins}`;
             fb.textContent = `Tantangan Terpilih: ${game.dares[pick]}`;
-            scheduleTrailGeometryUpdate();
         });
 
         stage.append(spinBtn, fb);
     }
 
     /**
-     * Renders the playful interactive mini-game embedded inside each rest-stop card.
+     * Dynamically constructs Realm Intro, Pos Spread, and Rest-Stop Sanctuary full-screen pages on demand.
      */
-    function createTalkMiniGame(game) {
-        if (!game) {
-            return null;
-        }
-        const wrap = document.createElement("div");
-        wrap.className = "talk-minigame";
+    function createDynamicPageElement(page) {
+        const sec = document.createElement("section");
+        sec.className = `deck-page deck-page--${page.type} biome-${page.biome}`;
+        sec.id = `page-${page.id}`;
+        sec.dataset.pageIndex = String(page.index);
+        sec.setAttribute("aria-label", page.title);
 
-        const head = document.createElement("div");
-        head.className = "minigame-head";
-        const badge = document.createElement("span");
-        badge.className = "minigame-badge";
-        badge.textContent = game.badge;
-        const scoreEl = document.createElement("span");
-        scoreEl.className = "minigame-score";
-        head.append(badge, scoreEl);
+        if (page.type === "realm-intro") {
+            const meta = BIOME_META[page.biome];
+            const shell = document.createElement("div");
+            shell.className = "realm-intro-shell storybook-frame";
 
-        const title = document.createElement("h4");
-        title.className = "minigame-title";
-        title.textContent = game.title;
+            const emblem = document.createElement("div");
+            emblem.className = "realm-intro-emblem stage-reveal";
+            emblem.style.setProperty("--stagger", "0");
+            emblem.setAttribute("aria-hidden", "true");
+            emblem.innerHTML = meta.svg;
 
-        const desc = document.createElement("p");
-        desc.className = "minigame-desc";
-        desc.textContent = game.desc;
+            const kicker = document.createElement("p");
+            kicker.className = "realm-intro-kicker stage-reveal";
+            kicker.style.setProperty("--stagger", "1");
+            kicker.textContent = meta.kicker;
 
-        const stage = document.createElement("div");
-        stage.className = "minigame-stage";
+            const h2 = document.createElement("h2");
+            h2.className = "realm-intro-title stage-reveal";
+            h2.style.setProperty("--stagger", "2");
+            h2.textContent = meta.title;
 
-        if (game.type === "tebak-chat" || game.type === "tebak-jam" || game.type === "susun-typo") {
-            buildRoundMiniGame(game, stage, scoreEl);
-        } else if (game.type === "suit-pendaki") {
-            buildSuitMiniGame(stage, scoreEl);
-        } else if (game.type === "lentera-hutan") {
-            buildLanternMiniGame(game, stage, scoreEl);
-        } else if (game.type === "kompak-123") {
-            buildTelepathyMiniGame(game, stage, scoreEl);
-        } else if (game.type === "roda-tantangan") {
-            buildWheelMiniGame(game, stage, scoreEl);
-        }
+            const sub = document.createElement("p");
+            sub.className = "realm-intro-sub stage-reveal";
+            sub.style.setProperty("--stagger", "3");
+            sub.textContent = meta.subtitle;
 
-        wrap.append(head, title, desc, stage);
-        return wrap;
-    }
-
-    function createTalkCardItem(talk, biomeId) {
-        const li = document.createElement("li");
-        li.className = `talk-card-item biome-${biomeId}`;
-
-        const card = document.createElement("div");
-        card.className = "talk-card";
-
-        const badge = document.createElement("span");
-        badge.className = "talk-badge";
-        badge.textContent = talk.badge;
-
-        const teaser = document.createElement("p");
-        teaser.className = "talk-teaser";
-        teaser.textContent = talk.teaser;
-
-        const btn = document.createElement("button");
-        btn.type = "button";
-        btn.className = "btn-talk-reveal";
-        btn.setAttribute("aria-expanded", "false");
-        btn.textContent = "Buka Topik Obrolan";
-
-        const panel = document.createElement("div");
-        panel.className = "talk-prompt-panel";
-        panel.hidden = true;
-
-        const q = document.createElement("p");
-        q.className = "talk-prompt-question";
-        q.textContent = talk.question;
-
-        const hint = document.createElement("p");
-        hint.className = "talk-prompt-hint";
-        hint.textContent = talk.hint;
-
-        panel.append(q, hint);
-
-        btn.addEventListener("click", () => {
-            const opening = panel.hidden;
-            panel.hidden = !opening;
-            btn.setAttribute("aria-expanded", String(opening));
-            btn.textContent = opening ? "Tutup Topik Obrolan" : "Buka Topik Obrolan";
-            scheduleTrailGeometryUpdate();
-        });
-
-        card.append(badge, teaser, btn, panel);
-
-        const miniGame = createTalkMiniGame(talk.miniGame);
-        if (miniGame) {
-            card.appendChild(miniGame);
-        }
-
-        li.appendChild(card);
-        return li;
-    }
-
-    function createChatCardElement(chat) {
-        const card = document.createElement("div");
-        card.className = "chat-mockup";
-
-        const header = document.createElement("div");
-        header.className = "chat-header";
-
-        const info = document.createElement("div");
-        info.className = "chat-header-info";
-        const tag = document.createElement("span");
-        tag.className = "chat-platform-tag";
-        tag.textContent = `${chat.platform} // ${chat.date}`;
-        const prompt = document.createElement("p");
-        prompt.className = "chat-prompt";
-        prompt.textContent = chat.prompt;
-        info.append(tag, prompt);
-
-        const replayBtn = document.createElement("button");
-        replayBtn.type = "button";
-        replayBtn.className = "btn-replay-chat";
-        replayBtn.textContent = "Putar Ulang";
-        replayBtn.addEventListener("click", () => {
-            card.classList.remove("is-visible");
-            void card.offsetWidth;
-            window.setTimeout(() => {
-                card.classList.add("is-visible");
-            }, 35);
-        });
-
-        header.append(info, replayBtn);
-
-        const thread = document.createElement("div");
-        thread.className = "chat-thread";
-        chat.messages.forEach((msg, msgIdx) => {
-            const bubble = document.createElement("div");
-            bubble.className = `chat-bubble ${msg.from === "jay" ? "chat-bubble--jay" : "chat-bubble--rara"}`;
-            bubble.style.setProperty("--msg-idx", String(msgIdx));
-
-            const body = document.createElement("p");
-            body.className = "chat-text";
-            body.textContent = msg.text;
-
-            const meta = document.createElement("p");
-            meta.className = "chat-meta";
-            meta.textContent = `${msg.from === "jay" ? "Jay" : "Rara"} | ${msg.time}`;
-
-            bubble.append(body, meta);
-            thread.appendChild(bubble);
-        });
-
-        card.append(header, thread);
-        return card;
-    }
-
-    /**
-     * Builds the opposite-column visual companion (Scrapbook Polaroid Pinboard or Tarot Illustration Plate).
-     */
-    function createCheckpointCompanion(cp) {
-        const companion = document.createElement("aside");
-        companion.className = "checkpoint-companion";
-        companion.setAttribute("aria-label", `Ilustrasi dan arsip pos ${cp.postNum}`);
-
-        const hasPhotos = Array.isArray(cp.photos) && cp.photos.length > 0;
-        if (hasPhotos) {
-            const board = document.createElement("div");
-            board.className = "polaroid-board";
-
-            const tape = document.createElement("span");
-            tape.className = "card-washi-tape";
-            tape.setAttribute("aria-hidden", "true");
-            board.appendChild(tape);
-
-            const boardHeader = document.createElement("div");
-            boardHeader.className = "polaroid-board-header";
-            const label = document.createElement("span");
-            label.className = "mono-tag";
-            label.textContent = `PAPAN SCRAPBOOK POS ${cp.postNum}`;
-            const mdplTag = document.createElement("span");
-            mdplTag.className = "mono-tag";
-            mdplTag.textContent = `${cp.altitude.toUpperCase()} | ${cp.date}`;
-            boardHeader.append(label, mdplTag);
-            board.appendChild(boardHeader);
-
-            const grid = document.createElement("div");
-            grid.className = `polaroid-grid polaroid-grid--${cp.photos.length}`;
-            cp.photos.forEach((photo, photoIdx) => {
-                const tile = document.createElement("button");
-                tile.type = "button";
-                tile.className = `polaroid-item${photo.contain ? " polaroid-item--contain" : ""}`;
-                tile.style.setProperty("--photo-idx", String(photoIdx));
-                tile.setAttribute("aria-label", `Perbesar foto: ${photo.caption}`);
-
-                const img = document.createElement("img");
-                img.width = 400;
-                img.height = 300;
-                img.src = photo.src;
-                img.alt = photo.alt;
-                img.loading = "lazy";
-                img.addEventListener("load", scheduleTrailGeometryUpdate);
-
-                const stampTag = document.createElement("span");
-                stampTag.className = "polaroid-stamp-tag";
-                stampTag.textContent = `ARSIP 27 // POS ${cp.postNum}`;
-
-                const cap = document.createElement("span");
-                cap.className = "polaroid-caption";
-                cap.textContent = photo.caption;
-
-                tile.append(img, stampTag, cap);
-                tile.addEventListener("click", () => {
-                    const galleryIdx = LIGHTBOX_GALLERY.findIndex((item) => item.src === photo.src);
-                    openImageLightbox(photo.src, cp.title, photo.caption, null, galleryIdx);
-                });
-
-                grid.appendChild(tile);
+            const pills = document.createElement("div");
+            pills.className = "realm-intro-pills stage-reveal";
+            pills.style.setProperty("--stagger", "4");
+            meta.pills.forEach((pText) => {
+                const pill = document.createElement("span");
+                pill.className = "realm-intro-pill";
+                pill.textContent = pText;
+                pills.appendChild(pill);
             });
-            board.appendChild(grid);
 
-            if (cp.pullQuote) {
-                const quote = document.createElement("p");
-                quote.className = "polaroid-pullquote";
-                quote.textContent = cp.pullQuote;
-                board.appendChild(quote);
-            }
+            const ctaBtn = document.createElement("button");
+            ctaBtn.type = "button";
+            ctaBtn.className = "btn-realm-enter stage-reveal";
+            ctaBtn.style.setProperty("--stagger", "5");
+            ctaBtn.textContent = `Jelajahi ${meta.shortName}`;
+            ctaBtn.addEventListener("click", () => goToPage(page.index + 1, { direction: "next" }));
 
-            companion.appendChild(board);
-            return companion;
+            shell.append(emblem, kicker, h2, sub, pills, ctaBtn);
+            sec.appendChild(shell);
+            return sec;
         }
 
-        const plate = document.createElement("div");
-        plate.className = "story-vignette";
+        if (page.type === "pos") {
+            const cp = page.checkpoint;
+            const spread = document.createElement("div");
+            spread.className = `pos-spread pos-spread--${page.spreadVariant}`;
 
-        const stamp = document.createElement("p");
-        stamp.className = "vignette-stamp";
-        stamp.textContent = `POS ${cp.postNum} // ${cp.altitude.toUpperCase()} // ${cp.date}`;
-
-        const halo = document.createElement("div");
-        halo.className = "vignette-arch-halo";
-
-        const svgWrap = document.createElement("div");
-        svgWrap.className = "vignette-svg-wrap";
-        svgWrap.setAttribute("aria-hidden", "true");
-        svgWrap.innerHTML = VIGNETTE_SVGS[cp.vignette] || VIGNETTE_SVGS["quill-arch"];
-        halo.appendChild(svgWrap);
-
-        const quote = document.createElement("blockquote");
-        quote.className = "vignette-quote";
-        quote.textContent = cp.pullQuote || cp.title;
-
-        const waxFoot = document.createElement("span");
-        waxFoot.className = "vignette-wax-chip";
-        waxFoot.textContent = `SEGEL EKSPEDISI 27 // POS ${cp.postNum}`;
-
-        plate.append(stamp, halo, quote, waxFoot);
-        companion.appendChild(plate);
-        return companion;
-    }
-
-    function renderTrailCheckpoints() {
-        const stackFrag = document.createDocumentFragment();
-        const realmMap = new Map();
-
-        [1, 2, 3, 4].forEach((bId) => {
-            const realmSec = document.createElement("section");
-            realmSec.className = `biome-realm biome-realm--${bId} biome-${bId}`;
-            realmSec.id = `biome-realm-${bId}`;
-            realmSec.dataset.biomeId = String(bId);
-            realmSec.setAttribute("aria-label", BIOME_META[bId].title);
-
-            if (REALM_SCENERY_SVGS[bId]) {
-                const scenery = document.createElement("div");
-                scenery.className = "realm-scenery-bg";
-                scenery.setAttribute("aria-hidden", "true");
-                scenery.innerHTML = REALM_SCENERY_SVGS[bId];
-                realmSec.appendChild(scenery);
-            }
-
-            const realmList = document.createElement("ol");
-            realmList.className = "realm-list";
-            const banner = createBiomeBanner(bId);
-            if (banner) {
-                realmList.appendChild(banner);
-            }
-
-            realmSec.appendChild(realmList);
-            stackFrag.appendChild(realmSec);
-            realmMap.set(bId, realmList);
-        });
-
-        TRAIL_CHECKPOINTS.forEach((cp, index) => {
-            const realmList = realmMap.get(cp.biome);
-            const li = document.createElement("li");
-            li.className = `checkpoint-item biome-${cp.biome} ${index % 2 === 0 ? "checkpoint--left" : "checkpoint--right"}`;
-            li.id = cp.id;
-            li.dataset.altitude = cp.altitude;
-            li.dataset.posIndex = String(index);
-
-            const node = document.createElement("div");
-            node.className = "checkpoint-node";
-            node.setAttribute("aria-hidden", "true");
-            node.textContent = cp.postNum;
-
-            const card = document.createElement("article");
-            card.className = "checkpoint-card";
-
-            const tape = document.createElement("span");
-            tape.className = "card-washi-tape";
-            tape.setAttribute("aria-hidden", "true");
-            card.appendChild(tape);
+            const storyCard = document.createElement("article");
+            storyCard.className = "checkpoint-card storybook-frame stage-reveal";
+            storyCard.style.setProperty("--stagger", "1");
 
             const headRow = document.createElement("div");
             headRow.className = "card-head-row";
 
             const pillRow = document.createElement("div");
             pillRow.className = "pos-pill-row";
-            [
-                `POS ${cp.postNum}`,
-                cp.altitude.toUpperCase(),
-                cp.date
-            ].forEach((txt) => {
+            [`POS ${cp.postNum} / 27`, cp.altitude.toUpperCase(), cp.date].forEach((txt) => {
                 const pill = document.createElement("span");
                 pill.className = "pos-pill";
                 pill.textContent = txt;
@@ -2866,58 +2870,52 @@
             miniWax.className = "card-wax-mini";
             miniWax.setAttribute("aria-hidden", "true");
             miniWax.textContent = "27";
-
             headRow.append(pillRow, miniWax);
 
-            const title = document.createElement("h3");
-            title.className = "checkpoint-title reveal-line";
-            title.style.setProperty("--line-index", "0");
+            const title = document.createElement("h2");
+            title.className = "checkpoint-title";
             title.textContent = cp.title;
-
-            card.append(headRow, title);
+            storyCard.append(headRow, title);
 
             if (Array.isArray(cp.lines) && cp.lines.length > 0) {
                 const linesWrap = document.createElement("div");
                 linesWrap.className = "checkpoint-lines";
-                cp.lines.forEach((text, lineIdx) => {
+                cp.lines.forEach((txt) => {
                     const p = document.createElement("p");
-                    p.className = "reveal-line";
-                    p.style.setProperty("--line-index", String(lineIdx + 1));
-                    p.textContent = text;
+                    p.textContent = txt;
                     linesWrap.appendChild(p);
                 });
-                card.appendChild(linesWrap);
+                storyCard.appendChild(linesWrap);
             }
 
             if (Array.isArray(cp.chats) && cp.chats.length > 0) {
                 cp.chats.forEach((chat) => {
-                    card.appendChild(createChatCardElement(chat));
+                    storyCard.appendChild(createChatCardElement(chat));
                 });
             } else if (cp.vignette) {
-                // Add inline miniature storybook vignette on photo-only story cards so Side A stays visually rich.
-                const miniStrip = document.createElement("div");
-                miniStrip.className = "card-vignette-strip";
+                const strip = document.createElement("div");
+                strip.className = "card-vignette-strip";
                 const art = document.createElement("div");
                 art.className = "card-vignette-art";
                 art.setAttribute("aria-hidden", "true");
                 art.innerHTML = VIGNETTE_SVGS[cp.vignette] || VIGNETTE_SVGS["quill-arch"];
-                const artSvg = art.querySelector("svg");
-                if (artSvg) {
-                    artSvg.setAttribute("width", "76");
-                    artSvg.setAttribute("height", "50");
+                const svgEl = art.querySelector("svg");
+                if (svgEl) {
+                    svgEl.setAttribute("width", "76");
+                    svgEl.setAttribute("height", "50");
                 }
                 const miniQ = document.createElement("p");
                 miniQ.className = "card-vignette-quote";
                 miniQ.textContent = cp.pullQuote || "";
-                miniStrip.append(art, miniQ);
-                card.appendChild(miniStrip);
+                strip.append(art, miniQ);
+                storyCard.appendChild(strip);
             }
 
             if (cp.footnote) {
                 const foot = document.createElement("p");
                 foot.className = "checkpoint-footnote";
                 foot.textContent = cp.footnote;
-                card.appendChild(foot);
+                storyCard.appendChild(foot);
             }
 
             if (cp.secretNote) {
@@ -2936,300 +2934,507 @@
                 noteBody.textContent = cp.secretNote;
 
                 toggleBtn.addEventListener("click", () => {
+                    SoundscapeEngine.playUiTap();
                     const isOpen = noteBody.hidden;
                     noteBody.hidden = !isOpen;
                     toggleBtn.setAttribute("aria-expanded", String(isOpen));
                     toggleBtn.textContent = isOpen ? "Tutup Catatan Jay" : "Buka Catatan Jay";
-                    scheduleTrailGeometryUpdate();
                 });
 
                 secretWrap.append(toggleBtn, noteBody);
-                card.appendChild(secretWrap);
+                storyCard.appendChild(secretWrap);
             }
 
+            const visualCol = buildVisualCompanion(cp);
             const quickGameBox = createPosQuickGame(cp);
             if (quickGameBox) {
-                card.appendChild(quickGameBox);
+                visualCol.appendChild(quickGameBox);
             }
 
-            const companion = createCheckpointCompanion(cp);
-            li.append(node, card, companion);
-            realmList.appendChild(li);
+            spread.append(storyCard, visualCol);
+            sec.appendChild(spread);
+            return sec;
+        }
 
-            if (cp.talkAfter) {
-                realmList.appendChild(createTalkCardItem(cp.talkAfter, cp.biome));
+        if (page.type === "rest-stop") {
+            const talk = page.talk;
+            const grid = document.createElement("div");
+            grid.className = "rest-sanctuary-grid";
+
+            const talkCard = document.createElement("article");
+            talkCard.className = "rest-talk-card storybook-frame stage-reveal";
+            talkCard.style.setProperty("--stagger", "1");
+
+            const badge = document.createElement("span");
+            badge.className = "talk-badge";
+            badge.textContent = talk.badge;
+
+            const h2 = document.createElement("h2");
+            h2.className = "rest-title";
+            h2.textContent = "Pos Istirahat: Obrolan Berdua";
+
+            const teaser = document.createElement("p");
+            teaser.className = "talk-teaser";
+            teaser.textContent = talk.teaser;
+
+            const revealBtn = document.createElement("button");
+            revealBtn.type = "button";
+            revealBtn.className = "btn-talk-reveal";
+            revealBtn.setAttribute("aria-expanded", "false");
+            revealBtn.textContent = "Buka Topik Obrolan";
+
+            const panel = document.createElement("div");
+            panel.className = "talk-prompt-panel";
+            panel.hidden = true;
+
+            const q = document.createElement("p");
+            q.className = "talk-prompt-question";
+            q.textContent = talk.question;
+            const hint = document.createElement("p");
+            hint.className = "talk-prompt-hint";
+            hint.textContent = talk.hint;
+            panel.append(q, hint);
+
+            revealBtn.addEventListener("click", () => {
+                SoundscapeEngine.playUiTap();
+                const opening = panel.hidden;
+                panel.hidden = !opening;
+                revealBtn.setAttribute("aria-expanded", String(opening));
+                revealBtn.textContent = opening ? "Tutup Topik Obrolan" : "Buka Topik Obrolan";
+            });
+
+            talkCard.append(badge, h2, teaser, revealBtn, panel);
+
+            const game = talk.miniGame;
+            const gameCard = document.createElement("section");
+            gameCard.className = "rest-game-card storybook-frame stage-reveal";
+            gameCard.style.setProperty("--stagger", "2");
+
+            const gHead = document.createElement("div");
+            gHead.className = "minigame-head";
+            const gBadge = document.createElement("span");
+            gBadge.className = "minigame-badge";
+            gBadge.textContent = game.badge;
+            const scoreEl = document.createElement("span");
+            scoreEl.className = "minigame-score";
+            gHead.append(gBadge, scoreEl);
+
+            const gTitle = document.createElement("h3");
+            gTitle.className = "minigame-title";
+            gTitle.textContent = game.title;
+
+            const gDesc = document.createElement("p");
+            gDesc.className = "minigame-desc";
+            gDesc.textContent = game.desc;
+
+            const gStage = document.createElement("div");
+            gStage.className = "minigame-stage";
+
+            if (game.type === "tebak-chat" || game.type === "tebak-jam" || game.type === "susun-typo") {
+                buildRoundMiniGame(game, gStage, scoreEl);
+            } else if (game.type === "suit-pendaki") {
+                buildSuitMiniGame(gStage, scoreEl);
+            } else if (game.type === "lentera-hutan") {
+                buildLanternMiniGame(game, gStage, scoreEl);
+            } else if (game.type === "kompak-123") {
+                buildTelepathyMiniGame(game, gStage, scoreEl);
+            } else if (game.type === "roda-tantangan") {
+                buildWheelMiniGame(game, gStage, scoreEl);
             }
+
+            gameCard.append(gHead, gTitle, gDesc, gStage);
+            grid.append(talkCard, gameCard);
+            sec.appendChild(grid);
+            return sec;
+        }
+
+        return sec;
+    }
+
+    function getOrCreatePageNode(idx) {
+        if (pageNodeCache.has(idx)) {
+            return pageNodeCache.get(idx);
+        }
+        const page = DECK_PAGES[idx];
+        const node = createDynamicPageElement(page);
+        node.hidden = true;
+        el.deckViewport.appendChild(node);
+        pageNodeCache.set(idx, node);
+        return node;
+    }
+
+    function buildAtlasMenu() {
+        const frag = document.createDocumentFragment();
+        const groups = new Map();
+
+        DECK_PAGES.forEach((p) => {
+            if (!groups.has(p.groupLabel)) {
+                groups.set(p.groupLabel, []);
+            }
+            groups.get(p.groupLabel).push(p);
         });
 
-        el.checkpointList.replaceChildren(stackFrag);
+        groups.forEach((items, groupName) => {
+            const groupWrap = document.createElement("div");
+            groupWrap.className = "atlas-group";
+
+            const heading = document.createElement("h3");
+            heading.className = "atlas-group-title";
+            heading.textContent = groupName;
+            groupWrap.appendChild(heading);
+
+            const grid = document.createElement("div");
+            grid.className = "atlas-page-grid";
+
+            items.forEach((item) => {
+                const btn = document.createElement("button");
+                btn.type = "button";
+                btn.className = "atlas-jump-btn";
+                btn.dataset.atlasPageIndex = String(item.index);
+
+                const num = document.createElement("span");
+                num.className = "atlas-jump-num";
+                num.textContent = String(item.index + 1).padStart(2, "0");
+
+                const txt = document.createElement("span");
+                txt.textContent = item.shortLabel;
+
+                btn.append(num, txt);
+                btn.addEventListener("click", () => {
+                    closeAtlasDialog();
+                    goToPage(item.index);
+                });
+                grid.appendChild(btn);
+            });
+
+            groupWrap.appendChild(grid);
+            frag.appendChild(groupWrap);
+        });
+
+        el.atlasPageList.replaceChildren(frag);
+    }
+
+    function getNextButtonLabel(idx) {
+        if (idx === 0) {
+            return "Mulai Ekspedisi";
+        }
+        if (idx >= DECK_PAGES.length - 1) {
+            return "Kembali ke Awal";
+        }
+        const next = DECK_PAGES[idx + 1];
+        if (next.type === "realm-intro") {
+            return `Masuki ${BIOME_META[next.biome].shortName}`;
+        }
+        if (next.type === "letter") {
+            return "Buka Surat Puncak";
+        }
+        if (next.type === "photobooth") {
+            return "Ke Photobooth";
+        }
+        return "Lanjut";
+    }
+
+    function syncDeckChrome(idx) {
+        const page = DECK_PAGES[idx];
+        const total = DECK_PAGES.length;
+        const meta = BIOME_META[page.biome];
+
+        el.deckApp.classList.toggle("is-onboarding", idx === 0);
+        el.deckApp.classList.remove("biome-1", "biome-2", "biome-3", "biome-4");
+        el.deckApp.classList.add(`biome-${page.biome}`);
+        el.worldStage.setAttribute("data-biome", String(page.biome));
+        el.worldStage.style.setProperty("--world-shift", (idx / Math.max(1, total - 1)).toFixed(4));
+
+        el.hudContextPill.textContent = `${meta.shortName.toUpperCase()} | HAL ${String(idx + 1).padStart(2, "0")} / ${total}`;
+        el.dockPageReadout.textContent = `HAL ${String(idx + 1).padStart(2, "0")} / ${total} // ${page.shortLabel.toUpperCase()}`;
+        el.dockProgressFill.style.width = `${(((idx + 1) / total) * 100).toFixed(2)}%`;
+
+        el.prevPageBtn.disabled = idx === 0;
+        el.nextPageBtn.textContent = getNextButtonLabel(idx);
+
+        el.realmTrackBtns.forEach((btn) => {
+            btn.classList.toggle("is-current", Number(btn.dataset.biomeJump) === page.biome && idx >= 2);
+        });
+
+        el.atlasPageList.querySelectorAll(".atlas-jump-btn").forEach((btn) => {
+            btn.classList.toggle("is-current", Number(btn.dataset.atlasPageIndex) === idx);
+        });
+
+        if (page.type === "realm-intro" || page.type === "pos") {
+            unlockStamp(meta.stampId);
+        } else if (page.type === "letter") {
+            unlockStamp("puncak");
+        }
+
+        SoundscapeEngine.setBiome(page.biome);
+
+        try {
+            window.history.replaceState(null, "", idx === 0 ? window.location.pathname + window.location.search : `#${page.id}`);
+        } catch (_) {
+            // Ignore restricted history state on sandboxed origins.
+        }
     }
 
     /**
-     * Recomputes the continuous winding SVG spine curve across all 4 realms.
+     * Fluidly transitions between any two pages using interruptible Depth Morph choreography.
      */
-    function updateTrailSvgGeometry() {
-        const containerRect = el.trailCanvas.getBoundingClientRect();
-        const nodes = el.trailCanvas.querySelectorAll(".checkpoint-node");
-        if (nodes.length < 2 || containerRect.width === 0) {
+    function goToPage(targetIdx, opts = {}) {
+        const clamped = Math.max(0, Math.min(DECK_PAGES.length - 1, Number(targetIdx) || 0));
+        const prevIdx = state.currentPageIndex;
+
+        if (clamped === prevIdx && pageNodeCache.get(clamped) && !pageNodeCache.get(clamped).hidden) {
+            syncDeckChrome(clamped);
             return;
         }
 
-        const isMobile = window.innerWidth < 860;
-        const points = Array.from(nodes).map((node) => {
-            const rect = node.getBoundingClientRect();
-            const baseX = rect.left - containerRect.left + rect.width / 2;
-            const cy = rect.top - containerRect.top + rect.height / 2;
-            return { x: baseX, y: cy };
+        if (state.leaveCleanupTimer) {
+            window.clearTimeout(state.leaveCleanupTimer);
+            state.leaveCleanupTimer = null;
+        }
+        if (state.enterCleanupTimer) {
+            window.clearTimeout(state.enterCleanupTimer);
+            state.enterCleanupTimer = null;
+        }
+
+        // Hide any lingering pages cleanly before starting the new transition.
+        pageNodeCache.forEach((node, nodeIdx) => {
+            if (nodeIdx !== prevIdx && nodeIdx !== clamped) {
+                node.hidden = true;
+                node.classList.remove("is-active", "is-entering-next", "is-entering-prev", "is-leaving-next", "is-leaving-prev", "is-dragging", "is-snap-back");
+                node.style.transform = "";
+            }
         });
 
-        const width = Math.max(Math.round(containerRect.width), 320);
-        const height = Math.max(Math.round(containerRect.height), Math.round(points[points.length - 1].y + 40));
-        el.trailSvg.setAttribute("viewBox", `0 0 ${width} ${height}`);
-        el.trailSvg.setAttribute("width", String(width));
-        el.trailSvg.setAttribute("height", String(height));
-        if (el.trailBiomeGrad) {
-            el.trailBiomeGrad.setAttribute("y2", String(height));
+        const dir = opts.direction || (clamped >= prevIdx ? "next" : "prev");
+        const outEl = getOrCreatePageNode(prevIdx);
+        const inEl = getOrCreatePageNode(clamped);
+
+        state.currentPageIndex = clamped;
+        syncDeckChrome(clamped);
+
+        if (outEl && outEl !== inEl) {
+            outEl.classList.remove("is-active", "is-entering-next", "is-entering-prev", "is-dragging", "is-snap-back");
+            outEl.style.transform = "";
+            outEl.classList.add(dir === "next" ? "is-leaving-next" : "is-leaving-prev");
+            state.leaveCleanupTimer = window.setTimeout(() => {
+                if (state.currentPageIndex !== prevIdx) {
+                    outEl.hidden = true;
+                    outEl.classList.remove("is-leaving-next", "is-leaving-prev");
+                }
+            }, 350);
         }
 
-        let d = `M ${points[0].x.toFixed(1)} ${points[0].y.toFixed(1)}`;
-        for (let i = 0; i < points.length - 1; i += 1) {
-            const p1 = points[i];
-            const p2 = points[i + 1];
-            if (isMobile) {
-                d += ` L ${p2.x.toFixed(1)} ${p2.y.toFixed(1)}`;
-            } else {
-                const swing = (i % 2 === 0 ? 1 : -1) * 10;
-                const dy = p2.y - p1.y;
-                const c1y = p1.y + dy * 0.35;
-                const c2y = p1.y + dy * 0.65;
-                d += ` C ${(p1.x + swing).toFixed(1)} ${c1y.toFixed(1)}, ${(p2.x + swing).toFixed(1)} ${c2y.toFixed(1)}, ${p2.x.toFixed(1)} ${p2.y.toFixed(1)}`;
-            }
+        inEl.hidden = false;
+        inEl.scrollTop = 0;
+        inEl.style.transform = "";
+        inEl.classList.remove("is-leaving-next", "is-leaving-prev", "is-entering-next", "is-entering-prev", "is-dragging", "is-snap-back");
+        void inEl.offsetWidth;
+        inEl.classList.add("is-active", dir === "next" ? "is-entering-next" : "is-entering-prev");
+
+        inEl.querySelectorAll(".chat-mockup").forEach((chatEl) => {
+            chatEl.classList.remove("is-visible");
+            void chatEl.offsetWidth;
+            chatEl.classList.add("is-visible");
+        });
+
+        state.enterCleanupTimer = window.setTimeout(() => {
+            inEl.classList.remove("is-entering-next", "is-entering-prev");
+        }, 480);
+
+        if (!opts.silent) {
+            SoundscapeEngine.playPageTurn(dir, clamped);
         }
-
-        el.trailPathGuide.setAttribute("d", d);
-        el.trailPathActive.setAttribute("d", d);
-
-        const totalLen = el.trailPathActive.getTotalLength();
-        state.trailTotalLength = totalLen;
-        el.trailPathActive.style.strokeDasharray = `${totalLen} ${totalLen}`;
-
-        updateScrollEffects();
     }
 
-    function scheduleTrailGeometryUpdate() {
-        if (state.resizeTimer) {
-            window.clearTimeout(state.resizeTimer);
+    function triggerOnboardingReveal() {
+        if (state.currentPageIndex !== 0 || state.isBreakingSeal) {
+            return;
         }
-        state.resizeTimer = window.setTimeout(updateTrailSvgGeometry, 90);
+        state.isBreakingSeal = true;
+        state.onboardingOpened = true;
+        SoundscapeEngine.setEnabled(true);
+        SoundscapeEngine.playSealOpen();
+
+        if (el.waxSealTrigger && !reducedMotionQuery.matches) {
+            el.waxSealTrigger.classList.add("is-breaking");
+            window.setTimeout(() => {
+                state.isBreakingSeal = false;
+                goToPage(1, { direction: "next", silent: true });
+                el.waxSealTrigger.classList.remove("is-breaking");
+            }, 360);
+        } else {
+            state.isBreakingSeal = false;
+            goToPage(1, { direction: "next", silent: true });
+        }
     }
 
-    function revealVisibleElementsNow() {
-        const thresholdY = window.innerHeight * 0.82;
-        const targets = document.querySelectorAll(
-            ".reveal-group, .biome-banner, .talk-card, .checkpoint-item, .chat-mockup, .book-letter-card"
-        );
-        targets.forEach((item) => {
-            if (item.classList.contains("is-visible")) {
+    function setupDeckNavigation() {
+        // 1. Horizontal Pointer / Touch Swipe with velocity momentum & boundary damping
+        let dragState = null;
+
+        el.deckViewport.addEventListener("pointerdown", (evt) => {
+            if (evt.button !== 0 && evt.pointerType === "mouse") {
                 return;
             }
-            const rect = item.getBoundingClientRect();
-            if (rect.top < thresholdY && rect.bottom > -80) {
-                item.classList.add("is-visible");
-                if (item.classList.contains("checkpoint-item")) {
-                    item.querySelectorAll(".chat-mockup").forEach((c) => c.classList.add("is-visible"));
+            if (evt.target.closest("button, a, input, textarea, select, label, canvas, video, [data-no-drag]")) {
+                return;
+            }
+            dragState = {
+                pointerId: evt.pointerId,
+                startX: evt.clientX,
+                startY: evt.clientY,
+                startTime: Date.now(),
+                dx: 0,
+                locked: null
+            };
+        });
+
+        el.deckViewport.addEventListener("pointermove", (evt) => {
+            if (!dragState || evt.pointerId !== dragState.pointerId) {
+                return;
+            }
+            const rawDx = evt.clientX - dragState.startX;
+            const rawDy = evt.clientY - dragState.startY;
+
+            if (!dragState.locked) {
+                if (Math.abs(rawDy) > 12 && Math.abs(rawDy) >= Math.abs(rawDx)) {
+                    dragState = null;
+                    return;
+                }
+                if (Math.abs(rawDx) > 12 && Math.abs(rawDx) > Math.abs(rawDy) * 1.15) {
+                    dragState.locked = "horizontal";
+                } else {
+                    return;
                 }
             }
-        });
-    }
 
-    function updateActiveTrailStage() {
-        const jalurRect = el.jalurSection ? el.jalurSection.getBoundingClientRect() : null;
-        const inTrail = Boolean(jalurRect && jalurRect.top < window.innerHeight * 0.72 && jalurRect.bottom > 180);
-        if (el.storyStepperDock) {
-            el.storyStepperDock.hidden = !inTrail;
-        }
-        const items = Array.from(document.querySelectorAll(".checkpoint-item"));
-        if (items.length === 0) {
-            return;
-        }
-        const centerAnchor = window.innerHeight * 0.44;
-        let bestIdx = state.activePosIndex || 0;
-        let bestDist = Infinity;
-        items.forEach((item, idx) => {
-            const rect = item.getBoundingClientRect();
-            const itemMid = rect.top + Math.min(rect.height, window.innerHeight * 0.6) * 0.5;
-            const dist = Math.abs(itemMid - centerAnchor);
-            if (dist < bestDist) {
-                bestDist = dist;
-                bestIdx = idx;
-            }
-        });
-        state.activePosIndex = bestIdx;
-        items.forEach((item, idx) => {
-            item.classList.toggle("is-active-stage", inTrail && idx === bestIdx);
-        });
-        const activeCp = TRAIL_CHECKPOINTS[bestIdx];
-        if (el.stepperPosLabel && activeCp) {
-            el.stepperPosLabel.textContent = `POS ${activeCp.postNum} / ${TRAIL_CHECKPOINTS.length} // ${activeCp.altitude.toUpperCase()}`;
-        }
-        if (el.stepPrevPosBtn) {
-            el.stepPrevPosBtn.disabled = bestIdx <= 0;
-        }
-        if (el.stepNextPosBtn) {
-            el.stepNextPosBtn.disabled = bestIdx >= TRAIL_CHECKPOINTS.length - 1;
-        }
+            const idx = state.currentPageIndex;
+            const atLeftBound = idx === 0 && rawDx > 0;
+            const atRightBound = idx === DECK_PAGES.length - 1 && rawDx < 0;
+            const dampedDx = atLeftBound || atRightBound ? rawDx * 0.22 : rawDx * 0.55;
+            dragState.dx = rawDx;
 
-        let targetBiome = activeCp ? activeCp.biome : 1;
-        if (jalurRect) {
-            if (jalurRect.top > window.innerHeight * 0.72) {
-                targetBiome = 1;
-            } else if (jalurRect.bottom <= 180) {
-                targetBiome = 4;
-            }
-        }
-        if (state.currentBiome !== targetBiome) {
-            state.currentBiome = targetBiome;
-        }
-        if (el.worldAmbienceStage && el.worldAmbienceStage.getAttribute("data-biome") !== String(targetBiome)) {
-            el.worldAmbienceStage.setAttribute("data-biome", String(targetBiome));
-        }
-    }
-
-    function navigateToCheckpoint(targetIdx) {
-        const clamped = Math.max(0, Math.min(TRAIL_CHECKPOINTS.length - 1, targetIdx));
-        const cp = TRAIL_CHECKPOINTS[clamped];
-        if (!cp) {
-            return;
-        }
-        const targetEl = document.getElementById(cp.id);
-        if (!targetEl) {
-            return;
-        }
-        targetEl.classList.add("is-visible");
-        targetEl.querySelectorAll(".chat-mockup").forEach((c) => c.classList.add("is-visible"));
-        targetEl.scrollIntoView({
-            behavior: reducedMotionQuery.matches ? "auto" : "smooth",
-            block: "center"
+            const activeNode = getOrCreatePageNode(idx);
+            activeNode.classList.remove("is-snap-back");
+            activeNode.classList.add("is-dragging");
+            activeNode.style.transform = `translate3d(${dampedDx.toFixed(1)}px, 0, 0)`;
         });
-        state.activePosIndex = clamped;
-        updateActiveTrailStage();
-    }
 
-    function updateActiveChapterNav() {
-        const anchorY = Math.min(window.innerHeight * 0.36, 280);
-        let activeId = el.sections[0] ? el.sections[0].id : "basecamp";
-        el.sections.forEach((sec) => {
-            const rect = sec.getBoundingClientRect();
-            if (rect.top <= anchorY && rect.bottom > anchorY) {
-                activeId = sec.id;
-            }
-        });
-        if (
-            window.innerHeight + (window.scrollY || 0) >= document.documentElement.scrollHeight - 24 &&
-            el.sections.length > 0
-        ) {
-            activeId = el.sections[el.sections.length - 1].id;
-        }
-        el.navPills.forEach((pill) => {
-            const match = pill.dataset.section === activeId;
-            pill.classList.toggle("is-active", match);
-            if (match) {
-                pill.setAttribute("aria-current", "location");
-            } else {
-                pill.removeAttribute("aria-current");
-            }
-        });
-    }
-
-    function checkRealmAndSummitStamps() {
-        const stampTargets = [
-            { el: document.getElementById("biome-realm-1"), stamp: "lembah" },
-            { el: document.getElementById("biome-realm-2"), stamp: "lentera" },
-            { el: document.getElementById("biome-realm-3"), stamp: "bidadari" },
-            { el: document.getElementById("biome-realm-4"), stamp: "bintang" },
-            { el: document.getElementById("puncak"), stamp: "puncak" }
-        ];
-        const triggerLine = window.innerHeight * 0.85;
-        stampTargets.forEach((item) => {
-            if (!item.el) {
+        function finishDrag(evt) {
+            if (!dragState || (evt.pointerId !== undefined && evt.pointerId !== dragState.pointerId)) {
                 return;
             }
-            const rect = item.el.getBoundingClientRect();
-            if (rect.top < triggerLine && rect.bottom > 0) {
-                unlockStamp(item.stamp);
+            const cur = dragState;
+            dragState = null;
+            const activeNode = getOrCreatePageNode(state.currentPageIndex);
+            activeNode.classList.remove("is-dragging");
+
+            if (cur.locked !== "horizontal") {
+                activeNode.style.transform = "";
+                return;
             }
-        });
-    }
 
-    function updateScrollEffects() {
-        state.scrollRafPending = false;
-        const doc = document.documentElement;
-        const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
-        const scrollTop = window.scrollY || window.pageYOffset || 0;
-        const ratio = Math.max(0, Math.min(1, scrollTop / maxScroll));
+            const elapsed = Math.max(16, Date.now() - cur.startTime);
+            const velocity = Math.abs(cur.dx) / elapsed;
+            const committed = Math.abs(cur.dx) >= 72 || velocity > 0.28;
 
-        el.scrollProgressBar.style.width = `${(ratio * 100).toFixed(2)}%`;
-
-        if (!reducedMotionQuery.matches) {
-            const heroRatio = Math.max(0, Math.min(1.2, scrollTop / Math.max(420, window.innerHeight)));
-            el.root.style.setProperty("--hero-scroll", heroRatio.toFixed(4));
-        } else {
-            el.root.style.setProperty("--hero-scroll", "0");
-        }
-
-        if (state.trailTotalLength > 0) {
-            if (reducedMotionQuery.matches) {
-                el.trailPathActive.style.strokeDashoffset = "0";
+            if (committed && cur.dx < 0 && state.currentPageIndex < DECK_PAGES.length - 1) {
+                if (state.currentPageIndex === 0) {
+                    triggerOnboardingReveal();
+                } else {
+                    goToPage(state.currentPageIndex + 1, { direction: "next" });
+                }
+            } else if (committed && cur.dx > 0 && state.currentPageIndex > 0) {
+                goToPage(state.currentPageIndex - 1, { direction: "prev" });
             } else {
-                const trailRect = el.trailCanvas.getBoundingClientRect();
-                const startAnchor = window.innerHeight * 0.68;
-                const scrolledInside = startAnchor - trailRect.top;
-                const progress = Math.max(0, Math.min(1, scrolledInside / Math.max(240, trailRect.height - 160)));
-                const offset = state.trailTotalLength * (1 - progress);
-                el.trailPathActive.style.strokeDashoffset = String(offset.toFixed(1));
-
-                const currentMdpl = Math.round(100 + progress * 2600);
-                const formattedMdpl = currentMdpl.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-                el.elevationReadout.textContent = `${formattedMdpl} mdpl`;
+                activeNode.classList.add("is-snap-back");
+                activeNode.style.transform = "translate3d(0, 0, 0)";
+                window.setTimeout(() => {
+                    activeNode.classList.remove("is-snap-back");
+                    activeNode.style.transform = "";
+                }, 280);
             }
         }
 
-        revealVisibleElementsNow();
-        updateActiveTrailStage();
-        updateActiveChapterNav();
-        checkRealmAndSummitStamps();
-    }
+        el.deckViewport.addEventListener("pointerup", finishDrag);
+        el.deckViewport.addEventListener("pointercancel", finishDrag);
 
-    function onWindowScroll() {
-        if (!state.scrollRafPending) {
-            state.scrollRafPending = true;
-            window.requestAnimationFrame(updateScrollEffects);
-        }
-    }
+        // 2. Smart Wheel / Trackpad Navigation (respects inner page scrolling before flipping)
+        el.deckViewport.addEventListener(
+            "wheel",
+            (evt) => {
+                if (el.atlasDialog.open || el.handoffDialog.open || el.lightboxDialog.open) {
+                    return;
+                }
+                if (evt.target.closest(".chat-thread, .atlas-groups, textarea")) {
+                    return;
+                }
 
-    function setupObservers() {
-        const revealObserver = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add("is-visible");
-                        if (entry.target.classList.contains("checkpoint-item")) {
-                            entry.target.querySelectorAll(".chat-mockup").forEach((c) => c.classList.add("is-visible"));
+                const activeNode = getOrCreatePageNode(state.currentPageIndex);
+                const useHorizontal = Math.abs(evt.deltaX) > Math.abs(evt.deltaY) * 1.15;
+                const primaryDelta = useHorizontal ? evt.deltaX : evt.deltaY;
+
+                if (!useHorizontal && activeNode) {
+                    const hasOverflow = activeNode.scrollHeight > activeNode.clientHeight + 6;
+                    if (hasOverflow) {
+                        const atBottom = activeNode.scrollTop + activeNode.clientHeight >= activeNode.scrollHeight - 4;
+                        const atTop = activeNode.scrollTop <= 4;
+                        if ((primaryDelta > 0 && !atBottom) || (primaryDelta < 0 && !atTop)) {
+                            state.wheelAccum = 0;
+                            return;
                         }
                     }
-                });
+                }
+
+                const now = Date.now();
+                if (now - state.lastWheelFlipAt < 540) {
+                    return;
+                }
+
+                state.wheelAccum += primaryDelta;
+                if (Math.abs(state.wheelAccum) >= 65) {
+                    const goForward = state.wheelAccum > 0;
+                    state.wheelAccum = 0;
+                    state.lastWheelFlipAt = now;
+                    if (goForward && state.currentPageIndex < DECK_PAGES.length - 1) {
+                        if (state.currentPageIndex === 0) {
+                            triggerOnboardingReveal();
+                        } else {
+                            goToPage(state.currentPageIndex + 1, { direction: "next" });
+                        }
+                    } else if (!goForward && state.currentPageIndex > 0) {
+                        goToPage(state.currentPageIndex - 1, { direction: "prev" });
+                    }
+                }
             },
-            { threshold: 0.14, rootMargin: "0px 0px -14% 0px" }
+            { passive: true }
         );
+    }
 
-        document
-            .querySelectorAll(".reveal-group, .biome-banner, .talk-card, .checkpoint-item, .chat-mockup, .book-letter-card")
-            .forEach((node) => revealObserver.observe(node));
+    function openAtlasDialog() {
+        state.lastFocusedBeforeDialog = document.activeElement;
+        if (!el.atlasDialog.open) {
+            el.atlasDialog.showModal();
+        }
+    }
 
-        revealVisibleElementsNow();
-        updateActiveTrailStage();
-        updateActiveChapterNav();
-        checkRealmAndSummitStamps();
+    function closeAtlasDialog() {
+        if (el.atlasDialog.open) {
+            el.atlasDialog.close();
+        }
+    }
+
+    function openHandoffDialog() {
+        state.lastFocusedBeforeDialog = document.activeElement;
+        if (!el.handoffDialog.open) {
+            el.handoffDialog.showModal();
+        }
+    }
+
+    function closeHandoffDialog() {
+        if (el.handoffDialog.open) {
+            el.handoffDialog.close();
+        }
     }
 
     function getSummaryRows() {
@@ -3351,25 +3556,15 @@
         ctx.lineTo(32, 7);
         ctx.stroke();
 
-        // Botanical curved leaves & corner rivet
         ctx.fillStyle = foilColor;
         ctx.beginPath();
         ctx.arc(8, 8, 3.2, 0, Math.PI * 2);
         ctx.fill();
-
-        ctx.strokeStyle = color;
-        ctx.lineWidth = 1.2;
-        ctx.beginPath();
-        ctx.ellipse(22, 13, 5.5, 2.2, -0.35, 0, Math.PI * 2);
-        ctx.ellipse(13, 22, 2.2, 5.5, 0.35, 0, Math.PI * 2);
-        ctx.stroke();
         ctx.restore();
     }
 
     function drawWaxSeal27(ctx, cx, cy, radius, waxColor, foilColor) {
         ctx.save();
-
-        // Twin ceremonial ribbons beneath seal
         ctx.fillStyle = waxColor;
         ctx.beginPath();
         ctx.moveTo(cx - radius * 0.45, cy + radius * 0.35);
@@ -3387,7 +3582,6 @@
         ctx.closePath();
         ctx.fill();
 
-        // Scalloped 12-lobe outer wax rim
         ctx.beginPath();
         const lobes = 12;
         for (let i = 0; i <= lobes * 2; i += 1) {
@@ -3420,7 +3614,7 @@
     }
 
     function drawMiniStampRow(ctx, startX, y, totalWidth, palette) {
-        const labels = ["FYP", "LEMBAH", "LENTERA", "BIDADARI", "BINTANG", "PUNCAK 27"];
+        const labels = ["FYP", "PESISIR", "LENTERA", "BIDADARI", "BINTANG", "PUNCAK 27"];
         const gap = 8;
         ctx.save();
         ctx.font = '600 10.5px "JetBrains Mono", Consolas, monospace';
@@ -3470,59 +3664,58 @@
         ctx.fillStyle = "#FAF6EE";
         ctx.fillRect(0, 0, width, height);
 
-        ctx.strokeStyle = "#835811";
+        ctx.strokeStyle = "#784D0C";
         ctx.lineWidth = 2;
         ctx.strokeRect(10, 10, width - 20, height - 20);
         ctx.strokeStyle = "#D8A84E";
         ctx.lineWidth = 1.3;
         ctx.strokeRect(18, 18, width - 36, height - 36);
 
-        drawStripCornerFiligree(ctx, 24, 24, 1, 1, "#835811", "#D8A84E");
-        drawStripCornerFiligree(ctx, width - 24, 24, -1, 1, "#835811", "#D8A84E");
-        drawStripCornerFiligree(ctx, 24, height - 24, 1, -1, "#835811", "#D8A84E");
-        drawStripCornerFiligree(ctx, width - 24, height - 24, -1, -1, "#835811", "#D8A84E");
+        drawStripCornerFiligree(ctx, 24, 24, 1, 1, "#784D0C", "#D8A84E");
+        drawStripCornerFiligree(ctx, width - 24, 24, -1, 1, "#784D0C", "#D8A84E");
+        drawStripCornerFiligree(ctx, 24, height - 24, 1, -1, "#784D0C", "#D8A84E");
+        drawStripCornerFiligree(ctx, width - 24, height - 24, -1, -1, "#784D0C", "#D8A84E");
 
-        // Top ceremonial crest band
-        drawFourPointStar(ctx, width / 2, 46, 10, "#835811", 0.9);
+        drawFourPointStar(ctx, width / 2, 46, 10, "#784D0C", 0.9);
         drawFourPointStar(ctx, width / 2 - 36, 46, 5, "#D8A84E", 0.9);
         drawFourPointStar(ctx, width / 2 + 36, 46, 5, "#D8A84E", 0.9);
 
-        ctx.fillStyle = "#1A4F3E";
+        ctx.fillStyle = "#0F4D5A";
         ctx.fillRect(pad, 62, innerW, 5);
         ctx.fillStyle = "#D8A84E";
         ctx.fillRect(pad, 72, innerW, 1.5);
 
-        ctx.fillStyle = "#1C1821";
+        ctx.fillStyle = "#1A1720";
         ctx.font = '600 25px "Fraunces", Georgia, serif';
         ctx.fillText("KARTU RANGKUMAN KENANGAN", pad, 114);
 
-        ctx.fillStyle = "#504754";
+        ctx.fillStyle = "#4A4252";
         ctx.font = '600 15px "JetBrains Mono", Consolas, monospace';
         const codeTxt = "EKSPEDISI-27";
         ctx.fillText(codeTxt, width - pad - ctx.measureText(codeTxt).width, 114);
 
         ctx.fillStyle = "#EDE4D3";
         ctx.fillRect(pad, 136, innerW, 88);
-        ctx.strokeStyle = "#835811";
+        ctx.strokeStyle = "#784D0C";
         ctx.lineWidth = 1.2;
         ctx.strokeRect(pad, 136, innerW, 88);
 
-        ctx.fillStyle = "#1C1821";
+        ctx.fillStyle = "#1A1720";
         ctx.font = '600 20px "Fraunces", Georgia, serif';
         ctx.fillText("Anisa Rahma Eka Widyastuti (Rara)", pad + 20, 172);
-        ctx.fillStyle = "#504754";
+        ctx.fillStyle = "#4A4252";
         ctx.font = '500 14px "JetBrains Mono", Consolas, monospace';
         ctx.fillText("ARSIP KENANGAN // AGUSTUS - 27 NOV 2026", pad + 20, 204);
 
         let y = 264;
         const rows = getSummaryRows();
         rows.forEach((row) => {
-            ctx.fillStyle = "#835811";
+            ctx.fillStyle = "#784D0C";
             ctx.font = '600 13.5px "JetBrains Mono", Consolas, monospace';
             ctx.fillText(row.label.toUpperCase(), pad, y);
             y += 24;
 
-            ctx.fillStyle = "#1C1821";
+            ctx.fillStyle = "#1A1720";
             ctx.font = '600 18.5px "Plus Jakarta Sans", "Segoe UI", sans-serif';
             const wrapped = wrapCanvasLines(ctx, row.answer, innerW);
             wrapped.slice(0, 2).forEach((line) => {
@@ -3540,7 +3733,7 @@
         ctx.fillText("07. NILAI PERTEMANAN KENAL JAY", pad, y + 6);
         y += 40;
 
-        ctx.fillStyle = "#1A4F3E";
+        ctx.fillStyle = "#0F4D5A";
         ctx.font = '700 32px "Fraunces", Georgia, serif';
         ctx.fillText(`${state.ratingScore} / 100`, pad, y);
 
@@ -3554,11 +3747,11 @@
 
         ctx.fillStyle = "#EDE4D3";
         ctx.fillRect(pad, y, innerW, boxHeight);
-        ctx.strokeStyle = "#835811";
+        ctx.strokeStyle = "#784D0C";
         ctx.lineWidth = 1.4;
         ctx.strokeRect(pad, y, innerW, boxHeight);
 
-        ctx.fillStyle = "#1C1821";
+        ctx.fillStyle = "#1A1720";
         ctx.font = 'italic 18px "Fraunces", Georgia, serif';
         noteLines.forEach((line, idx) => {
             ctx.fillText(line, pad + 18, y + 32 + idx * 25);
@@ -3570,7 +3763,7 @@
         ctx.fillStyle = "#C9BEA8";
         ctx.fillRect(pad, footerY + 42, innerW - 110, 1.5);
 
-        ctx.fillStyle = "#1C1821";
+        ctx.fillStyle = "#1A1720";
         ctx.font = '600 18px "Fraunces", Georgia, serif';
         ctx.fillText("DARI JAY // EKSPEDISI ARSIP 27", pad, footerY + 84);
 
@@ -3581,7 +3774,11 @@
 
         drawWaxSeal27(ctx, width - pad - 44, footerY + 72, 34, "#8F2631", "#D8A84E");
 
-        state.summaryDataUrl = canvas.toDataURL("image/png");
+        try {
+            state.summaryDataUrl = canvas.toDataURL("image/png");
+        } catch (_) {
+            state.summaryDataUrl = "";
+        }
     }
 
     function drawCoverCropped(ctx, source, srcW, srcH, destX, destY, destW, destH, mirror) {
@@ -3621,7 +3818,6 @@
     }
 
     function drawStripMarginMotifs(ctx, width, height, palette) {
-        // Outer metallic border & double inner hairline
         ctx.save();
         ctx.strokeStyle = palette.border;
         ctx.lineWidth = 3;
@@ -3634,7 +3830,6 @@
         ctx.lineWidth = 1.4;
         ctx.strokeRect(24, 24, width - 48, height - 48);
 
-        // Beaded side rails & celestial stars along left and right borders
         const dotStep = 44;
         for (let y = 130; y < height - 130; y += dotStep) {
             const odd = Math.floor(y / dotStep) % 2 === 0;
@@ -3680,10 +3875,6 @@
             ctx.fillStyle = palette.foil;
             ctx.fill();
             ctx.stroke();
-            ctx.beginPath();
-            ctx.arc(cx, cy + 1, 3, 0, Math.PI * 2);
-            ctx.fillStyle = palette.wax;
-            ctx.fill();
         } else if (theme === "berry") {
             ctx.beginPath();
             ctx.arc(cx, cy, 15, 0, Math.PI * 2);
@@ -3708,7 +3899,6 @@
             ctx.stroke();
             drawFourPointStar(ctx, cx, cy - 15, 5.5, palette.foil, 1);
         } else {
-            // Parchment compass rose & oak leaves
             ctx.beginPath();
             ctx.arc(cx, cy, 16, 0, Math.PI * 2);
             ctx.fillStyle = palette.accentSoft;
@@ -3724,7 +3914,6 @@
         const cx = width / 2;
         ctx.save();
 
-        // Corner archive mono tags
         ctx.font = '600 12px "JetBrains Mono", Consolas, monospace';
         ctx.fillStyle = palette.muted;
         ctx.textAlign = "left";
@@ -3732,7 +3921,6 @@
         ctx.textAlign = "right";
         ctx.fillText(`STRIP-${String(count).padStart(2, "0")}`, width - sidePad - 22, 54);
 
-        // Top crest emblem & flanking stars
         drawThemeEmblem(ctx, cx, 54, theme, palette);
         ctx.strokeStyle = palette.foil;
         ctx.lineWidth = 1.4;
@@ -3742,16 +3930,12 @@
         ctx.moveTo(cx + 32, 54);
         ctx.lineTo(width - sidePad - 94, 54);
         ctx.stroke();
-        drawFourPointStar(ctx, cx - 44, 54, 4.5, palette.foil, 0.9);
-        drawFourPointStar(ctx, cx + 44, 54, 4.5, palette.foil, 0.9);
 
-        // Display heading
         ctx.textAlign = "center";
         ctx.fillStyle = palette.text;
         ctx.font = '700 25px "Fraunces", Georgia, serif';
         ctx.fillText("EKSPEDISI ARSIP 27", cx, 102);
 
-        // Ornamental subtitle plaque
         const pillW = Math.min(photoWidth - 16, 460);
         const pillX = cx - pillW / 2;
         const pillY = 114;
@@ -3767,7 +3951,6 @@
         ctx.textBaseline = "middle";
         ctx.fillText("JAY & RARA // 27 POS KENANGAN // 2.700 MDPL", cx, pillY + 14.5);
 
-        // Decorative rule under header
         ctx.textBaseline = "alphabetic";
         ctx.strokeStyle = palette.accent;
         ctx.lineWidth = 2.2;
@@ -3788,14 +3971,13 @@
             "27 AGU -> 27 NOV"
         ];
         const dividerLabels = [
-            "POSE 01 // LEMBAH AWAL",
+            "POSE 01 // PESISIR SENJA",
             "POSE 02 // HUTAN LENTERA",
-            "POSE 03 // GERBANG BIDADARI",
+            "POSE 03 // LEMBAH BIDADARI",
             "POSE 04 // PUNCAK BINTANG"
         ];
 
         ctx.save();
-        // Polaroid mat card shadow + double matte rim
         ctx.fillStyle = "rgba(14, 18, 30, 0.14)";
         ctx.fillRect(x + 4, y + 6, w, h);
 
@@ -3831,11 +4013,6 @@
             ctx.strokeRect(innerX + 14, innerY + 14, innerW - 28, innerH - 28);
             ctx.restore();
 
-            drawFourPointStar(ctx, innerX + 30, innerY + 30, 6, palette.foil, 0.9);
-            drawFourPointStar(ctx, innerX + innerW - 30, innerY + 30, 6, palette.foil, 0.9);
-            drawFourPointStar(ctx, innerX + 30, innerY + innerH - 30, 6, palette.foil, 0.9);
-            drawFourPointStar(ctx, innerX + innerW - 30, innerY + innerH - 30, 6, palette.foil, 0.9);
-
             drawThemeEmblem(ctx, innerX + innerW / 2, innerY + innerH / 2 - 28, theme, palette);
 
             ctx.textAlign = "center";
@@ -3848,7 +4025,6 @@
             ctx.fillText("Buka Kamera / Upload / Isi Cepat Foto Momen", innerX + innerW / 2, innerY + innerH / 2 + 44);
         }
 
-        // Photo aperture double frame & 4 vintage triangular photo corner mounts
         ctx.strokeStyle = palette.border;
         ctx.lineWidth = 2;
         ctx.strokeRect(x, y, w, h);
@@ -3871,14 +4047,8 @@
             ctx.lineTo(cx, cy + cSize * dy);
             ctx.closePath();
             ctx.fill();
-
-            ctx.fillStyle = palette.foil;
-            ctx.beginPath();
-            ctx.arc(cx + 6 * dx, cy + 6 * dy, 2.2, 0, Math.PI * 2);
-            ctx.fill();
         });
 
-        // Alternating corner lore tag ribbon pill
         const tag = cornerTags[index % cornerTags.length];
         ctx.font = '600 10.5px "JetBrains Mono", Consolas, monospace';
         const tagW = Math.ceil(ctx.measureText(tag).width + 20);
@@ -3898,7 +4068,6 @@
         ctx.textBaseline = "middle";
         ctx.fillText(tag, tagX + tagW / 2, tagY + 11.5);
 
-        // Ornamental floral divider plaque between slots
         if (index < count - 1) {
             const midY = y + h + slotGap / 2;
             const dText = dividerLabels[index % dividerLabels.length];
@@ -3914,9 +4083,6 @@
             ctx.moveTo(plaqueX + plaqueW + 10, midY);
             ctx.lineTo(x + w - 18, midY);
             ctx.stroke();
-
-            drawFourPointStar(ctx, x + 10, midY, 4.5, palette.foil, 0.95);
-            drawFourPointStar(ctx, x + w - 10, midY, 4.5, palette.foil, 0.95);
 
             ctx.fillStyle = palette.accentSoft;
             ctx.strokeStyle = palette.border;
@@ -3935,7 +4101,6 @@
 
     function drawStripFooterCertificate(ctx, sidePad, footerY, photoWidth, canvasWidth, palette, captionText) {
         ctx.save();
-        // Top ornate divider above footer certificate
         ctx.strokeStyle = palette.border;
         ctx.lineWidth = 1.8;
         ctx.beginPath();
@@ -3944,7 +4109,6 @@
         ctx.stroke();
         drawFourPointStar(ctx, canvasWidth / 2, footerY, 6, palette.wax, 1);
 
-        // User caption + italic subtitle on left
         ctx.textAlign = "left";
         ctx.fillStyle = palette.text;
         ctx.font = '700 20px "Fraunces", Georgia, serif';
@@ -3954,10 +4118,8 @@
         ctx.font = 'italic 15.5px "Cormorant Garamond", Georgia, serif';
         ctx.fillText("Dari Kamera FYP BINUS hingga Puncak 27 November 2026", sidePad, footerY + 58);
 
-        // Mini expedition stamp badges row
         drawMiniStampRow(ctx, sidePad, footerY + 74, photoWidth - 116, palette);
 
-        // Postmark date pill on left bottom
         const dateText = "27 NOV 2026";
         ctx.font = '600 12px "JetBrains Mono", Consolas, monospace';
         const stampW = Math.ceil(ctx.measureText(dateText).width + 20);
@@ -3968,7 +4130,6 @@
         ctx.textBaseline = "middle";
         ctx.fillText(dateText, sidePad + 10, footerY + 125.5);
 
-        // Scalloped crimson-and-gold Wax Seal "27" on bottom right
         drawWaxSeal27(ctx, sidePad + photoWidth - 46, footerY + 86, 35, palette.wax, palette.foil);
         ctx.restore();
     }
@@ -4023,76 +4184,13 @@
         const captionText = (state.stripCaption || "Jay & Rara // Puncak 27").trim() || "Jay & Rara // Puncak 27";
         drawStripFooterCertificate(ctx, sidePad, footerLineY, photoWidth, canvasWidth, palette, captionText);
 
-        const dataUrl = canvas.toDataURL("image/png");
-        state.compositeDataUrl = dataUrl;
-        el.downloadBtn.disabled = state.isCapturing || !allFilled;
+        try {
+            state.compositeDataUrl = canvas.toDataURL("image/png");
+        } catch (_) {
+            state.compositeDataUrl = "";
+        }
+        el.downloadBtn.disabled = state.isCapturing || !allFilled || !state.compositeDataUrl;
         updateControlsState();
-    }
-
-    function ensureAudioContext() {
-        if (!state.soundEnabled) {
-            return null;
-        }
-        const AudioCtx = window.AudioContext || window.webkitAudioContext;
-        if (!AudioCtx) {
-            return null;
-        }
-        if (!state.audioContext) {
-            state.audioContext = new AudioCtx();
-        }
-        if (state.audioContext.state === "suspended") {
-            state.audioContext.resume().catch(() => {});
-        }
-        return state.audioContext;
-    }
-
-    function playTick() {
-        const ctx = ensureAudioContext();
-        if (!ctx) {
-            return;
-        }
-        const now = ctx.currentTime;
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = "triangle";
-        osc.frequency.setValueAtTime(660, now);
-        osc.frequency.exponentialRampToValueAtTime(420, now + 0.045);
-        gain.gain.setValueAtTime(0.08, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.start(now);
-        osc.stop(now + 0.055);
-    }
-
-    function playShutter() {
-        const ctx = ensureAudioContext();
-        if (!ctx) {
-            return;
-        }
-        const now = ctx.currentTime;
-        const bufferSize = Math.floor(ctx.sampleRate * 0.075);
-        const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-        const channel = buffer.getChannelData(0);
-        for (let i = 0; i < bufferSize; i += 1) {
-            channel[i] = (Math.random() * 2 - 1) * Math.exp(-i / (bufferSize * 0.28));
-        }
-
-        const noise = ctx.createBufferSource();
-        noise.buffer = buffer;
-        const filter = ctx.createBiquadFilter();
-        filter.type = "bandpass";
-        filter.frequency.setValueAtTime(1400, now);
-        filter.Q.setValueAtTime(0.9, now);
-
-        const gain = ctx.createGain();
-        gain.gain.setValueAtTime(0.28, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.075);
-
-        noise.connect(filter);
-        filter.connect(gain);
-        gain.connect(ctx.destination);
-        noise.start(now);
     }
 
     function setCameraViewState(mode, title = "", message = "") {
@@ -4325,7 +4423,7 @@
     }
 
     function triggerFlash() {
-        playShutter();
+        SoundscapeEngine.playShutter();
         el.flashOverlay.classList.remove("is-flashing");
         void el.flashOverlay.offsetWidth;
         el.flashOverlay.classList.add("is-flashing");
@@ -4362,7 +4460,7 @@
                     throw new DOMException("Aborted", "AbortError");
                 }
                 el.countdownNumber.textContent = String(cur);
-                playTick();
+                SoundscapeEngine.playTick();
                 await waitWithAbort(1000, signal);
             }
         } finally {
@@ -4392,7 +4490,6 @@
             return;
         }
 
-        ensureAudioContext();
         const controller = new AbortController();
         state.captureAbortController = controller;
         state.isCapturing = true;
@@ -4445,7 +4542,6 @@
             return;
         }
 
-        ensureAudioContext();
         const controller = new AbortController();
         state.captureAbortController = controller;
         state.isCapturing = true;
@@ -4480,7 +4576,11 @@
         canvas.height = FRAME_HEIGHT;
         const ctx = canvas.getContext("2d");
         drawCoverCropped(ctx, img, img.naturalWidth, img.naturalHeight, 0, 0, FRAME_WIDTH, FRAME_HEIGHT, false);
-        return canvas.toDataURL("image/jpeg", 0.92);
+        try {
+            return canvas.toDataURL("image/jpeg", 0.92);
+        } catch (_) {
+            return src;
+        }
     }
 
     async function fillStripFromMoments() {
@@ -4494,7 +4594,9 @@
             state.photos = frames;
             renderStripSlots();
             await renderCatalogStrip();
-            el.actionFeedback.textContent = `Strip diisi dengan ${state.shotCount} foto momen Rara & Jay.`;
+            el.actionFeedback.textContent = state.compositeDataUrl
+                ? `Strip diisi dengan ${state.shotCount} foto momen Rara & Jay.`
+                : `Strip diisi ${state.shotCount} foto momen (unduh PNG penuh tersedia via HTTPS / Vercel).`;
         } catch (_) {
             el.actionFeedback.textContent = "Gagal memuat foto momen ke strip.";
         }
@@ -4678,7 +4780,7 @@
 
     function openWhatsAppSelfLink() {
         const url = window.location.href;
-        const text = `Ekspedisi Arsip 27 - buka di laptop biar jalur pendakian dan photobooth lega: ${url}`;
+        const text = `Ekspedisi Arsip 27 - buka di laptop biar halaman penuh dan photobooth lega: ${url}`;
         window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, "_blank", "noopener,noreferrer");
         el.handoffFeedback.textContent = "WhatsApp dibuka. Kirim ke chat sendiri lalu buka di laptop.";
     }
@@ -4695,42 +4797,67 @@
     }
 
     function bindEvents() {
-        window.addEventListener("scroll", onWindowScroll, { passive: true });
-        window.addEventListener("resize", scheduleTrailGeometryUpdate);
-        window.addEventListener("load", updateTrailSvgGeometry);
-        if (typeof ResizeObserver === "function" && el.trailCanvas) {
-            const trailResizeObserver = new ResizeObserver(() => {
-                scheduleTrailGeometryUpdate();
+        el.goHomeBtn.addEventListener("click", () => goToPage(0, { direction: "prev" }));
+        el.waxSealTrigger.addEventListener("click", triggerOnboardingReveal);
+
+        el.prevPageBtn.addEventListener("click", () => {
+            if (state.currentPageIndex > 0) {
+                goToPage(state.currentPageIndex - 1, { direction: "prev" });
+            }
+        });
+
+        el.nextPageBtn.addEventListener("click", () => {
+            if (state.currentPageIndex === 0) {
+                triggerOnboardingReveal();
+            } else if (state.currentPageIndex >= DECK_PAGES.length - 1) {
+                goToPage(0, { direction: "prev" });
+            } else {
+                goToPage(state.currentPageIndex + 1, { direction: "next" });
+            }
+        });
+
+        el.realmTrackBtns.forEach((btn) => {
+            btn.addEventListener("click", () => {
+                const targetBiome = Number(btn.dataset.biomeJump);
+                const match = DECK_PAGES.find((p) => p.type === "realm-intro" && p.biome === targetBiome);
+                if (match) {
+                    goToPage(match.index);
+                }
             });
-            trailResizeObserver.observe(el.trailCanvas);
-        }
-        if (document.fonts && document.fonts.ready) {
-            document.fonts.ready.then(() => {
-                scheduleTrailGeometryUpdate();
-            }).catch(() => {});
-        }
+        });
+
+        el.openAtlasBtn.addEventListener("click", openAtlasDialog);
+        el.atlasCloseBtn.addEventListener("click", closeAtlasDialog);
+        el.atlasDialog.addEventListener("click", (evt) => {
+            if (evt.target === el.atlasDialog) {
+                closeAtlasDialog();
+            }
+        });
+
+        el.openHandoffBtn.addEventListener("click", openHandoffDialog);
+        el.handoffCloseBtn.addEventListener("click", closeHandoffDialog);
+        el.handoffDialog.addEventListener("click", (evt) => {
+            if (evt.target === el.handoffDialog) {
+                closeHandoffDialog();
+            }
+        });
+
+        el.audioToggleBtn.addEventListener("click", () => {
+            SoundscapeEngine.setEnabled(!state.soundEnabled);
+            if (state.soundEnabled) {
+                SoundscapeEngine.playUiTap();
+            }
+        });
+
+        el.soundToggle.addEventListener("click", () => {
+            SoundscapeEngine.setEnabled(!state.soundEnabled);
+            if (state.soundEnabled) {
+                SoundscapeEngine.playUiTap();
+            }
+        });
 
         el.themeToggle.addEventListener("click", () => {
             applyTheme(state.theme === "light" ? "dark" : "light", true);
-        });
-
-        el.openHandoffBtn.addEventListener("click", () => {
-            const nextOpen = el.handoffBanner.hidden;
-            el.handoffBanner.hidden = !nextOpen;
-            el.openHandoffBtn.setAttribute("aria-expanded", String(nextOpen));
-            if (nextOpen) {
-                el.handoffBanner.scrollIntoView({ behavior: "smooth", block: "nearest" });
-            }
-        });
-
-        el.dismissHandoffBtn.addEventListener("click", () => {
-            el.handoffBanner.hidden = true;
-            el.openHandoffBtn.setAttribute("aria-expanded", "false");
-            try {
-                sessionStorage.setItem(SESSION_HANDOFF_KEY, "1");
-            } catch (_) {
-                // Ignore restricted session storage.
-            }
         });
 
         el.waSelfBtn.addEventListener("click", openWhatsAppSelfLink);
@@ -4752,9 +4879,7 @@
                 unlockStamp("fyp");
                 saveQuizState();
                 updateLetterAndSummaryPreview();
-                document.getElementById("jalur").scrollIntoView({
-                    behavior: reducedMotionQuery.matches ? "auto" : "smooth"
-                });
+                goToPage(2, { direction: "next" });
             }
         });
 
@@ -4771,6 +4896,9 @@
             updateLetterAndSummaryPreview();
             renderQuizStep();
         });
+
+        el.letterEditQuizBtn.addEventListener("click", () => goToPage(1, { direction: "prev" }));
+        el.letterGoBoothBtn.addEventListener("click", () => goToPage(DECK_PAGES.length - 1, { direction: "next" }));
 
         el.tabStripCard.addEventListener("click", () => switchPrintCardTab("strip"));
         el.tabSummaryCard.addEventListener("click", () => switchPrintCardTab("summary"));
@@ -4815,15 +4943,6 @@
             el.cameraVideo.classList.toggle("is-mirrored", state.isMirrored);
             el.mirrorToggle.setAttribute("aria-pressed", String(state.isMirrored));
             el.mirrorToggle.textContent = state.isMirrored ? "Cermin: Aktif" : "Cermin: Mati";
-        });
-
-        el.soundToggle.addEventListener("click", () => {
-            state.soundEnabled = !state.soundEnabled;
-            el.soundToggle.setAttribute("aria-pressed", String(state.soundEnabled));
-            el.soundToggle.textContent = state.soundEnabled ? "Suara: Aktif" : "Suara: Mati";
-            if (state.soundEnabled) {
-                playTick();
-            }
         });
 
         el.switchCameraBtn.addEventListener("click", () => {
@@ -4878,52 +4997,92 @@
                 closePreviewDialog();
             }
         });
-        el.lightboxDialog.addEventListener("close", () => {
-            if (state.lastFocusedBeforeDialog && typeof state.lastFocusedBeforeDialog.focus === "function") {
-                state.lastFocusedBeforeDialog.focus();
-                state.lastFocusedBeforeDialog = null;
-            }
-        });
 
-        if (el.stepPrevPosBtn) {
-            el.stepPrevPosBtn.addEventListener("click", () => {
-                navigateToCheckpoint(state.activePosIndex - 1);
+        [el.atlasDialog, el.handoffDialog, el.lightboxDialog].forEach((dlg) => {
+            dlg.addEventListener("close", () => {
+                if (state.lastFocusedBeforeDialog && typeof state.lastFocusedBeforeDialog.focus === "function") {
+                    state.lastFocusedBeforeDialog.focus();
+                    state.lastFocusedBeforeDialog = null;
+                }
             });
-        }
-        if (el.stepNextPosBtn) {
-            el.stepNextPosBtn.addEventListener("click", () => {
-                navigateToCheckpoint(state.activePosIndex + 1);
-            });
-        }
+        });
 
         document.addEventListener("keydown", (evt) => {
             if (evt.key === "Escape" && state.isCapturing && !el.lightboxDialog.open) {
                 if (state.captureAbortController) {
                     state.captureAbortController.abort();
                 }
-            } else if (el.lightboxDialog.open && state.dialogGalleryIndex >= 0) {
+                return;
+            }
+            if (el.lightboxDialog.open && state.dialogGalleryIndex >= 0) {
                 if (evt.key === "ArrowLeft") {
                     stepLightboxGallery(-1);
                 } else if (evt.key === "ArrowRight") {
                     stepLightboxGallery(1);
                 }
+                return;
+            }
+            if (el.atlasDialog.open || el.handoffDialog.open || el.lightboxDialog.open) {
+                return;
+            }
+            if (evt.target && evt.target.closest("input, textarea, select, [contenteditable]")) {
+                return;
+            }
+            if (evt.key === "ArrowRight" || evt.key === "PageDown") {
+                evt.preventDefault();
+                if (state.currentPageIndex === 0) {
+                    triggerOnboardingReveal();
+                } else if (state.currentPageIndex < DECK_PAGES.length - 1) {
+                    goToPage(state.currentPageIndex + 1, { direction: "next" });
+                }
+            } else if (evt.key === "ArrowLeft" || evt.key === "PageUp") {
+                evt.preventDefault();
+                if (state.currentPageIndex > 0) {
+                    goToPage(state.currentPageIndex - 1, { direction: "prev" });
+                }
             }
         });
     }
 
+    function applyInitialHashRoute() {
+        const hash = (window.location.hash || "").replace(/^#/, "");
+        if (!hash) {
+            syncDeckChrome(0);
+            return;
+        }
+        const match = DECK_PAGES.find((p) => p.id === hash);
+        if (match && match.index > 0) {
+            goToPage(match.index, { direction: "next", silent: true });
+        } else {
+            syncDeckChrome(0);
+        }
+    }
+
+    window.__EKSPEDISI_DECK__ = {
+        count: () => DECK_PAGES.length,
+        currentIndex: () => state.currentPageIndex,
+        goTo: (idx) => goToPage(idx),
+        pages: DECK_PAGES.map((p) => ({
+            index: p.index,
+            id: p.id,
+            type: p.type,
+            biome: p.biome,
+            title: p.title
+        }))
+    };
+
     loadSavedState();
-    initHandoffVisibility();
-    initAmbientWorldCanvas();
-    initHeroStarlight();
+    buildAtlasMenu();
+    syncAudioButtons();
+    initAmbientParticles();
     renderPassportStamps();
     renderQuizStep();
-    renderTrailCheckpoints();
     updateLetterAndSummaryPreview();
     renderStripSlots();
     renderCatalogStrip();
     bindEvents();
-    setupObservers();
-    updateTrailSvgGeometry();
+    setupDeckNavigation();
+    applyInitialHashRoute();
     setCameraViewState(
         "idle",
         "Kamera siap dinyalakan",
