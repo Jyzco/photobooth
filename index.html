@@ -308,8 +308,12 @@
 
                     <div class="book-spine-gutter" aria-hidden="true">
                         <div class="book-spine-crease"></div>
+                        <div class="book-spine-glow" id="bookSpineGlow"></div>
                         <div class="book-ribbon-marker"></div>
                     </div>
+
+                    <div class="book-ambient-sheen" id="bookAmbientSheen" aria-hidden="true"></div>
+                    <canvas id="book-fx-canvas" class="book-fx-canvas" aria-hidden="true"></canvas>
 
                     <button type="button" class="book-corner-curl book-corner-curl--prev" id="bookCornerPrev" aria-label="Balik ke halaman sebelumnya" title="Balik ke halaman sebelumnya"></button>
                     <button type="button" class="book-corner-curl book-corner-curl--next" id="bookCornerNext" aria-label="Balik ke halaman berikutnya" title="Balik ke halaman berikutnya"></button>
@@ -323,11 +327,13 @@
                                     <span class="flip-sheet-pg" id="flipFrontPg">HAL 01</span>
                                 </div>
                                 <div class="flip-sheet-body">
+                                    <div class="flip-sheet-emblem" id="flipFrontEmblem" aria-hidden="true"></div>
                                     <p class="flip-sheet-kicker" id="flipFrontKicker">LEMBAR CERITA</p>
                                     <h3 class="flip-sheet-title" id="flipFrontTitle">Membuka Lembar Kenangan</h3>
                                     <div class="flip-sheet-ornament"></div>
+                                    <p class="flip-sheet-excerpt" id="flipFrontExcerpt">Setiap lembar menyimpan cerita perjalanan dari Pesisir Senja hingga Puncak 27.</p>
                                     <div class="flip-sheet-lines">
-                                        <span></span><span></span><span></span><span></span><span></span>
+                                        <span></span><span></span><span></span><span></span>
                                     </div>
                                     <div class="flip-sheet-card-ghost"></div>
                                 </div>
@@ -345,12 +351,14 @@
                                     <span class="flip-sheet-tag" id="flipBackTag">CATATAN PERJALANAN</span>
                                 </div>
                                 <div class="flip-sheet-body">
+                                    <div class="flip-sheet-emblem" id="flipBackEmblem" aria-hidden="true"></div>
                                     <p class="flip-sheet-kicker" id="flipBackKicker">BAB BERIKUTNYA</p>
                                     <h3 class="flip-sheet-title" id="flipBackTitle">Lembar Baru Terbuka</h3>
                                     <div class="flip-sheet-ornament"></div>
+                                    <p class="flip-sheet-excerpt" id="flipBackExcerpt">Balik lembar demi lembar untuk membuka tebakan, rekaman chat, dan bukti foto.</p>
                                     <div class="flip-sheet-card-ghost"></div>
                                     <div class="flip-sheet-lines">
-                                        <span></span><span></span><span></span><span></span>
+                                        <span></span><span></span><span></span>
                                     </div>
                                 </div>
                                 <div class="flip-sheet-footer">

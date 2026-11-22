@@ -1628,7 +1628,9 @@
 
     let ambientWorldApi = {
         triggerChapterBurst: () => {},
-        activeBurstCount: () => 0
+        triggerPageTurnGust: () => {},
+        activeBurstCount: () => 0,
+        activePageTurnMoteCount: () => 0
     };
 
     const el = {
@@ -1638,18 +1640,23 @@
         ambientCanvas: document.getElementById("ambient-world-canvas"),
         bookStage3d: document.getElementById("bookStage3d"),
         bookTome: document.getElementById("bookTome"),
+        bookFxCanvas: document.getElementById("book-fx-canvas"),
         bookCornerPrev: document.getElementById("bookCornerPrev"),
         bookCornerNext: document.getElementById("bookCornerNext"),
         bookTurnShadow: document.getElementById("bookTurnShadow"),
         bookFlipLeaf: document.getElementById("bookFlipLeaf"),
         flipFrontTag: document.getElementById("flipFrontTag"),
         flipFrontPg: document.getElementById("flipFrontPg"),
+        flipFrontEmblem: document.getElementById("flipFrontEmblem"),
         flipFrontKicker: document.getElementById("flipFrontKicker"),
         flipFrontTitle: document.getElementById("flipFrontTitle"),
+        flipFrontExcerpt: document.getElementById("flipFrontExcerpt"),
         flipBackTag: document.getElementById("flipBackTag"),
         flipBackPg: document.getElementById("flipBackPg"),
+        flipBackEmblem: document.getElementById("flipBackEmblem"),
         flipBackKicker: document.getElementById("flipBackKicker"),
         flipBackTitle: document.getElementById("flipBackTitle"),
+        flipBackExcerpt: document.getElementById("flipBackExcerpt"),
         bookCascadeLeaves: document.getElementById("bookCascadeLeaves"),
         chapterPortalOverlay: document.getElementById("chapterPortalOverlay"),
         portalEmblem: document.getElementById("portalEmblem"),
@@ -1922,8 +1929,42 @@
                 });
             },
             playPageTurn(dir, idx) {
-                const note = PENTATONIC[(idx + (dir === "prev" ? 2 : 0)) % PENTATONIC.length];
-                playTone(note, 0.22, 0.032, "triangle");
+                if (!state.soundEnabled) {
+                    return;
+                }
+                const note1 = PENTATONIC[(idx + (dir === "prev" ? 2 : 0)) % PENTATONIC.length];
+                const note2 = PENTATONIC[(idx + (dir === "prev" ? 1 : 2)) % PENTATONIC.length];
+                playTone(note1, 0.24, 0.03, "triangle");
+                window.setTimeout(() => playTone(note2, 0.28, 0.024, "sine"), 65);
+
+                const c = initGraph();
+                if (!c) {
+                    return;
+                }
+                const now = c.currentTime;
+                const dur = 0.19;
+                const size = Math.floor(c.sampleRate * dur);
+                const buf = c.createBuffer(1, size, c.sampleRate);
+                const ch = buf.getChannelData(0);
+                for (let i = 0; i < size; i += 1) {
+                    const t = i / size;
+                    const env = Math.sin(t * Math.PI) * Math.exp(-t * 1.9);
+                    ch[i] = (Math.random() * 2 - 1) * env;
+                }
+                const src = c.createBufferSource();
+                src.buffer = buf;
+                const filter = c.createBiquadFilter();
+                filter.type = "bandpass";
+                filter.Q.setValueAtTime(1.8, now);
+                filter.frequency.setValueAtTime(dir === "prev" ? 1850 : 920, now);
+                filter.frequency.exponentialRampToValueAtTime(dir === "prev" ? 950 : 2100, now + dur * 0.65);
+                const g = c.createGain();
+                g.gain.setValueAtTime(0.065, now);
+                g.gain.exponentialRampToValueAtTime(0.001, now + dur);
+                src.connect(filter);
+                filter.connect(g);
+                g.connect(c.destination);
+                src.start(now);
             },
             playUiTap() {
                 playTone(587.33, 0.08, 0.035, "sine");
@@ -2019,8 +2060,12 @@
 
         let width = 0;
         let height = 0;
+        let fxWidth = 0;
+        let fxHeight = 0;
         let meteorCooldown = 80;
         let lastPointerSparkAt = 0;
+        const fxCanvas = el.bookFxCanvas;
+        const fxCtx = fxCanvas ? fxCanvas.getContext("2d") : null;
 
         const motes = Array.from({ length: 48 }, (_, idx) => ({
             x: (idx * 79) % 1200,
@@ -2039,12 +2084,67 @@
         const pointerSparks = [];
         const burstParticles = [];
         const shockwaves = [];
+        const fxParticles = [];
+        const fxSweeps = [];
 
         function resize() {
             width = Math.max(320, window.innerWidth);
             height = Math.max(320, window.innerHeight);
             canvas.width = width;
             canvas.height = height;
+            if (fxCanvas && el.bookTome) {
+                fxWidth = Math.max(280, el.bookTome.clientWidth || 960);
+                fxHeight = Math.max(280, el.bookTome.clientHeight || 640);
+                fxCanvas.width = fxWidth;
+                fxCanvas.height = fxHeight;
+            }
+        }
+
+        function triggerPageTurnGust(dir = "next", biomeId = 1, isChapter = false) {
+            if (!fxCtx) {
+                return;
+            }
+            if (!fxWidth || !fxHeight) {
+                resize();
+            }
+            const pair = TONES[biomeId] || TONES[1];
+            const spineX = fxWidth * 0.5;
+            const count = isChapter ? 56 : 32;
+
+            fxSweeps.push({
+                dir,
+                life: 0,
+                maxLife: isChapter ? 38 : 30,
+                color: pair[0],
+                accentColor: pair[1]
+            });
+            if (fxSweeps.length > 4) {
+                fxSweeps.shift();
+            }
+
+            for (let i = 0; i < count; i += 1) {
+                const t = i / count;
+                const startY = fxHeight * (0.1 + t * 0.8) + (Math.random() - 0.5) * 24;
+                const horizontalDir = dir === "prev" ? 1 : -1;
+                const spreadVx = horizontalDir * (2.2 + Math.random() * 5.8) + (Math.random() - 0.5) * 1.8;
+                const spreadVy = -1.8 + (Math.random() - 0.5) * 3.4;
+                fxParticles.push({
+                    x: spineX + (Math.random() - 0.5) * 44,
+                    y: startY,
+                    vx: spreadVx,
+                    vy: spreadVy,
+                    size: (isChapter ? 3.0 : 2.3) + Math.random() * 2.8,
+                    rot: Math.random() * Math.PI * 2,
+                    rotSpeed: (Math.random() - 0.5) * 0.18,
+                    life: 0,
+                    maxLife: (isChapter ? 44 : 34) + Math.random() * 18,
+                    shape: biomeId === 3 ? (i % 2 === 0 ? "petal" : "star") : biomeId === 1 && i % 3 === 1 ? "bubble" : i % 2 === 0 ? "star" : "orb",
+                    color: pair[i % pair.length]
+                });
+            }
+            if (fxParticles.length > 180) {
+                fxParticles.splice(0, fxParticles.length - 180);
+            }
         }
 
         function spawnMeteor() {
@@ -2097,6 +2197,7 @@
             if (burstParticles.length > 220) {
                 burstParticles.splice(0, burstParticles.length - 220);
             }
+            triggerPageTurnGust("next", biomeId, true);
         }
 
         function drawBiomeMote(m, biomeId, color, alpha) {
@@ -2248,6 +2349,80 @@
                 }
             }
 
+            if (fxCtx && fxWidth && fxHeight) {
+                fxCtx.clearRect(0, 0, fxWidth, fxHeight);
+
+                for (let i = fxSweeps.length - 1; i >= 0; i -= 1) {
+                    const sw = fxSweeps[i];
+                    sw.life += 1;
+                    const progress = sw.life / sw.maxLife;
+                    if (progress >= 1) {
+                        fxSweeps.splice(i, 1);
+                        continue;
+                    }
+                    const easeP = 1 - Math.pow(1 - progress, 2.2);
+                    const sweepX = sw.dir === "prev"
+                        ? fxWidth * (0.14 + easeP * 0.72)
+                        : fxWidth * (0.86 - easeP * 0.72);
+                    const alpha = Math.sin(progress * Math.PI) * 0.42;
+                    const grad = fxCtx.createRadialGradient(
+                        sweepX,
+                        fxHeight * 0.5,
+                        8,
+                        sweepX,
+                        fxHeight * 0.5,
+                        fxWidth * 0.24
+                    );
+                    grad.addColorStop(0, `rgba(${sw.color}, ${alpha.toFixed(3)})`);
+                    grad.addColorStop(0.55, `rgba(${sw.accentColor}, ${(alpha * 0.45).toFixed(3)})`);
+                    grad.addColorStop(1, "rgba(0, 0, 0, 0)");
+                    fxCtx.fillStyle = grad;
+                    fxCtx.fillRect(0, 0, fxWidth, fxHeight);
+                }
+
+                for (let i = fxParticles.length - 1; i >= 0; i -= 1) {
+                    const fp = fxParticles[i];
+                    fp.vx *= 0.96;
+                    fp.vy = fp.vy * 0.96 - 0.02;
+                    fp.x += fp.vx;
+                    fp.y += fp.vy;
+                    fp.rot += fp.rotSpeed;
+                    fp.life += 1;
+                    const ratio = 1 - fp.life / fp.maxLife;
+                    if (ratio <= 0) {
+                        fxParticles.splice(i, 1);
+                        continue;
+                    }
+                    if (fp.shape === "star") {
+                        drawFourPointStar(fxCtx, fp.x, fp.y, fp.size * (1.15 + ratio * 0.85), `rgba(${fp.color}, 1)`, ratio * 0.95);
+                    } else if (fp.shape === "petal") {
+                        fxCtx.save();
+                        fxCtx.translate(fp.x, fp.y);
+                        fxCtx.rotate(fp.rot);
+                        fxCtx.beginPath();
+                        fxCtx.ellipse(0, 0, fp.size * 1.5, fp.size * 0.72, 0, 0, Math.PI * 2);
+                        fxCtx.fillStyle = `rgba(${fp.color}, ${(ratio * 0.9).toFixed(3)})`;
+                        fxCtx.fill();
+                        fxCtx.restore();
+                    } else if (fp.shape === "bubble") {
+                        fxCtx.beginPath();
+                        fxCtx.arc(fp.x, fp.y, fp.size * 1.25, 0, Math.PI * 2);
+                        fxCtx.strokeStyle = `rgba(${fp.color}, ${(ratio * 0.85).toFixed(3)})`;
+                        fxCtx.lineWidth = 1.2;
+                        fxCtx.stroke();
+                    } else {
+                        fxCtx.beginPath();
+                        fxCtx.arc(fp.x, fp.y, fp.size * 1.9, 0, Math.PI * 2);
+                        fxCtx.fillStyle = `rgba(${fp.color}, ${(ratio * 0.22).toFixed(3)})`;
+                        fxCtx.fill();
+                        fxCtx.beginPath();
+                        fxCtx.arc(fp.x, fp.y, fp.size * 0.8, 0, Math.PI * 2);
+                        fxCtx.fillStyle = `rgba(${fp.color}, ${(ratio * 0.94).toFixed(3)})`;
+                        fxCtx.fill();
+                    }
+                }
+            }
+
             window.requestAnimationFrame(drawFrame);
         }
 
@@ -2283,7 +2458,9 @@
 
         ambientWorldApi = {
             triggerChapterBurst,
-            activeBurstCount: () => burstParticles.length + shockwaves.length
+            triggerPageTurnGust,
+            activeBurstCount: () => burstParticles.length + shockwaves.length,
+            activePageTurnMoteCount: () => fxParticles.length + fxSweeps.length
         };
 
         resize();
@@ -3047,6 +3224,7 @@
                 cardBtn.classList.remove("is-photo-flipping");
                 void cardBtn.offsetWidth;
                 cardBtn.classList.add("is-photo-flipping");
+                ambientWorldApi.triggerPageTurnGust("next", cp.biome || 1, false);
             }
         }
 
@@ -3847,9 +4025,10 @@
             backFace.append(q, hint, closeCardBtn);
 
             openCardBtn.addEventListener("click", () => {
-                SoundscapeEngine.playUiTap();
+                SoundscapeEngine.playPageTurn("next", page.index);
                 state.restTalkOpened[page.restNum] = true;
                 talkFlipCard.classList.add("is-flipped");
+                ambientWorldApi.triggerPageTurnGust("next", page.biome || 1, false);
             });
 
             closeCardBtn.addEventListener("click", () => {
@@ -4063,6 +4242,25 @@
         }
     }
 
+    function getPageSheetExcerpt(page) {
+        if (!page) {
+            return "Membuka lembar perjalanan dari Pesisir Senja menuju Puncak 27.";
+        }
+        if (page.checkpoint) {
+            if (page.checkpoint.pullQuote) {
+                return page.checkpoint.pullQuote;
+            }
+            if (Array.isArray(page.checkpoint.lines) && page.checkpoint.lines[0]) {
+                return page.checkpoint.lines[0];
+            }
+        }
+        if (page.talk && page.talk.teaser) {
+            return page.talk.teaser;
+        }
+        const meta = BIOME_META[page.biome] || BIOME_META[1];
+        return meta.subtitle;
+    }
+
     function syncFlipLeafSheetContent(fromPage, toPage, dir = "next", subTitle = "") {
         const src = fromPage || DECK_PAGES[state.currentPageIndex] || DECK_PAGES[0];
         const dst = toPage || src;
@@ -4079,11 +4277,17 @@
         if (el.flipFrontPg) {
             el.flipFrontPg.textContent = `HAL ${String((rightPage.index || 0) + 1).padStart(2, "0")}`;
         }
+        if (el.flipFrontEmblem) {
+            el.flipFrontEmblem.innerHTML = rightMeta.svg;
+        }
         if (el.flipFrontKicker) {
             el.flipFrontKicker.textContent = (rightPage.shortLabel || "LEMBAR CERITA").toUpperCase();
         }
         if (el.flipFrontTitle) {
             el.flipFrontTitle.textContent = subTitle || rightPage.title || rightMeta.title;
+        }
+        if (el.flipFrontExcerpt) {
+            el.flipFrontExcerpt.textContent = getPageSheetExcerpt(rightPage);
         }
         if (el.flipBackTag) {
             el.flipBackTag.textContent = leftMeta.shortName.toUpperCase();
@@ -4091,11 +4295,17 @@
         if (el.flipBackPg) {
             el.flipBackPg.textContent = `HAL ${String((leftPage.index || 0) + 1).padStart(2, "0")}`;
         }
+        if (el.flipBackEmblem) {
+            el.flipBackEmblem.innerHTML = leftMeta.svg;
+        }
         if (el.flipBackKicker) {
             el.flipBackKicker.textContent = (leftPage.shortLabel || "CATATAN PERJALANAN").toUpperCase();
         }
         if (el.flipBackTitle) {
             el.flipBackTitle.textContent = subTitle || leftPage.title || leftMeta.title;
+        }
+        if (el.flipBackExcerpt) {
+            el.flipBackExcerpt.textContent = getPageSheetExcerpt(leftPage);
         }
     }
 
@@ -4111,8 +4321,17 @@
 
         syncFlipLeafSheetContent(sheetOpts.fromPage, sheetOpts.toPage, dir, sheetOpts.subTitle || "");
 
+        const activePage = sheetOpts.toPage || DECK_PAGES[state.currentPageIndex] || DECK_PAGES[0];
+        ambientWorldApi.triggerPageTurnGust(dir, activePage.biome || 1, false);
+
         el.bookFlipLeaf.classList.remove("is-flipping-next", "is-flipping-prev", "is-cover-opening");
         el.bookTurnShadow.classList.remove("is-active-next", "is-active-prev");
+        if (el.bookTome) {
+            el.bookTome.classList.remove("is-page-turning-next", "is-page-turning-prev");
+        }
+        if (el.bookCascadeLeaves && !el.bookCascadeLeaves.classList.contains("is-cascading-next") && !el.bookCascadeLeaves.classList.contains("is-cascading-prev")) {
+            el.bookCascadeLeaves.classList.remove("is-fluttering-next", "is-fluttering-prev");
+        }
         void el.bookFlipLeaf.offsetWidth;
 
         if (isCoverOpening) {
@@ -4122,6 +4341,13 @@
         }
         el.bookTurnShadow.classList.add(dir === "prev" ? "is-active-prev" : "is-active-next");
 
+        if (el.bookTome) {
+            el.bookTome.classList.add(dir === "prev" ? "is-page-turning-prev" : "is-page-turning-next");
+        }
+        if (el.bookCascadeLeaves && !el.bookCascadeLeaves.classList.contains("is-cascading-next") && !el.bookCascadeLeaves.classList.contains("is-cascading-prev")) {
+            el.bookCascadeLeaves.classList.add(dir === "prev" ? "is-fluttering-prev" : "is-fluttering-next");
+        }
+
         const duration = isCoverOpening ? 780 : 680;
         state.flipCleanupTimer = window.setTimeout(() => {
             if (seq !== state.transitionSeq) {
@@ -4129,6 +4355,12 @@
             }
             el.bookFlipLeaf.classList.remove("is-flipping-next", "is-flipping-prev", "is-cover-opening");
             el.bookTurnShadow.classList.remove("is-active-next", "is-active-prev");
+            if (el.bookTome) {
+                el.bookTome.classList.remove("is-page-turning-next", "is-page-turning-prev");
+            }
+            if (el.bookCascadeLeaves) {
+                el.bookCascadeLeaves.classList.remove("is-fluttering-next", "is-fluttering-prev");
+            }
             state.flipCleanupTimer = null;
         }, duration);
     }
@@ -4481,7 +4713,8 @@
             const activeNode = getOrCreatePageNode(idx);
             activeNode.classList.remove("is-snap-back");
             activeNode.classList.add("is-dragging");
-            activeNode.style.transform = `translate3d(${dampedDx.toFixed(1)}px, 0, 0)`;
+            const dragRotY = Math.max(-24, Math.min(24, dampedDx * 0.14));
+            activeNode.style.transform = `perspective(1500px) rotateY(${dragRotY.toFixed(2)}deg) translate3d(${(dampedDx * 0.58).toFixed(1)}px, 0, 0)`;
         });
 
         function finishDrag(evt) {
@@ -6085,6 +6318,10 @@
             const ny = ((evt.clientY - rect.top) / rect.height - 0.5) * 2;
             targetRy = nx * 1.45;
             targetRx = -ny * 1.1;
+            const lightX = Math.max(0, Math.min(100, ((evt.clientX - rect.left) / rect.width) * 100));
+            const lightY = Math.max(0, Math.min(100, ((evt.clientY - rect.top) / rect.height) * 100));
+            el.bookTome.style.setProperty("--page-light-x", `${lightX.toFixed(1)}%`);
+            el.bookTome.style.setProperty("--page-light-y", `${lightY.toFixed(1)}%`);
             schedule();
         });
 
@@ -6364,6 +6601,7 @@
         currentIndex: () => state.currentPageIndex,
         goTo: (idx, opts) => goToPage(idx, opts),
         activeBurstCount: () => ambientWorldApi.activeBurstCount(),
+        activePageTurnMoteCount: () => ambientWorldApi.activePageTurnMoteCount(),
         pages: DECK_PAGES.map((p) => ({
             index: p.index,
             id: p.id,
