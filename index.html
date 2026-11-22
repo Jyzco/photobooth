@@ -14,7 +14,7 @@
 <body>
     <!-- Full-Viewport 4-Biome Living Parallax World Backdrop -->
     <div class="living-world-stage" id="living-world-stage" data-biome="1" aria-hidden="true">
-        <!-- Alam I: Pesisir Senja (Coastal Twilight, Ocean Waves & Lighthouse Headland) -->
+        <!-- Alam I: Pesisir Senja (Coastal Twilight, Sweeping Lighthouse, Gliding Birds & Waves) -->
         <svg class="world-scene world-scene--1" id="scene-biome-1" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" fill="none">
             <defs>
                 <linearGradient id="coastalSky" x1="0" y1="0" x2="0" y2="1">
@@ -38,43 +38,58 @@
             <rect width="1600" height="900" fill="url(#coastalSky)"/>
             <rect width="1600" height="900" fill="url(#coastalSun)"/>
             <g class="parallax-far">
-                <circle cx="1024" cy="520" r="68" fill="#FFF1C2" fill-opacity="0.88"/>
-                <circle cx="1024" cy="520" r="124" fill="#FFE2A3" fill-opacity="0.24"/>
-                <path d="M180 185L183 194L192 197L183 200L180 209L177 200L168 197L177 194Z" fill="#FFF1C2" fill-opacity="0.8"/>
-                <path d="M480 132L482 138L488 140L482 142L480 148L478 142L472 140L478 138Z" fill="#FAF6EE" fill-opacity="0.72"/>
-                <path d="M1340 160L1343 168L1351 171L1343 174L1340 182L1337 174L1329 171L1337 168Z" fill="#FFF1C2" fill-opacity="0.78"/>
-                <path d="M310 288C355 256 420 264 452 292C490 274 542 288 558 316H278C288 302 298 294 310 288Z" fill="#504A68" fill-opacity="0.38" stroke="#F7D596" stroke-opacity="0.35" stroke-width="1.2"/>
-                <path d="M1120 262C1168 232 1236 240 1268 268C1308 250 1358 266 1372 292H1090C1098 278 1108 270 1120 262Z" fill="#5D4863" fill-opacity="0.35" stroke="#FFF1C2" stroke-opacity="0.34" stroke-width="1.2"/>
+                <g class="sun-pulse">
+                    <circle cx="1024" cy="520" r="68" fill="#FFF1C2" fill-opacity="0.88"/>
+                    <circle cx="1024" cy="520" r="136" fill="#FFE2A3" fill-opacity="0.24"/>
+                </g>
+                <path class="twinkle-star twinkle-star--a" d="M180 185L183 194L192 197L183 200L180 209L177 200L168 197L177 194Z" fill="#FFF1C2" fill-opacity="0.85"/>
+                <path class="twinkle-star twinkle-star--b" d="M480 132L482 138L488 140L482 142L480 148L478 142L472 140L478 138Z" fill="#FAF6EE" fill-opacity="0.78"/>
+                <path class="twinkle-star twinkle-star--c" d="M1340 160L1343 168L1351 171L1343 174L1340 182L1337 174L1329 171L1337 168Z" fill="#FFF1C2" fill-opacity="0.82"/>
+                <g class="sky-cloud sky-cloud--1">
+                    <path d="M310 288C355 256 420 264 452 292C490 274 542 288 558 316H278C288 302 298 294 310 288Z" fill="#504A68" fill-opacity="0.4" stroke="#F7D596" stroke-opacity="0.38" stroke-width="1.2"/>
+                </g>
+                <g class="sky-cloud sky-cloud--2">
+                    <path d="M1120 262C1168 232 1236 240 1268 268C1308 250 1358 266 1372 292H1090C1098 278 1108 270 1120 262Z" fill="#5D4863" fill-opacity="0.36" stroke="#FFF1C2" stroke-opacity="0.35" stroke-width="1.2"/>
+                </g>
+                <g class="coastal-flock" stroke="#FFF1C2" stroke-opacity="0.65" stroke-width="1.8" stroke-linecap="round">
+                    <path d="M740 240C748 232 758 232 764 240C770 232 780 232 788 240"/>
+                    <path d="M806 262C812 255 820 255 825 262C830 255 838 255 844 262"/>
+                    <path d="M708 268C713 262 720 262 724 268C728 262 735 262 740 268"/>
+                </g>
                 <!-- Distant Coastal Mountain Headland -->
                 <path d="M-120 558L80 462L290 520L520 420L760 512L940 556H-120V558Z" fill="#1C3D4E" fill-opacity="0.72"/>
                 <path d="M1160 556L1340 434L1540 492L1720 430V556H1160Z" fill="#183546" fill-opacity="0.78"/>
             </g>
             <g class="parallax-mid">
-                <!-- Ocean Surface + Golden Sun Reflection Path -->
+                <!-- Ocean Surface + Animated Golden Sun Reflection Path -->
                 <rect x="-120" y="554" width="1840" height="350" fill="url(#coastalSea)"/>
-                <ellipse cx="1024" cy="605" rx="190" ry="22" fill="#F8C87A" fill-opacity="0.32"/>
-                <ellipse cx="1024" cy="656" rx="138" ry="16" fill="#FFE6A8" fill-opacity="0.28"/>
-                <ellipse cx="1024" cy="706" rx="92" ry="12" fill="#FFF1C2" fill-opacity="0.25"/>
-                <!-- Rocky Cliff & Glowing Lighthouse -->
+                <g class="sea-shimmer-group">
+                    <ellipse cx="1024" cy="605" rx="195" ry="22" fill="#F8C87A" fill-opacity="0.34"/>
+                    <ellipse cx="1024" cy="656" rx="142" ry="16" fill="#FFE6A8" fill-opacity="0.3"/>
+                    <ellipse cx="1024" cy="706" rx="96" ry="12" fill="#FFF1C2" fill-opacity="0.26"/>
+                </g>
+                <!-- Rocky Cliff & Sweeping Lighthouse -->
                 <path d="M-120 715L140 564L275 588L372 678L435 760H-120V715Z" fill="#122736"/>
                 <g transform="translate(205, 430)">
-                    <circle cx="28" cy="24" r="66" fill="#FFE6A8" fill-opacity="0.22"/>
-                    <path d="M28 24L420 -18L420 74Z" fill="#FFF1C2" fill-opacity="0.09"/>
-                    <path d="M14 148L20 34H36L42 148H14Z" fill="#0E1D2B" stroke="#F7D596" stroke-opacity="0.55" stroke-width="1.4"/>
+                    <circle class="sun-pulse" cx="28" cy="24" r="68" fill="#FFE6A8" fill-opacity="0.24"/>
+                    <g class="lighthouse-beam" style="transform-origin: 28px 24px">
+                        <path d="M28 24L520 -44L520 92Z" fill="#FFF1C2" fill-opacity="0.14"/>
+                    </g>
+                    <path d="M14 148L20 34H36L42 148H14Z" fill="#0E1D2B" stroke="#F7D596" stroke-opacity="0.58" stroke-width="1.4"/>
                     <rect x="19" y="16" width="18" height="18" rx="3" fill="#FFF1C2"/>
                     <path d="M15 16L28 4L41 16H15Z" fill="#0E1D2B" stroke="#F7D596" stroke-width="1.2"/>
                 </g>
             </g>
             <g class="parallax-near">
                 <!-- Flowing Rhythmic Ocean Wave Ribbons & Shoreline -->
-                <path d="M-120 676C110 644 330 706 580 672C830 638 1060 698 1310 664C1490 640 1620 668 1720 656V900H-120V676Z" fill="#0E3040" fill-opacity="0.88"/>
-                <path d="M-120 746C150 708 420 778 720 738C1010 700 1280 764 1720 720" stroke="#F7D596" stroke-opacity="0.34" stroke-width="2" stroke-dasharray="18 14"/>
+                <path class="ocean-wave ocean-wave--1" d="M-180 676C110 644 330 706 580 672C830 638 1060 698 1310 664C1490 640 1640 668 1780 656V900H-180V676Z" fill="#0E3040" fill-opacity="0.88"/>
+                <path class="ocean-wave ocean-wave--2" d="M-180 746C150 708 420 778 720 738C1010 700 1280 764 1780 720" stroke="#F7D596" stroke-opacity="0.38" stroke-width="2" stroke-dasharray="18 14"/>
                 <path d="M-120 792C190 756 460 820 790 784C1080 752 1380 810 1720 776V900H-120V792Z" fill="#091D29"/>
                 <path d="M-120 842C240 812 560 854 920 828C1240 806 1490 846 1720 824V900H-120V842Z" fill="#1C2C38"/>
             </g>
         </svg>
 
-        <!-- Alam II: Hutan Lentera (Lantern Forest Canopy & Glowing Hanging Brass Lanterns) -->
+        <!-- Alam II: Hutan Lentera (Lantern Forest Canopy, Sunbeams, Mist & Swaying Hanging Lanterns) -->
         <svg class="world-scene world-scene--2" id="scene-biome-2" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" fill="none">
             <defs>
                 <linearGradient id="lanternSky" x1="0" y1="0" x2="0" y2="1">
@@ -84,36 +99,61 @@
                     <stop offset="100%" stop-color="#C98D46"/>
                 </linearGradient>
                 <radialGradient id="lanternWarmGlow" cx="0.5" cy="0.5" r="0.5">
-                    <stop offset="0%" stop-color="#FFE6A8" stop-opacity="0.72"/>
+                    <stop offset="0%" stop-color="#FFE6A8" stop-opacity="0.78"/>
                     <stop offset="100%" stop-color="#FFE6A8" stop-opacity="0"/>
                 </radialGradient>
+                <linearGradient id="forestBeamGrad" x1="0" y1="0" x2="0.4" y2="1">
+                    <stop offset="0%" stop-color="#FFE6A8" stop-opacity="0.16"/>
+                    <stop offset="100%" stop-color="#FFE6A8" stop-opacity="0"/>
+                </linearGradient>
             </defs>
             <rect width="1600" height="900" fill="url(#lanternSky)"/>
             <g class="parallax-far">
-                <circle cx="800" cy="490" r="240" fill="#F8C87A" fill-opacity="0.16"/>
+                <circle class="sun-pulse" cx="800" cy="490" r="260" fill="#F8C87A" fill-opacity="0.18"/>
+                <g class="forest-sunbeams">
+                    <polygon points="320,0 480,0 780,760 540,760" fill="url(#forestBeamGrad)"/>
+                    <polygon points="940,0 1120,0 1420,760 1180,760" fill="url(#forestBeamGrad)"/>
+                </g>
                 <path d="M-120 620L120 430L340 540L580 390L820 520L1080 370L1360 510L1720 390V900H-120V620Z" fill="#1F2B22"/>
             </g>
             <g class="parallax-mid">
                 <path d="M-120 680L90 520L270 610L470 460L690 590L940 440L1180 580L1430 450L1720 560V900H-120V680Z" fill="#152019"/>
                 <path d="M120 590L154 440L188 590H120ZM240 600L276 430L312 600H240ZM540 570L578 400L616 570H540ZM1030 560L1068 395L1106 560H1030ZM1340 585L1376 420L1412 585H1340Z" fill="#0F1812"/>
+                <ellipse class="forest-mist" cx="820" cy="645" rx="680" ry="52" fill="#F8C87A" fill-opacity="0.09"/>
+                <g class="lantern-pendulum lantern-pendulum--3" style="transform-origin: 480px 44px">
+                    <line x1="480" y1="44" x2="480" y2="112" stroke="#F3D695" stroke-opacity="0.7" stroke-width="1.2"/>
+                    <circle cx="480" cy="128" r="34" fill="url(#lanternWarmGlow)"/>
+                    <path d="M471 112H489L493 128L486 142H474L467 128L471 112Z" fill="#1D221C" stroke="#FFE6A8" stroke-width="1.3"/>
+                    <circle cx="480" cy="127" r="4.5" fill="#FFE6A8"/>
+                </g>
+                <g class="lantern-pendulum lantern-pendulum--4" style="transform-origin: 1120px 48px">
+                    <line x1="1120" y1="48" x2="1120" y2="118" stroke="#F3D695" stroke-opacity="0.7" stroke-width="1.2"/>
+                    <circle cx="1120" cy="134" r="34" fill="url(#lanternWarmGlow)"/>
+                    <path d="M1111 118H1129L1133 134L1126 148H1114L1107 134L1111 118Z" fill="#1D221C" stroke="#FFE6A8" stroke-width="1.3"/>
+                    <circle cx="1120" cy="133" r="4.5" fill="#FFE6A8"/>
+                </g>
             </g>
             <g class="parallax-near">
-                <!-- Overhead Canopy Vines & Hanging Forest Lanterns -->
-                <path d="M-60 22C160 118 350 96 540 24" stroke="#7ED4BD" stroke-opacity="0.34" stroke-width="2"/>
-                <path d="M1660 22C1420 122 1210 96 1020 26" stroke="#F8C87A" stroke-opacity="0.36" stroke-width="2"/>
-                <line x1="250" y1="86" x2="250" y2="176" stroke="#F3D695" stroke-width="1.6"/>
-                <circle cx="250" cy="202" r="56" fill="url(#lanternWarmGlow)"/>
-                <path d="M236 176H264L270 202L260 224H240L230 202L236 176Z" fill="#1D221C" stroke="#FFE6A8" stroke-width="1.6"/>
-                <circle cx="250" cy="200" r="7" fill="#FFE6A8"/>
-                <line x1="1330" y1="90" x2="1330" y2="184" stroke="#F3D695" stroke-width="1.6"/>
-                <circle cx="1330" cy="210" r="56" fill="url(#lanternWarmGlow)"/>
-                <path d="M1316 184H1344L1350 210L1340 232H1320L1310 210L1316 184Z" fill="#1D221C" stroke="#FFE6A8" stroke-width="1.6"/>
-                <circle cx="1330" cy="208" r="7" fill="#FFE6A8"/>
+                <!-- Overhead Canopy Vines & Swaying Hanging Forest Lanterns -->
+                <path d="M-60 22C160 118 350 96 540 24" stroke="#7ED4BD" stroke-opacity="0.38" stroke-width="2"/>
+                <path d="M1660 22C1420 122 1210 96 1020 26" stroke="#F8C87A" stroke-opacity="0.38" stroke-width="2"/>
+                <g class="lantern-pendulum lantern-pendulum--1" style="transform-origin: 250px 86px">
+                    <line x1="250" y1="86" x2="250" y2="176" stroke="#F3D695" stroke-width="1.6"/>
+                    <circle cx="250" cy="202" r="58" fill="url(#lanternWarmGlow)"/>
+                    <path d="M236 176H264L270 202L260 224H240L230 202L236 176Z" fill="#1D221C" stroke="#FFE6A8" stroke-width="1.6"/>
+                    <circle cx="250" cy="200" r="7" fill="#FFE6A8"/>
+                </g>
+                <g class="lantern-pendulum lantern-pendulum--2" style="transform-origin: 1330px 90px">
+                    <line x1="1330" y1="90" x2="1330" y2="184" stroke="#F3D695" stroke-width="1.6"/>
+                    <circle cx="1330" cy="210" r="58" fill="url(#lanternWarmGlow)"/>
+                    <path d="M1316 184H1344L1350 210L1340 232H1320L1310 210L1316 184Z" fill="#1D221C" stroke="#FFE6A8" stroke-width="1.6"/>
+                    <circle cx="1330" cy="208" r="7" fill="#FFE6A8"/>
+                </g>
                 <path d="M-120 790C240 730 560 806 890 756C1180 714 1460 778 1720 742V900H-120V790Z" fill="#0B120E"/>
             </g>
         </svg>
 
-        <!-- Alam III: Lembah Bidadari (Crescent Moon Berry Sky, Misty Valley & Blossom Meadow) -->
+        <!-- Alam III: Lembah Bidadari (Crescent Moon Berry Sky, Flowing Aurora & Misty Valley) -->
         <svg class="world-scene world-scene--3" id="scene-biome-3" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" fill="none">
             <defs>
                 <linearGradient id="valleySky" x1="0" y1="0" x2="0" y2="1">
@@ -122,28 +162,42 @@
                     <stop offset="80%" stop-color="#9B4D6F"/>
                     <stop offset="100%" stop-color="#E79BB2"/>
                 </linearGradient>
+                <linearGradient id="valleyAuroraGrad" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stop-color="#F09BB0" stop-opacity="0"/>
+                    <stop offset="40%" stop-color="#F8C87A" stop-opacity="0.22"/>
+                    <stop offset="70%" stop-color="#E79BB2" stop-opacity="0.24"/>
+                    <stop offset="100%" stop-color="#F09BB0" stop-opacity="0"/>
+                </linearGradient>
             </defs>
             <rect width="1600" height="900" fill="url(#valleySky)"/>
             <g class="parallax-far">
-                <circle cx="1220" cy="184" r="90" fill="#FFE2EC" fill-opacity="0.16"/>
+                <path class="valley-aurora-ribbon" d="M-140 310C180 190 520 350 860 220C1180 110 1440 270 1740 160L1740 290C1440 390 1160 230 850 340C510 460 180 310 -140 420Z" fill="url(#valleyAuroraGrad)"/>
+                <circle class="valley-moon-halo" cx="1220" cy="184" r="102" fill="#FFE2EC" fill-opacity="0.18"/>
                 <path d="M1238 124C1206 132 1188 164 1194 196C1200 228 1226 248 1256 250C1216 262 1178 238 1170 198C1162 158 1188 120 1226 116C1231 116 1235 119 1238 124Z" fill="#FFE9D2"/>
-                <polyline points="220,150 350,192 485,134 625,180" stroke="#FFE9D2" stroke-opacity="0.28" stroke-width="1.2" stroke-dasharray="4 6"/>
+                <g class="valley-constellation">
+                    <polyline points="220,150 350,192 485,134 625,180" stroke="#FFE9D2" stroke-opacity="0.34" stroke-width="1.3" stroke-dasharray="4 6"/>
+                    <circle cx="220" cy="150" r="3.5" fill="#FFE9D2"/>
+                    <circle cx="350" cy="192" r="3" fill="#F8C87A"/>
+                    <circle cx="485" cy="134" r="4" fill="#FFE9D2"/>
+                    <circle cx="625" cy="180" r="3.5" fill="#F09BB0"/>
+                </g>
                 <path d="M-120 620C210 510 510 570 810 470C1110 370 1400 500 1720 430V900H-120V620Z" fill="#3B2142" fill-opacity="0.72"/>
             </g>
             <g class="parallax-mid">
                 <path d="M-120 690C240 590 540 660 860 580C1180 500 1440 620 1720 550V900H-120V690Z" fill="#2A1733"/>
-                <ellipse cx="780" cy="645" rx="540" ry="62" fill="#F09BB0" fill-opacity="0.14"/>
+                <ellipse class="valley-mist valley-mist--1" cx="760" cy="645" rx="600" ry="64" fill="#F09BB0" fill-opacity="0.16"/>
+                <ellipse class="valley-mist valley-mist--2" cx="420" cy="702" rx="460" ry="44" fill="#FFE2EC" fill-opacity="0.1"/>
             </g>
             <g class="parallax-near">
                 <path d="M-120 774C230 714 550 788 920 738C1230 696 1470 764 1720 726V900H-120V774Z" fill="#180E22"/>
-                <circle cx="240" cy="792" r="4" fill="#F09BB0"/>
-                <circle cx="380" cy="806" r="3.5" fill="#F8C87A"/>
-                <circle cx="1160" cy="776" r="4" fill="#F09BB0"/>
-                <circle cx="1310" cy="796" r="3.5" fill="#FFE9D2"/>
+                <circle class="twinkle-star twinkle-star--a" cx="240" cy="792" r="4.5" fill="#F09BB0"/>
+                <circle class="twinkle-star twinkle-star--b" cx="380" cy="806" r="4" fill="#F8C87A"/>
+                <circle class="twinkle-star twinkle-star--c" cx="1160" cy="776" r="4.5" fill="#F09BB0"/>
+                <circle class="twinkle-star twinkle-star--a" cx="1310" cy="796" r="4" fill="#FFE9D2"/>
             </g>
         </svg>
 
-        <!-- Alam IV: Puncak Gunung Berbintang (Alpine Peaks, Astrolabe & Starlight) -->
+        <!-- Alam IV: Puncak Gunung Berbintang (Alpine Peaks, Rotating Astrolabe & Aurora) -->
         <svg class="world-scene world-scene--4" id="scene-biome-4" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" fill="none">
             <defs>
                 <linearGradient id="summitSky" x1="0" y1="0" x2="0" y2="1">
@@ -152,28 +206,41 @@
                     <stop offset="84%" stop-color="#2D4A7C"/>
                     <stop offset="100%" stop-color="#D9A85C"/>
                 </linearGradient>
+                <linearGradient id="summitAuroraGrad" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stop-color="#96C2F7" stop-opacity="0"/>
+                    <stop offset="35%" stop-color="#7AD7DC" stop-opacity="0.22"/>
+                    <stop offset="68%" stop-color="#F8C87A" stop-opacity="0.18"/>
+                    <stop offset="100%" stop-color="#96C2F7" stop-opacity="0"/>
+                </linearGradient>
             </defs>
             <rect width="1600" height="900" fill="url(#summitSky)"/>
             <g class="parallax-far">
+                <path class="summit-aurora summit-aurora--1" d="M-160 220C210 110 540 270 890 150C1210 40 1480 210 1760 110L1760 240C1470 340 1190 170 880 280C530 390 210 240 -160 340Z" fill="url(#summitAuroraGrad)"/>
                 <g transform="translate(1160, 250)">
-                    <circle r="196" stroke="#F8C87A" stroke-opacity="0.34" stroke-width="1.6" stroke-dasharray="8 6"/>
-                    <circle r="152" stroke="#FAF6EE" stroke-opacity="0.24" stroke-width="1.2"/>
-                    <circle r="106" stroke="#F8C87A" stroke-opacity="0.32" stroke-width="1.1" stroke-dasharray="4 6"/>
-                    <path d="M0 -196V-162M0 162V196M-196 0H-162M162 0H196" stroke="#FFE6A8" stroke-opacity="0.46" stroke-width="1.8"/>
+                    <g class="astrolabe-wheel astrolabe-wheel--outer">
+                        <circle r="196" stroke="#F8C87A" stroke-opacity="0.38" stroke-width="1.6" stroke-dasharray="10 7"/>
+                        <path d="M0 -196V-162M0 162V196M-196 0H-162M162 0H196" stroke="#FFE6A8" stroke-opacity="0.52" stroke-width="1.8"/>
+                    </g>
+                    <g class="astrolabe-wheel astrolabe-wheel--inner">
+                        <circle r="152" stroke="#FAF6EE" stroke-opacity="0.26" stroke-width="1.2"/>
+                        <circle r="106" stroke="#F8C87A" stroke-opacity="0.38" stroke-width="1.2" stroke-dasharray="4 6"/>
+                    </g>
                 </g>
                 <path d="M-120 638L160 392L380 518L630 272L880 488L1140 286L1410 472L1720 318V900H-120V638Z" fill="#1F2E54"/>
                 <path d="M630 272L710 382L648 412L608 368L570 404L630 272Z" fill="#F8C87A" fill-opacity="0.38"/>
                 <path d="M1140 286L1215 388L1154 418L1118 376L1082 410L1140 286Z" fill="#F8C87A" fill-opacity="0.36"/>
+                <circle class="twinkle-star twinkle-star--a" cx="630" cy="258" r="4" fill="#FFE6A8"/>
+                <circle class="twinkle-star twinkle-star--b" cx="1140" cy="272" r="4" fill="#FFE6A8"/>
             </g>
             <g class="parallax-mid">
                 <path d="M-120 706L180 546L410 644L680 490L940 620L1220 478L1480 600L1720 492V900H-120V706Z" fill="#131E3A"/>
             </g>
             <g class="parallax-near">
                 <path d="M-120 790C240 738 560 806 900 756C1210 712 1460 778 1720 740V900H-120V790Z" fill="#0B1224"/>
-                <circle cx="410" cy="142" r="2.6" fill="#FFE6A8"/>
-                <circle cx="780" cy="112" r="3" fill="#FAF6EE"/>
-                <circle cx="960" cy="176" r="2.4" fill="#FFE6A8"/>
-                <circle cx="230" cy="260" r="2.4" fill="#96C2F7"/>
+                <circle class="twinkle-star twinkle-star--a" cx="410" cy="142" r="3" fill="#FFE6A8"/>
+                <circle class="twinkle-star twinkle-star--b" cx="780" cy="112" r="3.2" fill="#FAF6EE"/>
+                <circle class="twinkle-star twinkle-star--c" cx="960" cy="176" r="2.8" fill="#FFE6A8"/>
+                <circle class="twinkle-star twinkle-star--a" cx="230" cy="260" r="2.8" fill="#96C2F7"/>
             </g>
         </svg>
 
@@ -251,6 +318,23 @@
                     <div class="book-flip-leaf" id="bookFlipLeaf" aria-hidden="true">
                         <div class="flip-leaf-face flip-leaf-face--front"></div>
                         <div class="flip-leaf-face flip-leaf-face--back"></div>
+                    </div>
+
+                    <div class="book-cascade-leaves" id="bookCascadeLeaves" aria-hidden="true">
+                        <div class="cascade-leaf cascade-leaf--1"></div>
+                        <div class="cascade-leaf cascade-leaf--2"></div>
+                        <div class="cascade-leaf cascade-leaf--3"></div>
+                    </div>
+
+                    <div class="chapter-portal-overlay" id="chapterPortalOverlay" aria-hidden="true">
+                        <div class="portal-card-3d">
+                            <div class="portal-ring portal-ring--outer"></div>
+                            <div class="portal-ring portal-ring--inner"></div>
+                            <div class="portal-emblem" id="portalEmblem"></div>
+                            <p class="portal-kicker" id="portalKicker"></p>
+                            <h2 class="portal-title" id="portalTitle"></h2>
+                            <p class="portal-subtitle" id="portalSubtitle"></p>
+                        </div>
                     </div>
 
                     <div class="deck-viewport" id="deck-viewport">

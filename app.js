@@ -1619,7 +1619,16 @@
         transitionSeq: 0,
         leaveCleanupTimer: null,
         enterCleanupTimer: null,
-        flipCleanupTimer: null
+        flipCleanupTimer: null,
+        chapterTransitionSeq: 0,
+        chapterPortalTimer: null,
+        cascadeCleanupTimer: null,
+        warpCleanupTimer: null
+    };
+
+    let ambientWorldApi = {
+        triggerChapterBurst: () => {},
+        activeBurstCount: () => 0
     };
 
     const el = {
@@ -1633,6 +1642,12 @@
         bookCornerNext: document.getElementById("bookCornerNext"),
         bookTurnShadow: document.getElementById("bookTurnShadow"),
         bookFlipLeaf: document.getElementById("bookFlipLeaf"),
+        bookCascadeLeaves: document.getElementById("bookCascadeLeaves"),
+        chapterPortalOverlay: document.getElementById("chapterPortalOverlay"),
+        portalEmblem: document.getElementById("portalEmblem"),
+        portalKicker: document.getElementById("portalKicker"),
+        portalTitle: document.getElementById("portalTitle"),
+        portalSubtitle: document.getElementById("portalSubtitle"),
         deckViewport: document.getElementById("deck-viewport"),
         goHomeBtn: document.getElementById("goHomeBtn"),
         hudContextPill: document.getElementById("hudContextPill"),
@@ -1740,6 +1755,7 @@
     pageNodeCache.set(DECK_PAGES.length - 1, el.pagePhotobooth);
 
     const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const finePointerQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
 
     /**
      * Procedural Web Audio soundscape generator for subtle biome ambience (ocean tide, forest breeze, alpine wind)
@@ -1908,6 +1924,23 @@
                 playTone(523.25, 0.22, 0.05, "sine");
                 window.setTimeout(() => playTone(783.99, 0.34, 0.055, "sine"), 90);
             },
+            playChapterFanfare(biomeId) {
+                if (!state.soundEnabled) {
+                    return;
+                }
+                const chords = {
+                    1: [261.63, 329.63, 392.0, 523.25, 659.25],
+                    2: [293.66, 369.99, 440.0, 587.33, 739.99],
+                    3: [329.63, 415.3, 493.88, 659.25, 830.61],
+                    4: [392.0, 493.88, 587.33, 783.99, 987.77]
+                };
+                const notes = chords[biomeId] || chords[1];
+                notes.forEach((freq, idx) => {
+                    window.setTimeout(() => {
+                        playTone(freq, 0.58 + idx * 0.07, 0.04, idx % 2 === 0 ? "triangle" : "sine");
+                    }, idx * 68);
+                });
+            },
             playTick() {
                 playTone(660, 0.055, 0.075, "triangle");
             },
@@ -1957,7 +1990,7 @@
     }
 
     /**
-     * Renders biome-adaptive sparkles, lantern fireflies, valley petals, and alpine stars.
+     * Renders living biome-specific backdrop creatures, shooting stars, pointer sparkle trails, and chapter burst fireworks.
      */
     function initAmbientParticles() {
         const canvas = el.ambientCanvas;
@@ -1970,24 +2003,34 @@
         }
 
         const TONES = {
-            1: ["247, 213, 150", "178, 232, 232"],
-            2: ["248, 200, 122", "222, 162, 74"],
-            3: ["240, 155, 176", "243, 214, 149"],
-            4: ["250, 246, 238", "155, 196, 248"]
+            1: ["247, 213, 150", "126, 220, 224", "252, 168, 128"],
+            2: ["248, 200, 122", "118, 212, 164", "243, 152, 74"],
+            3: ["240, 155, 176", "243, 214, 149", "192, 168, 240"],
+            4: ["250, 246, 238", "155, 196, 248", "243, 214, 149"]
         };
 
         let width = 0;
         let height = 0;
-        const motes = Array.from({ length: 42 }, (_, idx) => ({
+        let meteorCooldown = 80;
+        let lastPointerSparkAt = 0;
+
+        const motes = Array.from({ length: 48 }, (_, idx) => ({
             x: (idx * 79) % 1200,
             y: (idx * 131) % 800,
-            vx: ((idx % 5) - 2) * 0.16,
-            vy: -0.2 - (idx % 4) * 0.08,
-            radius: 1.4 + (idx % 3) * 0.9,
+            vx: ((idx % 7) - 3) * 0.14,
+            vy: -0.22 - (idx % 4) * 0.09,
+            radius: 1.5 + (idx % 3) * 0.95,
             phase: idx * 0.52,
-            isStar: idx % 4 === 0,
-            toneIdx: idx % 2
+            rot: (idx * 0.7) % (Math.PI * 2),
+            rotSpeed: ((idx % 2 === 0 ? 1 : -1) * (0.012 + (idx % 3) * 0.005)),
+            kind: idx % 3,
+            toneIdx: idx % 3
         }));
+
+        const meteors = [];
+        const pointerSparks = [];
+        const burstParticles = [];
+        const shockwaves = [];
 
         function resize() {
             width = Math.max(320, window.innerWidth);
@@ -1996,28 +2039,244 @@
             canvas.height = height;
         }
 
+        function spawnMeteor() {
+            const startX = width * (0.18 + Math.random() * 0.72);
+            const startY = height * (0.04 + Math.random() * 0.28);
+            const speed = 7.5 + Math.random() * 4.2;
+            const angle = Math.PI * 0.74 + (Math.random() - 0.5) * 0.14;
+            meteors.push({
+                x: startX,
+                y: startY,
+                vx: Math.cos(angle) * speed,
+                vy: Math.sin(angle) * speed,
+                len: 52 + Math.random() * 48,
+                life: 0,
+                maxLife: 36 + Math.random() * 18
+            });
+        }
+
+        function triggerChapterBurst(biomeId) {
+            const pair = TONES[biomeId] || TONES[1];
+            const cx = width * 0.5;
+            const cy = height * 0.48;
+
+            shockwaves.push(
+                { x: cx, y: cy, radius: 28, maxRadius: Math.max(width, height) * 0.52, alpha: 0.78, color: pair[0], lineWidth: 2.8 },
+                { x: cx, y: cy, radius: 12, maxRadius: Math.max(width, height) * 0.36, alpha: 0.62, color: pair[1], lineWidth: 2.0 }
+            );
+            if (shockwaves.length > 6) {
+                shockwaves.splice(0, shockwaves.length - 6);
+            }
+
+            const count = 72;
+            for (let i = 0; i < count; i += 1) {
+                const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.16;
+                const speed = 3.2 + Math.random() * 7.4;
+                burstParticles.push({
+                    x: cx + (Math.random() - 0.5) * 34,
+                    y: cy + (Math.random() - 0.5) * 24,
+                    vx: Math.cos(angle) * speed,
+                    vy: Math.sin(angle) * speed - 1.1,
+                    size: 2.4 + Math.random() * 3.4,
+                    rot: Math.random() * Math.PI * 2,
+                    rotSpeed: (Math.random() - 0.5) * 0.16,
+                    life: 0,
+                    maxLife: 48 + Math.random() * 28,
+                    shape: i % 3 === 0 ? "petal" : i % 2 === 0 ? "star" : "orb",
+                    color: pair[i % pair.length]
+                });
+            }
+            if (burstParticles.length > 220) {
+                burstParticles.splice(0, burstParticles.length - 220);
+            }
+        }
+
+        function drawBiomeMote(m, biomeId, color, alpha) {
+            if (biomeId === 1 && m.kind === 1) {
+                ctx.beginPath();
+                ctx.arc(m.x, m.y, m.radius * 1.45, 0, Math.PI * 2);
+                ctx.strokeStyle = `rgba(${color}, ${(alpha * 0.75).toFixed(3)})`;
+                ctx.lineWidth = 1.1;
+                ctx.stroke();
+                return;
+            }
+            if (biomeId === 2 && m.kind !== 0) {
+                ctx.beginPath();
+                ctx.arc(m.x, m.y, m.radius * 3.2, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(${color}, ${(alpha * 0.2).toFixed(3)})`;
+                ctx.fill();
+                ctx.beginPath();
+                ctx.arc(m.x, m.y, m.radius * 0.95, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(${color}, ${Math.min(0.95, alpha * 1.35).toFixed(3)})`;
+                ctx.fill();
+                return;
+            }
+            if (biomeId === 3 && m.kind !== 2) {
+                ctx.save();
+                ctx.translate(m.x, m.y);
+                ctx.rotate(m.rot);
+                ctx.beginPath();
+                ctx.ellipse(0, 0, m.radius * 1.9, m.radius * 0.9, 0, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(${color}, ${(alpha * 0.85).toFixed(3)})`;
+                ctx.fill();
+                ctx.restore();
+                return;
+            }
+            if (m.kind === 0 || biomeId === 4) {
+                drawFourPointStar(ctx, m.x, m.y, m.radius * 2.5, `rgba(${color}, 1)`, alpha);
+                return;
+            }
+            ctx.beginPath();
+            ctx.arc(m.x, m.y, m.radius, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(${color}, ${alpha.toFixed(3)})`;
+            ctx.fill();
+        }
+
         function drawFrame() {
             const curPage = DECK_PAGES[state.currentPageIndex] || DECK_PAGES[0];
-            const pair = TONES[curPage.biome] || TONES[1];
+            const biomeId = curPage.biome || 1;
+            const pair = TONES[biomeId] || TONES[1];
             ctx.clearRect(0, 0, width, height);
-            motes.forEach((m) => {
-                m.x = (m.x + m.vx + width) % width;
-                m.y = (m.y + m.vy + height) % height;
-                m.phase += 0.025;
-                const alpha = (0.35 + 0.5 * Math.sin(m.phase)) * 0.65;
-                const color = pair[m.toneIdx];
 
-                if (m.isStar) {
-                    drawFourPointStar(ctx, m.x, m.y, m.radius * 2.4, `rgba(${color}, 1)`, alpha);
+            motes.forEach((m) => {
+                m.phase += 0.025;
+                m.rot += m.rotSpeed;
+                const sway = biomeId === 3 ? Math.sin(m.phase * 0.8) * 0.35 : 0;
+                m.x = (m.x + m.vx + sway + width) % width;
+                m.y = (m.y + m.vy + height) % height;
+                const alpha = (0.36 + 0.5 * Math.sin(m.phase)) * 0.68;
+                const color = pair[m.toneIdx % pair.length];
+                drawBiomeMote(m, biomeId, color, alpha);
+            });
+
+            if (biomeId === 4 || biomeId === 3) {
+                meteorCooldown -= biomeId === 4 ? 1 : 0.45;
+                if (meteorCooldown <= 0) {
+                    spawnMeteor();
+                    meteorCooldown = biomeId === 4 ? 85 + Math.random() * 65 : 165 + Math.random() * 95;
+                }
+            }
+
+            for (let i = meteors.length - 1; i >= 0; i -= 1) {
+                const mt = meteors[i];
+                mt.x += mt.vx;
+                mt.y += mt.vy;
+                mt.life += 1;
+                const ratio = 1 - mt.life / mt.maxLife;
+                if (ratio <= 0) {
+                    meteors.splice(i, 1);
+                    continue;
+                }
+                const tailX = mt.x - (mt.vx / 8) * mt.len;
+                const tailY = mt.y - (mt.vy / 8) * mt.len;
+                const grad = ctx.createLinearGradient(mt.x, mt.y, tailX, tailY);
+                grad.addColorStop(0, `rgba(250, 246, 238, ${(ratio * 0.92).toFixed(3)})`);
+                grad.addColorStop(1, "rgba(250, 246, 238, 0)");
+                ctx.strokeStyle = grad;
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(mt.x, mt.y);
+                ctx.lineTo(tailX, tailY);
+                ctx.stroke();
+            }
+
+            for (let i = pointerSparks.length - 1; i >= 0; i -= 1) {
+                const sp = pointerSparks[i];
+                sp.x += sp.vx;
+                sp.y += sp.vy;
+                sp.life += 1;
+                const ratio = 1 - sp.life / sp.maxLife;
+                if (ratio <= 0) {
+                    pointerSparks.splice(i, 1);
+                    continue;
+                }
+                drawFourPointStar(ctx, sp.x, sp.y, sp.size * ratio, `rgba(${sp.color}, 1)`, ratio * 0.78);
+            }
+
+            for (let i = shockwaves.length - 1; i >= 0; i -= 1) {
+                const sw = shockwaves[i];
+                sw.radius += (sw.maxRadius - sw.radius) * 0.085 + 3.2;
+                sw.alpha *= 0.93;
+                if (sw.alpha <= 0.03 || sw.radius >= sw.maxRadius) {
+                    shockwaves.splice(i, 1);
+                    continue;
+                }
+                ctx.beginPath();
+                ctx.arc(sw.x, sw.y, sw.radius, 0, Math.PI * 2);
+                ctx.strokeStyle = `rgba(${sw.color}, ${sw.alpha.toFixed(3)})`;
+                ctx.lineWidth = sw.lineWidth;
+                ctx.stroke();
+            }
+
+            for (let i = burstParticles.length - 1; i >= 0; i -= 1) {
+                const bp = burstParticles[i];
+                bp.vx *= 0.965;
+                bp.vy = bp.vy * 0.965 + 0.045;
+                bp.x += bp.vx;
+                bp.y += bp.vy;
+                bp.rot += bp.rotSpeed;
+                bp.life += 1;
+                const ratio = 1 - bp.life / bp.maxLife;
+                if (ratio <= 0) {
+                    burstParticles.splice(i, 1);
+                    continue;
+                }
+                if (bp.shape === "star") {
+                    drawFourPointStar(ctx, bp.x, bp.y, bp.size * (1.1 + ratio * 0.9), `rgba(${bp.color}, 1)`, ratio * 0.92);
+                } else if (bp.shape === "petal") {
+                    ctx.save();
+                    ctx.translate(bp.x, bp.y);
+                    ctx.rotate(bp.rot);
+                    ctx.beginPath();
+                    ctx.ellipse(0, 0, bp.size * 1.45, bp.size * 0.7, 0, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(${bp.color}, ${(ratio * 0.88).toFixed(3)})`;
+                    ctx.fill();
+                    ctx.restore();
                 } else {
                     ctx.beginPath();
-                    ctx.arc(m.x, m.y, m.radius, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(${color}, ${alpha.toFixed(3)})`;
+                    ctx.arc(bp.x, bp.y, bp.size * 0.85, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(${bp.color}, ${(ratio * 0.9).toFixed(3)})`;
                     ctx.fill();
                 }
-            });
+            }
+
             window.requestAnimationFrame(drawFrame);
         }
+
+        window.addEventListener(
+            "pointermove",
+            (evt) => {
+                if (evt.pointerType !== "mouse" || !finePointerQuery.matches) {
+                    return;
+                }
+                const now = performance.now();
+                if (now - lastPointerSparkAt < 45) {
+                    return;
+                }
+                lastPointerSparkAt = now;
+                const curPage = DECK_PAGES[state.currentPageIndex] || DECK_PAGES[0];
+                const pair = TONES[curPage.biome] || TONES[1];
+                pointerSparks.push({
+                    x: evt.clientX,
+                    y: evt.clientY,
+                    vx: (Math.random() - 0.5) * 0.7,
+                    vy: -0.5 - Math.random() * 0.65,
+                    size: 4.5 + Math.random() * 3.5,
+                    life: 0,
+                    maxLife: 24,
+                    color: pair[Math.floor(Math.random() * pair.length)]
+                });
+                if (pointerSparks.length > 28) {
+                    pointerSparks.shift();
+                }
+            },
+            { passive: true }
+        );
+
+        ambientWorldApi = {
+            triggerChapterBurst,
+            activeBurstCount: () => burstParticles.length + shockwaves.length
+        };
 
         resize();
         window.addEventListener("resize", resize);
@@ -3324,10 +3583,23 @@
             crestBox.className = "realm-crest-plate stage-reveal";
             crestBox.style.setProperty("--stagger", "1");
 
+            const medallion = document.createElement("div");
+            medallion.className = "realm-3d-medallion";
+
+            const outerOrbit = document.createElement("span");
+            outerOrbit.className = "medallion-orbit medallion-orbit--outer";
+            outerOrbit.setAttribute("aria-hidden", "true");
+
+            const innerOrbit = document.createElement("span");
+            innerOrbit.className = "medallion-orbit medallion-orbit--inner";
+            innerOrbit.setAttribute("aria-hidden", "true");
+
             const emblem = document.createElement("div");
             emblem.className = "realm-intro-emblem";
             emblem.setAttribute("aria-hidden", "true");
             emblem.innerHTML = meta.svg;
+
+            medallion.append(outerOrbit, innerOrbit, emblem);
 
             const pills = document.createElement("div");
             pills.className = "realm-intro-pills";
@@ -3338,7 +3610,7 @@
                 pills.appendChild(pill);
             });
 
-            crestBox.append(emblem, pills);
+            crestBox.append(medallion, pills);
             leftPage.append(leftFolio, crestBox);
 
             const rightPage = document.createElement("div");
@@ -3372,14 +3644,26 @@
             sub.style.setProperty("--stagger", "3");
             sub.textContent = meta.subtitle;
 
+            const ctaRow = document.createElement("div");
+            ctaRow.className = "realm-cta-row stage-reveal";
+            ctaRow.style.setProperty("--stagger", "4");
+
             const ctaBtn = document.createElement("button");
             ctaBtn.type = "button";
-            ctaBtn.className = "btn-realm-enter stage-reveal";
-            ctaBtn.style.setProperty("--stagger", "4");
+            ctaBtn.className = "btn-realm-enter";
             ctaBtn.textContent = `Buka Bab ${meta.shortName}`;
             ctaBtn.addEventListener("click", () => goToPage(page.index + 1, { direction: "next" }));
 
-            storyInner.append(kicker, h2, sub, ctaBtn);
+            const replayBtn = document.createElement("button");
+            replayBtn.type = "button";
+            replayBtn.className = "btn-outline";
+            replayBtn.textContent = "Putar Efek Bab";
+            replayBtn.addEventListener("click", () => {
+                triggerChapterTransitionSpectacle(page, "next", { replayOnly: true });
+            });
+
+            ctaRow.append(ctaBtn, replayBtn);
+            storyInner.append(kicker, h2, sub, ctaRow);
             rightPage.append(rightFolio, storyInner);
 
             spread.append(leftPage, rightPage);
@@ -3794,6 +4078,147 @@
         }, duration);
     }
 
+    function getChapterPortalMeta(page) {
+        const meta = BIOME_META[page.biome] || BIOME_META[1];
+        if (page.type === "quiz") {
+            return {
+                kicker: "GERBANG EKSPEDISI // BASECAMP",
+                title: "Tujuh Pertanyaan Pembuka",
+                subtitle: "Pemanasan sebelum lembar kenangan Alam I terbuka.",
+                svg: BIOME_META[1].svg
+            };
+        }
+        if (page.type === "letter") {
+            return {
+                kicker: "SURAT KELULUSAN // 2.700 MDPL",
+                title: "Puncak Ekspedisi 27",
+                subtitle: "Satu surat utuh dari kaki gunung hingga malam berbintang.",
+                svg: BIOME_META[4].svg
+            };
+        }
+        if (page.type === "photobooth") {
+            return {
+                kicker: "STUDIO KENANGAN // EDISI 27",
+                title: "Photobooth Ekspedisi 27",
+                subtitle: "Abadikan foto berdua di bingkai kenangan puncak.",
+                svg: BIOME_META[4].svg
+            };
+        }
+        return {
+            kicker: meta.groupLabel,
+            title: meta.title,
+            subtitle: page.type === "realm-intro" ? meta.subtitle : page.title || meta.subtitle,
+            svg: meta.svg
+        };
+    }
+
+    function isChapterTransition(prevPage, targetPage, dir) {
+        if (!prevPage || !targetPage || prevPage.index === targetPage.index) {
+            return false;
+        }
+        if (prevPage.biome !== targetPage.biome) {
+            return true;
+        }
+        if (targetPage.type === "realm-intro") {
+            return dir === "next" || Math.abs(targetPage.index - prevPage.index) > 1;
+        }
+        return targetPage.type === "quiz" || targetPage.type === "letter" || targetPage.type === "photobooth";
+    }
+
+    /**
+     * Triggers the celebratory multi-leaf cascade, 3D chapter portal banner, horizon pulse, firework burst, and fanfare.
+     */
+    function triggerChapterTransitionSpectacle(targetPage, dir = "next", opts = {}) {
+        if (!targetPage) {
+            return;
+        }
+        state.chapterTransitionSeq += 1;
+        const seq = state.chapterTransitionSeq;
+
+        if (state.chapterPortalTimer) {
+            window.clearTimeout(state.chapterPortalTimer);
+            state.chapterPortalTimer = null;
+        }
+        if (state.cascadeCleanupTimer) {
+            window.clearTimeout(state.cascadeCleanupTimer);
+            state.cascadeCleanupTimer = null;
+        }
+        if (state.warpCleanupTimer) {
+            window.clearTimeout(state.warpCleanupTimer);
+            state.warpCleanupTimer = null;
+        }
+
+        const biomeId = targetPage.biome || 1;
+        ambientWorldApi.triggerChapterBurst(biomeId);
+
+        if (!opts.silent) {
+            SoundscapeEngine.playChapterFanfare(biomeId);
+        }
+
+        if (reducedMotionQuery.matches) {
+            return;
+        }
+
+        if (el.worldStage) {
+            el.worldStage.classList.remove("is-biome-shifting");
+            void el.worldStage.offsetWidth;
+            el.worldStage.classList.add("is-biome-shifting");
+        }
+
+        if (el.bookTome) {
+            el.bookTome.classList.remove("is-chapter-warping");
+            void el.bookTome.offsetWidth;
+            el.bookTome.classList.add("is-chapter-warping");
+            state.warpCleanupTimer = window.setTimeout(() => {
+                if (seq === state.chapterTransitionSeq) {
+                    el.bookTome.classList.remove("is-chapter-warping");
+                    if (el.worldStage) {
+                        el.worldStage.classList.remove("is-biome-shifting");
+                    }
+                    state.warpCleanupTimer = null;
+                }
+            }, 920);
+        }
+
+        if (el.bookCascadeLeaves) {
+            el.bookCascadeLeaves.classList.remove("is-cascading-next", "is-cascading-prev");
+            void el.bookCascadeLeaves.offsetWidth;
+            el.bookCascadeLeaves.classList.add(dir === "prev" ? "is-cascading-prev" : "is-cascading-next");
+            state.cascadeCleanupTimer = window.setTimeout(() => {
+                if (seq === state.chapterTransitionSeq) {
+                    el.bookCascadeLeaves.classList.remove("is-cascading-next", "is-cascading-prev");
+                    state.cascadeCleanupTimer = null;
+                }
+            }, 780);
+        }
+
+        if (el.chapterPortalOverlay) {
+            const info = getChapterPortalMeta(targetPage);
+            if (el.portalEmblem) {
+                el.portalEmblem.innerHTML = info.svg;
+            }
+            if (el.portalKicker) {
+                el.portalKicker.textContent = info.kicker;
+            }
+            if (el.portalTitle) {
+                el.portalTitle.textContent = info.title;
+            }
+            if (el.portalSubtitle) {
+                el.portalSubtitle.textContent = info.subtitle;
+            }
+
+            el.chapterPortalOverlay.classList.remove("is-active");
+            void el.chapterPortalOverlay.offsetWidth;
+            el.chapterPortalOverlay.classList.add("is-active");
+            state.chapterPortalTimer = window.setTimeout(() => {
+                if (seq === state.chapterTransitionSeq) {
+                    el.chapterPortalOverlay.classList.remove("is-active");
+                    state.chapterPortalTimer = null;
+                }
+            }, 1180);
+        }
+    }
+
     /**
      * Advances or rewinds quiz steps uniformly from both in-page quiz controls and the bottom dock.
      */
@@ -3867,6 +4292,8 @@
         });
 
         const dir = opts.direction || (clamped >= prevIdx ? "next" : "prev");
+        const prevPage = DECK_PAGES[prevIdx];
+        const targetPage = DECK_PAGES[clamped];
         const outEl = getOrCreatePageNode(prevIdx);
         const inEl = getOrCreatePageNode(clamped);
 
@@ -3875,6 +4302,9 @@
 
         if (!opts.skipFlipAnim) {
             playBookPageFlipAnimation(dir, Boolean(opts.coverOpening));
+            if (isChapterTransition(prevPage, targetPage, dir)) {
+                triggerChapterTransitionSpectacle(targetPage, dir, opts);
+            }
         }
 
         if (outEl && outEl !== inEl) {
@@ -5493,10 +5923,9 @@
     }
 
     /**
-     * Applies subtle spring-damped 3D parallax tilt to the hardcover book on fine-pointer desktops.
+     * Applies smooth 3D parallax tilt to the hardcover book and interactive multi-layer biome parallax on fine-pointer desktops.
      */
     function initBook3dTilt() {
-        const finePointerQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
         if (!el.bookStage3d || !el.bookTome || !finePointerQuery.matches || reducedMotionQuery.matches) {
             return;
         }
@@ -5505,23 +5934,44 @@
         let targetRy = 0;
         let curRx = 0;
         let curRy = 0;
+        let targetPx = 0;
+        let targetPy = 0;
+        let curPx = 0;
+        let curPy = 0;
         let rafId = null;
+
+        function writeFrameVars() {
+            el.bookTome.style.setProperty("--book-tilt-x", `${curRx.toFixed(3)}deg`);
+            el.bookTome.style.setProperty("--book-tilt-y", `${curRy.toFixed(3)}deg`);
+            if (el.worldStage) {
+                el.worldStage.style.setProperty("--bg-parallax-x", curPx.toFixed(4));
+                el.worldStage.style.setProperty("--bg-parallax-y", curPy.toFixed(4));
+            }
+        }
 
         function tick() {
             curRx += (targetRx - curRx) * 0.14;
             curRy += (targetRy - curRy) * 0.14;
-            el.bookTome.style.setProperty("--book-tilt-x", `${curRx.toFixed(3)}deg`);
-            el.bookTome.style.setProperty("--book-tilt-y", `${curRy.toFixed(3)}deg`);
+            curPx += (targetPx - curPx) * 0.1;
+            curPy += (targetPy - curPy) * 0.1;
 
-            if (Math.abs(targetRx - curRx) > 0.008 || Math.abs(targetRy - curRy) > 0.008) {
-                rafId = window.requestAnimationFrame(tick);
-            } else {
+            const settled =
+                Math.abs(targetRx - curRx) <= 0.006 &&
+                Math.abs(targetRy - curRy) <= 0.006 &&
+                Math.abs(targetPx - curPx) <= 0.004 &&
+                Math.abs(targetPy - curPy) <= 0.004;
+
+            if (settled) {
                 curRx = targetRx;
                 curRy = targetRy;
-                el.bookTome.style.setProperty("--book-tilt-x", `${curRx.toFixed(3)}deg`);
-                el.bookTome.style.setProperty("--book-tilt-y", `${curRy.toFixed(3)}deg`);
+                curPx = targetPx;
+                curPy = targetPy;
+                writeFrameVars();
                 rafId = null;
+                return;
             }
+            writeFrameVars();
+            rafId = window.requestAnimationFrame(tick);
         }
 
         function schedule() {
@@ -5529,6 +5979,27 @@
                 rafId = window.requestAnimationFrame(tick);
             }
         }
+
+        window.addEventListener(
+            "pointermove",
+            (evt) => {
+                if (evt.pointerType !== "mouse" || el.atlasDialog.open || el.handoffDialog.open || el.lightboxDialog.open) {
+                    return;
+                }
+                const vw = Math.max(1, window.innerWidth);
+                const vh = Math.max(1, window.innerHeight);
+                targetPx = Math.max(-1, Math.min(1, (evt.clientX / vw - 0.5) * 2));
+                targetPy = Math.max(-1, Math.min(1, (evt.clientY / vh - 0.5) * 2));
+                schedule();
+            },
+            { passive: true }
+        );
+
+        document.addEventListener("mouseleave", () => {
+            targetPx = 0;
+            targetPy = 0;
+            schedule();
+        });
 
         el.bookStage3d.addEventListener("pointermove", (evt) => {
             if (evt.pointerType !== "mouse" || el.atlasDialog.open || el.handoffDialog.open || el.lightboxDialog.open) {
@@ -5804,7 +6275,8 @@
     window.__EKSPEDISI_DECK__ = {
         count: () => DECK_PAGES.length,
         currentIndex: () => state.currentPageIndex,
-        goTo: (idx) => goToPage(idx),
+        goTo: (idx, opts) => goToPage(idx, opts),
+        activeBurstCount: () => ambientWorldApi.activeBurstCount(),
         pages: DECK_PAGES.map((p) => ({
             index: p.index,
             id: p.id,
