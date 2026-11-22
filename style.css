@@ -686,6 +686,7 @@ a {
         0 7px 0 #1B0F0A,
         0 8px 0 rgba(216, 168, 78, 0.36),
         inset 0 1px 0 rgba(255, 244, 214, 0.18);
+    transform-style: preserve-3d;
     transform: rotateX(var(--book-tilt-x)) rotateY(var(--book-tilt-y));
     transition: max-width 360ms var(--ease-out);
 }
@@ -817,23 +818,23 @@ a {
 .book-corner-curl {
     position: absolute;
     bottom: 14px;
-    width: 48px;
-    height: 48px;
+    width: 54px;
+    height: 54px;
     padding: 0;
     border: 0;
     background: transparent;
     cursor: pointer;
     z-index: 28;
-    transition: transform 220ms var(--ease-out);
+    transition: transform 240ms var(--ease-out);
 }
 
 .book-corner-curl::before {
     content: "";
     position: absolute;
-    width: 28px;
-    height: 28px;
+    width: 34px;
+    height: 34px;
     bottom: 0;
-    transition: transform 220ms var(--ease-out), opacity 220ms var(--ease-out);
+    transition: width 240ms var(--ease-out), height 240ms var(--ease-out), transform 240ms var(--ease-out), box-shadow 240ms var(--ease-out);
 }
 
 .book-corner-curl--next {
@@ -843,8 +844,9 @@ a {
 .book-corner-curl--next::before {
     right: 0;
     border-bottom-right-radius: 10px;
-    background: linear-gradient(135deg, transparent 48%, rgba(120, 77, 12, 0.28) 49%, var(--surface-soft) 56%, #DECFA8 100%);
-    box-shadow: -3px -3px 8px rgba(14, 18, 30, 0.16);
+    border-top-left-radius: 6px;
+    background: linear-gradient(135deg, transparent 44%, rgba(120, 77, 12, 0.36) 46%, #FFF8EA 54%, #DFCFA8 100%);
+    box-shadow: -5px -5px 12px rgba(14, 18, 30, 0.24);
 }
 
 .book-corner-curl--prev {
@@ -854,16 +856,37 @@ a {
 .book-corner-curl--prev::before {
     left: 0;
     border-bottom-left-radius: 10px;
-    background: linear-gradient(225deg, transparent 48%, rgba(120, 77, 12, 0.28) 49%, var(--surface-soft) 56%, #DECFA8 100%);
-    box-shadow: 3px -3px 8px rgba(14, 18, 30, 0.16);
+    border-top-right-radius: 6px;
+    background: linear-gradient(225deg, transparent 44%, rgba(120, 77, 12, 0.36) 46%, #FFF8EA 54%, #DFCFA8 100%);
+    box-shadow: 5px -5px 12px rgba(14, 18, 30, 0.24);
 }
 
 [data-theme="dark"] .book-corner-curl--next::before {
-    background: linear-gradient(135deg, transparent 48%, rgba(237, 196, 110, 0.35) 49%, #23304F 56%, #18223A 100%);
+    background: linear-gradient(135deg, transparent 44%, rgba(243, 214, 149, 0.55) 46%, #31436B 54%, #1A253F 100%);
+    box-shadow: -6px -6px 14px rgba(0, 0, 0, 0.48);
 }
 
 [data-theme="dark"] .book-corner-curl--prev::before {
-    background: linear-gradient(225deg, transparent 48%, rgba(237, 196, 110, 0.35) 49%, #23304F 56%, #18223A 100%);
+    background: linear-gradient(225deg, transparent 44%, rgba(243, 214, 149, 0.55) 46%, #31436B 54%, #1A253F 100%);
+    box-shadow: 6px -6px 14px rgba(0, 0, 0, 0.48);
+}
+
+.book-corner-curl--next:hover::before,
+.book-corner-curl--next:focus-visible::before,
+.book-tome.is-peeking-next .book-corner-curl--next::before {
+    width: 48px;
+    height: 48px;
+    transform: translate3d(-3px, -3px, 0);
+    box-shadow: -9px -9px 18px rgba(10, 14, 24, 0.36);
+}
+
+.book-corner-curl--prev:hover::before,
+.book-corner-curl--prev:focus-visible::before,
+.book-tome.is-peeking-prev .book-corner-curl--prev::before {
+    width: 48px;
+    height: 48px;
+    transform: translate3d(3px, -3px, 0);
+    box-shadow: 9px -9px 18px rgba(10, 14, 24, 0.36);
 }
 
 .book-corner-curl:active::before {
@@ -881,23 +904,49 @@ a {
 }
 
 @keyframes bookShadowSweepNext {
-    0% { opacity: 0; background: linear-gradient(90deg, transparent 45%, rgba(14, 18, 30, 0.22) 55%, transparent 72%); }
-    45% { opacity: 1; background: linear-gradient(90deg, transparent 22%, rgba(14, 18, 30, 0.28) 48%, transparent 62%); }
-    100% { opacity: 0; background: linear-gradient(90deg, transparent 10%, rgba(14, 18, 30, 0.1) 30%, transparent 45%); }
+    0% {
+        opacity: 0;
+        background: linear-gradient(90deg, transparent 46%, rgba(8, 12, 22, 0.38) 52%, rgba(8, 12, 22, 0.14) 76%, transparent 94%);
+    }
+    46% {
+        opacity: 1;
+        background: linear-gradient(90deg, transparent 16%, rgba(8, 12, 22, 0.32) 38%, rgba(8, 12, 22, 0.48) 50%, rgba(8, 12, 22, 0.16) 64%, transparent 78%);
+    }
+    86% {
+        opacity: 0.85;
+        background: linear-gradient(90deg, rgba(8, 12, 22, 0.24) 6%, rgba(8, 12, 22, 0.38) 28%, rgba(8, 12, 22, 0.2) 50%, transparent 58%);
+    }
+    100% {
+        opacity: 0;
+        background: linear-gradient(90deg, transparent 0%, rgba(8, 12, 22, 0.08) 25%, transparent 52%);
+    }
 }
 
 @keyframes bookShadowSweepPrev {
-    0% { opacity: 0; background: linear-gradient(270deg, transparent 45%, rgba(14, 18, 30, 0.22) 55%, transparent 72%); }
-    45% { opacity: 1; background: linear-gradient(270deg, transparent 22%, rgba(14, 18, 30, 0.28) 48%, transparent 62%); }
-    100% { opacity: 0; background: linear-gradient(270deg, transparent 10%, rgba(14, 18, 30, 0.1) 30%, transparent 45%); }
+    0% {
+        opacity: 0;
+        background: linear-gradient(270deg, transparent 46%, rgba(8, 12, 22, 0.38) 52%, rgba(8, 12, 22, 0.14) 76%, transparent 94%);
+    }
+    46% {
+        opacity: 1;
+        background: linear-gradient(270deg, transparent 16%, rgba(8, 12, 22, 0.32) 38%, rgba(8, 12, 22, 0.48) 50%, rgba(8, 12, 22, 0.16) 64%, transparent 78%);
+    }
+    86% {
+        opacity: 0.85;
+        background: linear-gradient(270deg, rgba(8, 12, 22, 0.24) 6%, rgba(8, 12, 22, 0.38) 28%, rgba(8, 12, 22, 0.2) 50%, transparent 58%);
+    }
+    100% {
+        opacity: 0;
+        background: linear-gradient(270deg, transparent 0%, rgba(8, 12, 22, 0.08) 25%, transparent 52%);
+    }
 }
 
 .book-turn-shadow.is-active-next {
-    animation: bookShadowSweepNext 540ms var(--ease-book-flip) forwards;
+    animation: bookShadowSweepNext 680ms var(--ease-book-flip) forwards;
 }
 
 .book-turn-shadow.is-active-prev {
-    animation: bookShadowSweepPrev 540ms var(--ease-book-flip) forwards;
+    animation: bookShadowSweepPrev 680ms var(--ease-book-flip) forwards;
 }
 
 .book-flip-leaf {
@@ -912,24 +961,28 @@ a {
     z-index: 25;
     opacity: 0;
     visibility: hidden;
+    will-change: transform, opacity;
 }
 
 .flip-leaf-face {
     position: absolute;
     inset: 0;
+    overflow: hidden;
     border-radius: 4px 12px 12px 4px;
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
-    border: 1px solid rgba(120, 77, 12, 0.28);
+    border: 1.5px solid rgba(154, 107, 29, 0.46);
     background:
         repeating-linear-gradient(
             to bottom,
             transparent 0px,
             transparent 27px,
-            rgba(120, 77, 12, 0.05) 28px
+            rgba(120, 77, 12, 0.06) 28px
         ),
-        linear-gradient(90deg, var(--surface-gutter) 0%, var(--surface) 14%, var(--surface-soft) 100%);
-    box-shadow: 0 18px 40px rgba(10, 14, 24, 0.24);
+        linear-gradient(90deg, #E2D3B5 0%, #FAF3E3 14%, #FFFBF2 58%, #F2E7D0 100%);
+    box-shadow:
+        -8px 0 22px rgba(10, 14, 24, 0.18),
+        0 24px 52px rgba(10, 14, 24, 0.34);
 }
 
 .flip-leaf-face--back {
@@ -940,42 +993,202 @@ a {
             to bottom,
             transparent 0px,
             transparent 27px,
-            rgba(120, 77, 12, 0.05) 28px
+            rgba(120, 77, 12, 0.06) 28px
         ),
-        linear-gradient(270deg, var(--surface-gutter) 0%, var(--surface) 14%, var(--surface-soft) 100%);
+        linear-gradient(270deg, #E2D3B5 0%, #FAF3E3 14%, #FFFBF2 58%, #F2E7D0 100%);
+    box-shadow:
+        8px 0 22px rgba(10, 14, 24, 0.18),
+        0 24px 52px rgba(10, 14, 24, 0.34);
+}
+
+[data-theme="dark"] .flip-leaf-face {
+    border-color: rgba(243, 214, 149, 0.58);
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            transparent 0px,
+            transparent 27px,
+            rgba(243, 214, 149, 0.065) 28px
+        ),
+        linear-gradient(90deg, #131B2E 0%, #22304E 16%, #29395C 60%, #1D2944 100%);
+    box-shadow:
+        -10px 0 26px rgba(0, 0, 0, 0.45),
+        0 26px 56px rgba(0, 0, 0, 0.62);
+}
+
+[data-theme="dark"] .flip-leaf-face--back {
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            transparent 0px,
+            transparent 27px,
+            rgba(243, 214, 149, 0.065) 28px
+        ),
+        linear-gradient(270deg, #131B2E 0%, #22304E 16%, #29395C 60%, #1D2944 100%);
+}
+
+/* Printed Manuscript Content Inside Turning 3D Book Sheet */
+.flip-sheet-inner {
+    position: absolute;
+    inset: 0;
+    padding: 26px 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 16px;
+    pointer-events: none;
+}
+
+.flip-sheet-folio,
+.flip-sheet-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-strong);
+}
+
+.flip-sheet-footer {
+    padding-bottom: 0;
+    padding-top: 10px;
+    border-bottom: 0;
+    border-top: 1px dashed var(--border-strong);
+    opacity: 0.78;
+}
+
+.flip-sheet-body {
+    margin: auto 0;
+    display: grid;
+    gap: 12px;
+}
+
+.flip-sheet-kicker {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    color: var(--gold);
+}
+
+.flip-sheet-title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 2.1vw, 1.7rem);
+    font-weight: 600;
+    line-height: 1.24;
+    color: var(--ink);
+}
+
+.flip-sheet-ornament {
+    width: 72px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+}
+
+.flip-sheet-lines {
+    display: grid;
+    gap: 9px;
+}
+
+.flip-sheet-lines span {
+    display: block;
+    height: 7px;
+    border-radius: 999px;
+    background: var(--border-strong);
+    opacity: 0.55;
+}
+
+.flip-sheet-lines span:nth-child(1) { width: 92%; }
+.flip-sheet-lines span:nth-child(2) { width: 84%; }
+.flip-sheet-lines span:nth-child(3) { width: 88%; }
+.flip-sheet-lines span:nth-child(4) { width: 68%; }
+.flip-sheet-lines span:nth-child(5) { width: 54%; }
+
+.flip-sheet-card-ghost {
+    height: 104px;
+    border-radius: var(--radius-md);
+    border: 1.5px dashed var(--border-strong);
+    background: rgba(216, 168, 78, 0.08);
+}
+
+/* Dynamic Paper Cylinder Specular Highlight & Gutter Shade */
+.flip-leaf-lighting {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(
+        90deg,
+        rgba(0, 0, 0, 0.22) 0%,
+        rgba(255, 255, 255, 0) 20%,
+        rgba(255, 250, 235, 0.34) 52%,
+        rgba(0, 0, 0, 0.16) 88%,
+        rgba(255, 248, 225, 0.45) 100%
+    );
+    mix-blend-mode: soft-light;
 }
 
 @keyframes bookLeafFlipNext {
     0% {
-        opacity: 0.96;
-        visibility: visible;
-        transform: rotateY(0deg);
-    }
-    48% {
         opacity: 1;
-        transform: rotateY(-92deg) skewY(-1deg);
+        visibility: visible;
+        transform: perspective(1600px) translateZ(2px) rotateY(0deg) rotateZ(0deg);
+    }
+    24% {
+        opacity: 1;
+        transform: perspective(1600px) translateZ(18px) rotateY(-44deg) rotateZ(-1.2deg);
+    }
+    50% {
+        opacity: 1;
+        transform: perspective(1600px) translateZ(28px) rotateY(-92deg) rotateZ(-1.7deg);
+    }
+    76% {
+        opacity: 1;
+        transform: perspective(1600px) translateZ(16px) rotateY(-146deg) rotateZ(-0.8deg);
+    }
+    90% {
+        opacity: 0.96;
+        transform: perspective(1600px) translateZ(4px) rotateY(-174deg) rotateZ(-0.2deg);
     }
     100% {
         opacity: 0;
         visibility: hidden;
-        transform: rotateY(-180deg);
+        transform: perspective(1600px) translateZ(0px) rotateY(-180deg) rotateZ(0deg);
     }
 }
 
 @keyframes bookLeafFlipPrev {
     0% {
-        opacity: 0.96;
-        visibility: visible;
-        transform: rotateY(-180deg);
-    }
-    48% {
         opacity: 1;
-        transform: rotateY(-88deg) skewY(1deg);
+        visibility: visible;
+        transform: perspective(1600px) translateZ(2px) rotateY(-180deg) rotateZ(0deg);
+    }
+    24% {
+        opacity: 1;
+        transform: perspective(1600px) translateZ(18px) rotateY(-136deg) rotateZ(1.2deg);
+    }
+    50% {
+        opacity: 1;
+        transform: perspective(1600px) translateZ(28px) rotateY(-88deg) rotateZ(1.7deg);
+    }
+    76% {
+        opacity: 1;
+        transform: perspective(1600px) translateZ(16px) rotateY(-34deg) rotateZ(0.8deg);
+    }
+    90% {
+        opacity: 0.96;
+        transform: perspective(1600px) translateZ(4px) rotateY(-6deg) rotateZ(0.2deg);
     }
     100% {
         opacity: 0;
         visibility: hidden;
-        transform: rotateY(0deg);
+        transform: perspective(1600px) translateZ(0px) rotateY(0deg) rotateZ(0deg);
     }
 }
 
@@ -983,30 +1196,38 @@ a {
     0% {
         opacity: 1;
         visibility: visible;
-        transform: rotateY(0deg);
+        transform: perspective(1700px) translateZ(4px) rotateY(0deg) rotateZ(0deg);
+    }
+    45% {
+        opacity: 1;
+        transform: perspective(1700px) translateZ(32px) rotateY(-88deg) rotateZ(-1.6deg);
+    }
+    88% {
+        opacity: 0.95;
+        transform: perspective(1700px) translateZ(8px) rotateY(-166deg) rotateZ(-0.3deg);
     }
     100% {
         opacity: 0;
         visibility: hidden;
-        transform: rotateY(-165deg);
+        transform: perspective(1700px) translateZ(0px) rotateY(-176deg) rotateZ(0deg);
     }
 }
 
 .book-flip-leaf.is-flipping-next {
     visibility: visible;
-    animation: bookLeafFlipNext 540ms var(--ease-book-flip) forwards;
+    animation: bookLeafFlipNext 680ms var(--ease-book-flip) forwards;
 }
 
 .book-flip-leaf.is-flipping-prev {
     visibility: visible;
-    animation: bookLeafFlipPrev 540ms var(--ease-book-flip) forwards;
+    animation: bookLeafFlipPrev 680ms var(--ease-book-flip) forwards;
 }
 
 .book-flip-leaf.is-cover-opening {
     left: 20px;
     right: 16px;
     visibility: visible;
-    animation: bookCoverSwingOpen 640ms var(--ease-book-flip) forwards;
+    animation: bookCoverSwingOpen 780ms var(--ease-book-flip) forwards;
 }
 
 .book-flip-leaf.is-cover-opening .flip-leaf-face--front {
@@ -1042,27 +1263,49 @@ a {
     inset: 0;
     border-radius: 4px 12px 12px 4px;
     transform-origin: left center;
-    backface-visibility: hidden;
-    border: 1.5px solid rgba(216, 168, 78, 0.55);
-    background: linear-gradient(90deg, var(--surface-gutter) 0%, var(--surface) 22%, var(--surface-soft) 100%);
-    box-shadow: 0 14px 30px rgba(10, 14, 24, 0.22);
+    backface-visibility: visible;
+    -webkit-backface-visibility: visible;
+    border: 1.5px solid rgba(216, 168, 78, 0.65);
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            transparent 0px,
+            transparent 23px,
+            rgba(216, 168, 78, 0.08) 24px
+        ),
+        linear-gradient(90deg, var(--surface-gutter) 0%, var(--surface) 18%, var(--surface-soft) 84%, rgba(243, 214, 149, 0.22) 100%);
+    box-shadow: 0 18px 36px rgba(10, 14, 24, 0.28);
     opacity: 0;
     visibility: hidden;
 }
 
+[data-theme="dark"] .cascade-leaf {
+    border-color: rgba(243, 214, 149, 0.62);
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            transparent 0px,
+            transparent 23px,
+            rgba(243, 214, 149, 0.08) 24px
+        ),
+        linear-gradient(90deg, #121A2D 0%, #243354 20%, #2C3E66 82%, rgba(243, 214, 149, 0.28) 100%);
+    box-shadow: 0 20px 42px rgba(0, 0, 0, 0.52);
+}
+
 .book-cascade-leaves.is-cascading-next .cascade-leaf {
     visibility: visible;
-    animation: bookLeafFlipNext 520ms var(--ease-book-flip) forwards;
+    animation: bookLeafFlipNext 640ms var(--ease-book-flip) forwards;
 }
 
 .book-cascade-leaves.is-cascading-prev .cascade-leaf {
     visibility: visible;
-    animation: bookLeafFlipPrev 520ms var(--ease-book-flip) forwards;
+    animation: bookLeafFlipPrev 640ms var(--ease-book-flip) forwards;
 }
 
 .book-cascade-leaves .cascade-leaf--1 { animation-delay: 45ms; }
-.book-cascade-leaves .cascade-leaf--2 { animation-delay: 120ms; }
-.book-cascade-leaves .cascade-leaf--3 { animation-delay: 195ms; }
+.book-cascade-leaves .cascade-leaf--2 { animation-delay: 115ms; }
+.book-cascade-leaves .cascade-leaf--3 { animation-delay: 185ms; }
+.book-cascade-leaves .cascade-leaf--4 { animation-delay: 255ms; }
 
 /* 3D Floating Chapter Transition Portal Overlay (Non-Blocking) */
 .chapter-portal-overlay {
@@ -1224,63 +1467,67 @@ a {
 @keyframes deckEnterNext {
     from {
         opacity: 0;
-        transform: translate3d(2.5%, 0, 0) scale(0.988);
+        transform: perspective(1800px) rotateY(8deg) translate3d(1.6%, 0, 0) scale(0.99);
     }
     to {
         opacity: 1;
-        transform: translate3d(0, 0, 0) scale(1);
+        transform: perspective(1800px) rotateY(0deg) translate3d(0, 0, 0) scale(1);
     }
 }
 
 @keyframes deckEnterPrev {
     from {
         opacity: 0;
-        transform: translate3d(-2.5%, 0, 0) scale(0.988);
+        transform: perspective(1800px) rotateY(-8deg) translate3d(-1.6%, 0, 0) scale(0.99);
     }
     to {
         opacity: 1;
-        transform: translate3d(0, 0, 0) scale(1);
+        transform: perspective(1800px) rotateY(0deg) translate3d(0, 0, 0) scale(1);
     }
 }
 
 @keyframes deckLeaveNext {
     from {
         opacity: 1;
-        transform: translate3d(0, 0, 0);
+        transform: perspective(1800px) rotateY(0deg) translate3d(0, 0, 0);
     }
     to {
         opacity: 0;
-        transform: translate3d(-2.5%, 0, 0);
+        transform: perspective(1800px) rotateY(-10deg) translate3d(-1.8%, 0, 0);
     }
 }
 
 @keyframes deckLeavePrev {
     from {
         opacity: 1;
-        transform: translate3d(0, 0, 0);
+        transform: perspective(1800px) rotateY(0deg) translate3d(0, 0, 0);
     }
     to {
         opacity: 0;
-        transform: translate3d(2.5%, 0, 0);
+        transform: perspective(1800px) rotateY(10deg) translate3d(1.8%, 0, 0);
     }
 }
 
 .deck-page.is-entering-next {
-    animation: deckEnterNext 460ms var(--ease-out) both;
+    transform-origin: center center;
+    animation: deckEnterNext 540ms var(--ease-out) both;
 }
 
 .deck-page.is-entering-prev {
-    animation: deckEnterPrev 460ms var(--ease-out) both;
+    transform-origin: center center;
+    animation: deckEnterPrev 540ms var(--ease-out) both;
 }
 
 .deck-page.is-leaving-next {
     pointer-events: none;
-    animation: deckLeaveNext 320ms var(--ease-book-flip) forwards;
+    transform-origin: center center;
+    animation: deckLeaveNext 380ms var(--ease-book-flip) forwards;
 }
 
 .deck-page.is-leaving-prev {
     pointer-events: none;
-    animation: deckLeavePrev 320ms var(--ease-book-flip) forwards;
+    transform-origin: center center;
+    animation: deckLeavePrev 380ms var(--ease-book-flip) forwards;
 }
 
 @keyframes stageFadeUp {
@@ -2252,13 +2499,17 @@ a {
 }
 
 @keyframes leafTurnIn {
-    from {
+    0% {
         opacity: 0;
-        transform: rotateY(-14deg) translate3d(10px, 0, 0) scale(0.985);
+        transform: perspective(1300px) rotateY(-28deg) translate3d(14px, 0, 0) scale(0.98);
     }
-    to {
+    55% {
         opacity: 1;
-        transform: rotateY(0deg) translate3d(0, 0, 0) scale(1);
+        transform: perspective(1300px) rotateY(3deg) translate3d(0, 0, 0) scale(1);
+    }
+    100% {
+        opacity: 1;
+        transform: perspective(1300px) rotateY(0deg) translate3d(0, 0, 0) scale(1);
     }
 }
 
@@ -2271,7 +2522,7 @@ a {
 
 .leaf-panel.is-leaf-entering {
     transform-origin: left center;
-    animation: leafTurnIn 360ms var(--ease-out) both;
+    animation: leafTurnIn 460ms var(--ease-out) both;
 }
 
 .pos-selingan-box {
@@ -3623,6 +3874,58 @@ a {
     .book-cascade-leaves {
         left: 10px;
         right: 10px;
+    }
+
+    @keyframes bookLeafFlipNextMobile {
+        0% {
+            opacity: 1;
+            visibility: visible;
+            transform: perspective(1400px) translateZ(2px) rotateY(0deg);
+        }
+        45% {
+            opacity: 1;
+            transform: perspective(1400px) translateZ(20px) rotateY(-58deg) rotateZ(-1.2deg);
+        }
+        85% {
+            opacity: 0.92;
+            transform: perspective(1400px) translateZ(10px) rotateY(-102deg) rotateZ(-0.5deg);
+        }
+        100% {
+            opacity: 0;
+            visibility: hidden;
+            transform: perspective(1400px) translateZ(0px) rotateY(-116deg);
+        }
+    }
+
+    @keyframes bookLeafFlipPrevMobile {
+        0% {
+            opacity: 1;
+            visibility: visible;
+            transform: perspective(1400px) translateZ(2px) rotateY(-116deg);
+        }
+        45% {
+            opacity: 1;
+            transform: perspective(1400px) translateZ(20px) rotateY(-54deg) rotateZ(1.2deg);
+        }
+        85% {
+            opacity: 0.92;
+            transform: perspective(1400px) translateZ(8px) rotateY(-10deg) rotateZ(0.3deg);
+        }
+        100% {
+            opacity: 0;
+            visibility: hidden;
+            transform: perspective(1400px) translateZ(0px) rotateY(0deg);
+        }
+    }
+
+    .book-flip-leaf.is-flipping-next,
+    .book-cascade-leaves.is-cascading-next .cascade-leaf {
+        animation-name: bookLeafFlipNextMobile;
+    }
+
+    .book-flip-leaf.is-flipping-prev,
+    .book-cascade-leaves.is-cascading-prev .cascade-leaf {
+        animation-name: bookLeafFlipPrevMobile;
     }
 
     .book-spread {

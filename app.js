@@ -1642,6 +1642,14 @@
         bookCornerNext: document.getElementById("bookCornerNext"),
         bookTurnShadow: document.getElementById("bookTurnShadow"),
         bookFlipLeaf: document.getElementById("bookFlipLeaf"),
+        flipFrontTag: document.getElementById("flipFrontTag"),
+        flipFrontPg: document.getElementById("flipFrontPg"),
+        flipFrontKicker: document.getElementById("flipFrontKicker"),
+        flipFrontTitle: document.getElementById("flipFrontTitle"),
+        flipBackTag: document.getElementById("flipBackTag"),
+        flipBackPg: document.getElementById("flipBackPg"),
+        flipBackKicker: document.getElementById("flipBackKicker"),
+        flipBackTitle: document.getElementById("flipBackTitle"),
         bookCascadeLeaves: document.getElementById("bookCascadeLeaves"),
         chapterPortalOverlay: document.getElementById("chapterPortalOverlay"),
         portalEmblem: document.getElementById("portalEmblem"),
@@ -3167,8 +3175,17 @@
             });
         }
 
-        function renderActiveLeaf(animateTurn = false) {
+        function renderActiveLeaf(animateTurn = false, flipDir = "next") {
             const curTab = state.posLeafTab[cp.id];
+            const activeLeafMeta = leaves.find((l) => l.id === curTab) || leaves[0];
+            if (animateTurn) {
+                state.transitionSeq += 1;
+                playBookPageFlipAnimation(flipDir, false, {
+                    fromPage: DECK_PAGES[state.currentPageIndex],
+                    toPage: DECK_PAGES[state.currentPageIndex],
+                    subTitle: `${cp.title} (${activeLeafMeta ? activeLeafMeta.label : "Lembar"})`
+                });
+            }
             const panel = document.createElement("div");
             panel.className = `leaf-panel${animateTurn && !reducedMotionQuery.matches ? " is-leaf-entering" : ""}`;
 
@@ -4046,7 +4063,43 @@
         }
     }
 
-    function playBookPageFlipAnimation(dir, isCoverOpening = false) {
+    function syncFlipLeafSheetContent(fromPage, toPage, dir = "next", subTitle = "") {
+        const src = fromPage || DECK_PAGES[state.currentPageIndex] || DECK_PAGES[0];
+        const dst = toPage || src;
+        const srcMeta = BIOME_META[src.biome] || BIOME_META[1];
+        const dstMeta = BIOME_META[dst.biome] || BIOME_META[1];
+        const rightPage = dir === "prev" ? dst : src;
+        const leftPage = dir === "prev" ? src : dst;
+        const rightMeta = dir === "prev" ? dstMeta : srcMeta;
+        const leftMeta = dir === "prev" ? srcMeta : dstMeta;
+
+        if (el.flipFrontTag) {
+            el.flipFrontTag.textContent = rightMeta.shortName.toUpperCase();
+        }
+        if (el.flipFrontPg) {
+            el.flipFrontPg.textContent = `HAL ${String((rightPage.index || 0) + 1).padStart(2, "0")}`;
+        }
+        if (el.flipFrontKicker) {
+            el.flipFrontKicker.textContent = (rightPage.shortLabel || "LEMBAR CERITA").toUpperCase();
+        }
+        if (el.flipFrontTitle) {
+            el.flipFrontTitle.textContent = subTitle || rightPage.title || rightMeta.title;
+        }
+        if (el.flipBackTag) {
+            el.flipBackTag.textContent = leftMeta.shortName.toUpperCase();
+        }
+        if (el.flipBackPg) {
+            el.flipBackPg.textContent = `HAL ${String((leftPage.index || 0) + 1).padStart(2, "0")}`;
+        }
+        if (el.flipBackKicker) {
+            el.flipBackKicker.textContent = (leftPage.shortLabel || "CATATAN PERJALANAN").toUpperCase();
+        }
+        if (el.flipBackTitle) {
+            el.flipBackTitle.textContent = subTitle || leftPage.title || leftMeta.title;
+        }
+    }
+
+    function playBookPageFlipAnimation(dir, isCoverOpening = false, sheetOpts = {}) {
         if (!el.bookFlipLeaf || !el.bookTurnShadow || reducedMotionQuery.matches) {
             return;
         }
@@ -4055,6 +4108,8 @@
             state.flipCleanupTimer = null;
         }
         const seq = state.transitionSeq;
+
+        syncFlipLeafSheetContent(sheetOpts.fromPage, sheetOpts.toPage, dir, sheetOpts.subTitle || "");
 
         el.bookFlipLeaf.classList.remove("is-flipping-next", "is-flipping-prev", "is-cover-opening");
         el.bookTurnShadow.classList.remove("is-active-next", "is-active-prev");
@@ -4067,7 +4122,7 @@
         }
         el.bookTurnShadow.classList.add(dir === "prev" ? "is-active-prev" : "is-active-next");
 
-        const duration = isCoverOpening ? 640 : 540;
+        const duration = isCoverOpening ? 780 : 680;
         state.flipCleanupTimer = window.setTimeout(() => {
             if (seq !== state.transitionSeq) {
                 return;
@@ -4189,7 +4244,7 @@
                     el.bookCascadeLeaves.classList.remove("is-cascading-next", "is-cascading-prev");
                     state.cascadeCleanupTimer = null;
                 }
-            }, 780);
+            }, 920);
         }
 
         if (el.chapterPortalOverlay) {
@@ -4227,7 +4282,11 @@
             if (state.quizStep < QUIZ_STEPS.length - 1) {
                 state.quizStep += 1;
                 state.transitionSeq += 1;
-                playBookPageFlipAnimation("next", false);
+                playBookPageFlipAnimation("next", false, {
+                    fromPage: DECK_PAGES[1],
+                    toPage: DECK_PAGES[1],
+                    subTitle: `Pertanyaan ${String(state.quizStep + 1).padStart(2, "0")} / ${String(QUIZ_STEPS.length).padStart(2, "0")}`
+                });
                 SoundscapeEngine.playPageTurn("next", state.quizStep);
                 renderQuizStep();
                 const quizPage = pageNodeCache.get(1);
@@ -4247,7 +4306,11 @@
         if (state.quizStep > 0) {
             state.quizStep -= 1;
             state.transitionSeq += 1;
-            playBookPageFlipAnimation("prev", false);
+            playBookPageFlipAnimation("prev", false, {
+                fromPage: DECK_PAGES[1],
+                toPage: DECK_PAGES[1],
+                subTitle: `Pertanyaan ${String(state.quizStep + 1).padStart(2, "0")} / ${String(QUIZ_STEPS.length).padStart(2, "0")}`
+            });
             SoundscapeEngine.playPageTurn("prev", state.quizStep);
             renderQuizStep();
             const quizPage = pageNodeCache.get(1);
@@ -4301,7 +4364,10 @@
         syncDeckChrome(clamped);
 
         if (!opts.skipFlipAnim) {
-            playBookPageFlipAnimation(dir, Boolean(opts.coverOpening));
+            playBookPageFlipAnimation(dir, Boolean(opts.coverOpening), {
+                fromPage: prevPage,
+                toPage: targetPage
+            });
             if (isChapterTransition(prevPage, targetPage, dir)) {
                 triggerChapterTransitionSpectacle(targetPage, dir, opts);
             }
@@ -6035,6 +6101,27 @@
 
         el.prevPageBtn.addEventListener("click", handlePrevNavControl);
         el.nextPageBtn.addEventListener("click", handleNextNavControl);
+
+        el.nextPageBtn.addEventListener("pointerenter", () => {
+            if (el.bookTome && state.currentPageIndex > 0) {
+                el.bookTome.classList.add("is-peeking-next");
+            }
+        });
+        el.nextPageBtn.addEventListener("pointerleave", () => {
+            if (el.bookTome) {
+                el.bookTome.classList.remove("is-peeking-next");
+            }
+        });
+        el.prevPageBtn.addEventListener("pointerenter", () => {
+            if (el.bookTome && state.currentPageIndex > 0) {
+                el.bookTome.classList.add("is-peeking-prev");
+            }
+        });
+        el.prevPageBtn.addEventListener("pointerleave", () => {
+            if (el.bookTome) {
+                el.bookTome.classList.remove("is-peeking-prev");
+            }
+        });
 
         if (el.bookCornerPrev) {
             el.bookCornerPrev.addEventListener("click", handlePrevNavControl);
